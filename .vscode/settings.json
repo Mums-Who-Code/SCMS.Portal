@@ -1,0 +1,35 @@
+{
+    "psi-header.config": {
+        "forceToTop": true,
+        "blankLinesAfter": 1,
+        "license": "Custom"
+    },
+    "psi-header.templates": [
+        {
+            "language": "*",
+            "template": [
+                "-----------------------------------------------------------------------",
+                "Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.",
+                "-----------------------------------------------------------------------",
+            ]
+        }
+    ],
+    "psi-header.changes-tracking": {
+        "autoHeader": "autoSave"
+    },
+    "editor.formatOnSave": true,
+    "psi-header.lang-config": [
+		{
+			"language": "csharp",
+			"begin": "",
+			"end": "",
+			"prefix": "//"
+		},
+		{
+			"language": ".razor",
+			"begin": "",
+			"end": "",
+			"prefix": "//"
+		}
+	]
+}
