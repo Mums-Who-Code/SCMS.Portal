@@ -21,7 +21,6 @@ namespace SCMS.Portal.Web
         {
             return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
-
         }
     }
 }
