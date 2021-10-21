@@ -1,3 +1,7 @@
+//-----------------------------------------------------------------------
+//Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
+//-----------------------------------------------------------------------
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +18,7 @@ namespace SCMS.Portal.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
+        public Startup(IConfiguration configuration) => Configuration = configuration;
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
@@ -27,13 +27,8 @@ namespace SCMS.Portal.Web
             AddRootDirectory(services);
         }
 
-        private static void AddRootDirectory(IServiceCollection services)
-        {
-            services.AddRazorPages(options =>
-            {
-                options.RootDirectory = "/Views/Pages";
-            });
-        }
+        private static void AddRootDirectory(IServiceCollection services) =>
+            services.AddRazorPages(options => options.RootDirectory = "/Views/Pages");
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -49,7 +44,6 @@ namespace SCMS.Portal.Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
