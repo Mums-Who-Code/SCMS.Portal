@@ -1,3 +1,7 @@
+//-----------------------------------------------------------------------
+//Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
+//-----------------------------------------------------------------------
+
 using System;
 using Xunit;
 
