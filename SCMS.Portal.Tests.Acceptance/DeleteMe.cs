@@ -2,7 +2,6 @@
 //Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 //-----------------------------------------------------------------------
 
-using System;
 using Xunit;
 
 namespace SCMS.Portal.Tests.Acceptance
@@ -11,6 +10,5 @@ namespace SCMS.Portal.Tests.Acceptance
     {
         [Fact]
         public void ShouldBeTrue() => Assert.True(condition: true);
-
     }
 }
