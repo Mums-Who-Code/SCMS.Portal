@@ -4,7 +4,7 @@
 
 using Xunit;
 
-namespace SCMS.Portal.Tests.Unit
+namespace SCMS.Portal.Tests.Acceptance
 {
     public class DeleteMe
     {
