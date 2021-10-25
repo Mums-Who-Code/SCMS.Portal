@@ -2,10 +2,10 @@
 //Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 //-----------------------------------------------------------------------
 
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 namespace SCMS.Portal.Web.Pages
 {
