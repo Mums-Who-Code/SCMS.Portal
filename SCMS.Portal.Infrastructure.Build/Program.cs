@@ -48,7 +48,7 @@ namespace SCMS.Console.Infrastructure.Build
 
                                 TargetDotNetVersion = new TargetDotNetVersion
                                 {
-                                    DotNetVersion = "6.0.0-rc.2.21480.5",
+                                    DotNetVersion = "6.0.100-rc.2.21505.57",
                                     IncludePrerelease = true
                                 },
                             },
