@@ -8,4 +8,8 @@
     <Folder Include="Brokers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Foundations\" />
+  </ItemGroup>
+
 </Project>
