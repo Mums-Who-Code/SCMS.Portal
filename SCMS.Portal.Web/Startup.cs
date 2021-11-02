@@ -7,9 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SCMS.Portal.Web.Brokers.API;
-using RESTFulSense;
 using RESTFulSense.Clients;
+using SCMS.Portal.Web.Brokers.API;
 using SCMS.Portal.Web.Models.Configurations;
 using System;
 
@@ -19,6 +18,7 @@ namespace SCMS.Portal.Web
     {
         public Startup(IConfiguration configuration) =>
             Configuration = configuration;
+
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)

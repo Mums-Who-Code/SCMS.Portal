@@ -19,8 +19,10 @@ namespace SCMS.Portal.Web.Brokers.API
 
         private async ValueTask<T> PostAsync<T>(string relativeUrl, T content) =>
             await this.apiClient.PostContentAsync<T>(relativeUrl, content);
+
         private async ValueTask<T> PutAsync<T>(string relativeUrl, T content) =>
             await this.apiClient.PutContentAsync<T>(relativeUrl, content);
+        
         private async ValueTask<T> DeleteAsync<T>(string relativeUrl) =>
             await this.apiClient.DeleteContentAsync<T>(relativeUrl);
     }
