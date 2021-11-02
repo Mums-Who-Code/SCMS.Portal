@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Brokers\" />
+    <PackageReference Include="RESTFulSense" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>
