@@ -2,6 +2,7 @@
 //Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 //-----------------------------------------------------------------------
 
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +11,6 @@ using Microsoft.Extensions.Hosting;
 using RESTFulSense.Clients;
 using SCMS.Portal.Web.Brokers.API;
 using SCMS.Portal.Web.Models.Configurations;
-using System;
 
 namespace SCMS.Portal.Web
 {

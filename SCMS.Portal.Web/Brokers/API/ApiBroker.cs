@@ -2,8 +2,8 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
-using RESTFulSense.Clients;
 using System.Threading.Tasks;
+using RESTFulSense.Clients;
 
 namespace SCMS.Portal.Web.Brokers.API
 {
