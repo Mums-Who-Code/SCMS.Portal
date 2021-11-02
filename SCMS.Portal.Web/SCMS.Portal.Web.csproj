@@ -8,4 +8,8 @@
     <PackageReference Include="RESTFulSense" Version="2.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Foundations\" />
+  </ItemGroup>
+
 </Project>
