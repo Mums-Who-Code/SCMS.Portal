@@ -4,7 +4,7 @@
 
 using System;
 
-namespace SCMS.Portal.Web.Brokers.Logging
+namespace SCMS.Portal.Web.Brokers.Loggings
 {
     public interface ILoggingBroker
     {
@@ -13,6 +13,6 @@ namespace SCMS.Portal.Web.Brokers.Logging
         void LogDebug(string message);
         void LogWarning(string message);
         void LogError(Exception exception);
-        void LogCritical(Exception exception);  
+        void LogCritical(Exception exception);
     }
 }
