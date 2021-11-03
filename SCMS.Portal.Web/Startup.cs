@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using RESTFulSense.Clients;
 using SCMS.Portal.Web.Brokers.Apis;
 using SCMS.Portal.Web.Brokers.Loggings;
+using SCMS.Portal.Web.Brokers.Navigations;
 using SCMS.Portal.Web.Models.Configurations;
 
 namespace SCMS.Portal.Web
@@ -30,6 +31,7 @@ namespace SCMS.Portal.Web
             AddRootDirectory(services);
             services.AddScoped<IApiBroker, ApiBroker>();
             services.AddScoped<ILoggingBroker, LoggingBroker>();
+            services.AddScoped<INavigationBroker, NavigationBroker>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
