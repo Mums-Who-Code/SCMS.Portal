@@ -4,15 +4,15 @@
 
 using Microsoft.AspNetCore.Components;
 
-namespace SCMS.Portal.Web.Brokers.Navigation
+namespace SCMS.Portal.Web.Brokers.Navigations
 {
     public class NavigationBroker : INavigationBroker
     {
         private readonly NavigationManager navigationManager;
-        public NavigationBroker(NavigationManager navigationManager) => 
+        public NavigationBroker(NavigationManager navigationManager) =>
             this.navigationManager = navigationManager;
 
-        public void NavigateTo(string route) => 
+        public void NavigateTo(string route) =>
             this.navigationManager.NavigateTo(route);
     }
 }
