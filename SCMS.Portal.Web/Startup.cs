@@ -2,16 +2,16 @@
 //Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 //-----------------------------------------------------------------------
 
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SCMS.Portal.Web.Brokers.API;
-using RESTFulSense;
 using RESTFulSense.Clients;
+using SCMS.Portal.Web.Brokers.APIs;
+using SCMS.Portal.Web.Brokers.Loggings;
 using SCMS.Portal.Web.Models.Configurations;
-using System;
 
 namespace SCMS.Portal.Web
 {
@@ -19,6 +19,7 @@ namespace SCMS.Portal.Web
     {
         public Startup(IConfiguration configuration) =>
             Configuration = configuration;
+
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
@@ -28,6 +29,7 @@ namespace SCMS.Portal.Web
             AddHttpClient(services);
             AddRootDirectory(services);
             services.AddScoped<IApiBroker, ApiBroker>();
+            services.AddScoped<ILoggingBroker, LoggingBroker>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

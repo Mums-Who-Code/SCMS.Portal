@@ -2,9 +2,13 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
-namespace SCMS.Portal.Web.Brokers.API
+using System;
+
+namespace SCMS.Portal.Web.Brokers.DateTimes
 {
-    public interface IApiBroker
+    public class DateTimeBroker : IDateTimeBroker
     {
+        public DateTimeOffset GetCurrentDateTime() =>
+            DateTimeOffset.UtcNow;
     }
 }

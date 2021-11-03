@@ -7,7 +7,7 @@ using ADotNet.Models.Pipelines.GithubPipelines.DotNets;
 using ADotNet.Models.Pipelines.GithubPipelines.DotNets.Tasks;
 using ADotNet.Models.Pipelines.GithubPipelines.DotNets.Tasks.SetupDotNetTaskV1s;
 
-namespace SCMS.Console.Infrastructure.Build
+namespace SCMS.Portal.Infrastructure.Build
 {
     public class Program
     {

@@ -2,10 +2,10 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
-using Microsoft.Extensions.Logging;
 using System;
+using Microsoft.Extensions.Logging;
 
-namespace SCMS.Portal.Web.Brokers.Logging
+namespace SCMS.Portal.Web.Brokers.Loggings
 {
     public class LoggingBroker : ILoggingBroker
     {
@@ -21,6 +21,6 @@ namespace SCMS.Portal.Web.Brokers.Logging
         public void LogDebug(string message) => this.logger.LogDebug(message);
         public void LogInformation(string message) => this.logger.LogInformation(message);
         public void LogTrace(string message) => this.logger.LogTrace(message);
-        public void LogWarning(string message) => this.LogWarning(message);
+        public void LogWarning(string message) => this.logger.LogWarning(message);
     }
 }
