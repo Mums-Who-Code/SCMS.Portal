@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RESTFulSense.Clients;
-using SCMS.Portal.Web.Brokers.API;
+using SCMS.Portal.Web.Brokers.APIs;
 using SCMS.Portal.Web.Models.Configurations;
 
 namespace SCMS.Portal.Web
