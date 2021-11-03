@@ -9,6 +9,7 @@ namespace SCMS.Portal.Web.Brokers.Navigations
     public class NavigationBroker : INavigationBroker
     {
         private readonly NavigationManager navigationManager;
+
         public NavigationBroker(NavigationManager navigationManager) =>
             this.navigationManager = navigationManager;
 
