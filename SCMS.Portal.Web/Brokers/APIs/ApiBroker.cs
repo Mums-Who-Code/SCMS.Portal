@@ -5,7 +5,7 @@
 using System.Threading.Tasks;
 using RESTFulSense.Clients;
 
-namespace SCMS.Portal.Web.Brokers.APIs
+namespace SCMS.Portal.Web.Brokers.Apis
 {
     public class ApiBroker : IApiBroker
     {
