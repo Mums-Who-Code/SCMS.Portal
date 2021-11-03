@@ -4,11 +4,10 @@
 
 using System;
 
-namespace SCMS.Portal.Web.Brokers.DateTime
+namespace SCMS.Portal.Web.Brokers.DateTimes
 {
-    public class DateTimeBroker : IDateTimeBroker
+    public interface IDateTimeBroker
     {
-        public DateTimeOffset GetCurrentDateTime() =>
-            DateTimeOffset.UtcNow;
+        DateTimeOffset GetCurrentDateTime();
     }
 }
