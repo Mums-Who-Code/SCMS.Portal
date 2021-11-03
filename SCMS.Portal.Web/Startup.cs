@@ -29,9 +29,7 @@ namespace SCMS.Portal.Web
             services.AddServerSideBlazor();
             AddHttpClient(services);
             AddRootDirectory(services);
-            services.AddScoped<IApiBroker, ApiBroker>();
-            services.AddScoped<ILoggingBroker, LoggingBroker>();
-            services.AddScoped<INavigationBroker, NavigationBroker>();
+            AddBrokers(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -71,5 +69,11 @@ namespace SCMS.Portal.Web
             services.AddRazorPages(options =>
             options.RootDirectory = "/Views/Pages");
 
+        private void AddBrokers(IServiceCollection services)
+        {
+            services.AddScoped<IApiBroker, ApiBroker>();
+            services.AddScoped<ILoggingBroker, LoggingBroker>();
+            services.AddScoped<INavigationBroker, NavigationBroker>();
+        }
     }
 }
