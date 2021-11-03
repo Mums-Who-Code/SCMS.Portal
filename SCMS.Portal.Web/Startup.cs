@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RESTFulSense.Clients;
 using SCMS.Portal.Web.Brokers.Apis;
+using SCMS.Portal.Web.Brokers.Loggings;
 using SCMS.Portal.Web.Models.Configurations;
 
 namespace SCMS.Portal.Web
@@ -28,6 +29,7 @@ namespace SCMS.Portal.Web
             AddHttpClient(services);
             AddRootDirectory(services);
             services.AddScoped<IApiBroker, ApiBroker>();
+            services.AddScoped<ILoggingBroker, LoggingBroker>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
