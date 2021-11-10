@@ -7,7 +7,7 @@ using RESTFulSense.Clients;
 
 namespace SCMS.Portal.Web.Brokers.Apis
 {
-    public class ApiBroker : IApiBroker
+    public partial class ApiBroker : IApiBroker
     {
         private readonly IRESTFulApiFactoryClient apiClient;
 
