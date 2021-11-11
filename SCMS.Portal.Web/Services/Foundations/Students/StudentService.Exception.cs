@@ -4,7 +4,7 @@
 
 using System.Threading.Tasks;
 using SCMS.Portal.Web.Models.Foundations.Students;
-using SCMS.Portal.Web.Services.Foundations.Students.Exceptions;
+using SCMS.Portal.Web.Models.Foundations.Students.Exceptions;
 using Xeptions;
 
 namespace SCMS.Portal.Web.Services.Foundations.Students
@@ -29,9 +29,9 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
             }
         }
 
-        private StudentValidationException CreateAndLogValidationException(Xeption nullStudentException)
+        private StudentValidationException CreateAndLogValidationException(Xeption exception)
         {
-            var studentValidationException = new StudentValidationException(nullStudentException);
+            var studentValidationException = new StudentValidationException(exception);
             this.loggingBroker.LogError(studentValidationException);
 
             return studentValidationException;

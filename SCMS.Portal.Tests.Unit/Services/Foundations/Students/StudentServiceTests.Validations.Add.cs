@@ -6,7 +6,7 @@ using System;
 using System.Threading.Tasks;
 using Moq;
 using SCMS.Portal.Web.Models.Foundations.Students;
-using SCMS.Portal.Web.Services.Foundations.Students.Exceptions;
+using SCMS.Portal.Web.Models.Foundations.Students.Exceptions;
 using Xunit;
 
 namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
@@ -45,22 +45,36 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
 
-        [Fact]
-        public async Task ShouldThrowValidationExceptionOnAddIfStudentIsInvalidAndLogItAsync()
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("   ")]
+        public async Task ShouldThrowValidationExceptionOnAddIfStudentIsInvalidAndLogItAsync(string invalidFirstName)
         {
             //given
-            Guid invalidId = Guid.Empty;
-            Student randomStudent = CreateRandomStudent();
-            Student invalidStudent = randomStudent;
-            invalidStudent.Id = invalidId;
+            Student invalidStudent = new Student
+            {
+                FirstName = invalidFirstName,
+                DateOfBirth = default,
+                Status = StudentStatus.Inactive
+            };
 
-            var InvalidStudentException =
-                new InvalidStudentException(
-                    parameterName: nameof(Student.Id),
-                    parameterValue: invalidStudent.Id);
+            var invalidStudentException = new InvalidStudentException();
+
+            invalidStudentException.AddData(
+                key: nameof(Student.Id),
+                values: "Id is required.");
+
+            invalidStudentException.AddData(
+                key: nameof(Student.FirstName),
+                values: "Text is required.");
+
+            invalidStudentException.AddData(
+                key: nameof(Student.LastName),
+                values: "Text is required.");
 
             var expectedStudentValidationException =
-                new StudentValidationException(InvalidStudentException);
+                new StudentValidationException(invalidStudentException);
 
             //when
             ValueTask<Student> addStudentTask

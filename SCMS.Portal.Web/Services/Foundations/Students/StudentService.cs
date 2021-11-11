@@ -25,7 +25,7 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
         public ValueTask<Student> AddStudentAsyc(Student student) =>
             TryCatch(async () =>
             {
-                ValidateStudent(student);
+                ValidateStudentOnAdd(student);
 
                 return await this.apiBroker.PostStudentAsync(student);
             });

@@ -4,7 +4,7 @@
 
 using Xeptions;
 
-namespace SCMS.Portal.Web.Services.Foundations.Students.Exceptions
+namespace SCMS.Portal.Web.Models.Foundations.Students.Exceptions
 {
     public class StudentValidationException : Xeption
     {

@@ -31,7 +31,10 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
         }
 
         private static Student CreateRandomStudent() =>
-            CreateStudentFiller().Create();
+            CreateStudentFiller(dateTime: GetRandomDateTime()).Create();
+
+        private static DateTimeOffset GetRandomDateTime() =>
+            new DateTimeRange(earliestDate: new DateTime()).GetValue();
 
         private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException)
         {
@@ -39,12 +42,15 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
                 && actualException.InnerException.Message == expectedException.InnerException.Message
                 && (actualException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data); ;
         }
-        private static Filler<Student> CreateStudentFiller()
+        private static Filler<Student> CreateStudentFiller(DateTimeOffset dateTime)
         {
             var filler = new Filler<Student>();
+            Guid userId = Guid.NewGuid();
 
             filler.Setup()
-                .OnType<DateTimeOffset>().Use(DateTimeOffset.UtcNow);
+                .OnProperty(student => student.Status).Use(StudentStatus.Active)
+                .OnType<DateTimeOffset>().Use(dateTime)
+                .OnType<Guid>().Use(userId);
 
             return filler;
         }

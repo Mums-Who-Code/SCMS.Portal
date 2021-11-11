@@ -4,11 +4,12 @@
 
 using Xeptions;
 
-namespace SCMS.Portal.Web.Services.Foundations.Students.Exceptions
+namespace SCMS.Portal.Web.Models.Foundations.Students.Exceptions
 {
-    public class NullStudentException : Xeption
+    public class InvalidStudentException : Xeption
     {
-        public NullStudentException()
-            : base(message: "Null student error occured.") { }
+        public InvalidStudentException()
+            : base(message: "Invalid student, fix the errors and try again.")
+        { }
     }
 }
