@@ -22,9 +22,7 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
             this.loggingBroker = loggingBroker;
         }
 
-        public ValueTask<Student> AddStudentAsyc(Student student)
-        {
-            throw new System.NotImplementedException();
-        }
+        public async ValueTask<Student> AddStudentAsyc(Student student) =>
+            await this.apiBroker.PostStudentAsync(student);
     }
 }
