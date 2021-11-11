@@ -9,7 +9,7 @@ using SCMS.Portal.Web.Models.Foundations.Students;
 
 namespace SCMS.Portal.Web.Services.Foundations.Students
 {
-    public class StudentService : IStudentService
+    public partial class StudentService : IStudentService
     {
         private readonly IApiBroker apiBroker;
         private readonly ILoggingBroker loggingBroker;
@@ -22,7 +22,12 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
             this.loggingBroker = loggingBroker;
         }
 
-        public async ValueTask<Student> AddStudentAsyc(Student student) =>
-            await this.apiBroker.PostStudentAsync(student);
+        public ValueTask<Student> AddStudentAsyc(Student student) =>
+            TryCatch(async () =>
+            {
+                ValidateStudent(student);
+
+                return await this.apiBroker.PostStudentAsync(student);
+            });
     }
 }

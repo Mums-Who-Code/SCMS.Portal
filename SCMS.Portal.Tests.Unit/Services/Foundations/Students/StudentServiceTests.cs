@@ -10,6 +10,7 @@ using SCMS.Portal.Web.Brokers.Loggings;
 using SCMS.Portal.Web.Models.Foundations.Students;
 using SCMS.Portal.Web.Services.Foundations.Students;
 using Tynamix.ObjectFiller;
+using Xeptions;
 
 namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
 {
@@ -32,10 +33,11 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
         private static Student CreateRandomStudent() =>
             CreateStudentFiller().Create();
 
-        private Expression<Func<Exception, bool>> SameExceptionAs(Exception expectedException)
+        private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException)
         {
             return actualException => actualException.Message == expectedException.Message
-                && actualException.InnerException.Message == expectedException.InnerException.Message;
+                && actualException.InnerException.Message == expectedException.InnerException.Message
+                && (actualException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data); ;
         }
         private static Filler<Student> CreateStudentFiller()
         {
