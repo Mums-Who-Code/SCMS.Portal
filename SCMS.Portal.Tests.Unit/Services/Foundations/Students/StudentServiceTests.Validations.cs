@@ -2,6 +2,7 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using Moq;
 using SCMS.Portal.Web.Models.Foundations.Students;
@@ -24,12 +25,12 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
                 new StudentValidationException(nullStudentException);
 
             //when
-            ValueTask<Student> submitStudentTask =
+            ValueTask<Student> addStudentTask =
                 this.studentService.AddStudentAsyc(invalidStudent);
 
             //then
             await Assert.ThrowsAsync<StudentValidationException>(() =>
-                submitStudentTask.AsTask());
+                addStudentTask.AsTask());
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(
@@ -42,6 +43,44 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
 
             this.apiBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowValidationExceptionOnAddIfStudentIsInvalidAndLogItAsync()
+        {
+            //given
+            Guid invalidId = Guid.Empty;
+            Student randomStudent = CreateRandomStudent();
+            Student invalidStudent = randomStudent;
+            invalidStudent.Id = invalidId;
+
+            var InvalidStudentException =
+                new InvalidStudentException(
+                    parameterName: nameof(Student.Id),
+                    parameterValue: invalidStudent.Id);
+
+            var expectedStudentValidationException =
+                new StudentValidationException(InvalidStudentException);
+
+            //when
+            ValueTask<Student> addStudentTask
+                = this.studentService.AddStudentAsyc(invalidStudent);
+
+            //then
+            await Assert.ThrowsAsync<StudentValidationException>(() =>
+                addStudentTask.AsTask());
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(
+                    SameExceptionAs(expectedStudentValidationException))),
+                        Times.Once);
+
+            this.apiBrokerMock.Verify(broker =>
+                broker.PostStudentAsync(It.IsAny<Student>()),
+                    Times.Never);
+
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.apiBrokerMock.VerifyNoOtherCalls();
         }
     }
 }
