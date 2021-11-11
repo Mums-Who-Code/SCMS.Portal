@@ -2,6 +2,7 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
+using System;
 using SCMS.Portal.Web.Models.Foundations.Students;
 using SCMS.Portal.Web.Services.Foundations.Students.Exceptions;
 
@@ -11,10 +12,18 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
     {
         private void ValidateStudent(Student student)
         {
-            if (student is null)
+            switch (student)
             {
-                throw new NullStudentException();
+                case null:
+                    throw new NullStudentException();
+                case { } when IsInvalid(student.Id):
+                    throw new InvalidStudentException(
+                        parameterName: nameof(Student.Id),
+                        parameterValue: student.Id);
             }
         }
+
+        private static bool IsInvalid(Guid id) =>
+            id == Guid.Empty;
     }
 }

@@ -23,6 +23,10 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
             {
                 throw CreateAndLogValidationException(nullStudentException);
             }
+            catch (InvalidStudentException invalidStudentException)
+            {
+                throw CreateAndLogValidationException(invalidStudentException);
+            }
         }
 
         private StudentValidationException CreateAndLogValidationException(Xeption nullStudentException)
