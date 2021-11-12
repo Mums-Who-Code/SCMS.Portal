@@ -21,7 +21,13 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
                (Rule: IsInvalid(date: student.DateOfBirth), Parameter: nameof(Student.DateOfBirth)),
                (Rule: IsInvalid(student.Status), Parameter: nameof(Student.Status)),
                (Rule: IsInvalid(student.CreatedDate), Parameter: nameof(Student.CreatedDate)),
-               (Rule: IsInvalid(id: student.CreatedBy), Parameter: nameof(Student.CreatedBy))
+               (Rule: IsInvalid(id: student.CreatedBy), Parameter: nameof(Student.CreatedBy)),
+
+               (Rule: IsInvalid(
+                   firstDate: student.UpdateDate,
+                   secondDate: student.CreatedDate,
+                   secondParameterName: nameof(Student.CreatedDate)),
+                Parameter: nameof(Student.UpdateDate))
            );
         }
 
@@ -56,6 +62,15 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
             Condition = status != StudentStatus.Active,
             Message = "Value is invalid."
         };
+
+        private static dynamic IsInvalid(
+            DateTimeOffset firstDate,
+            DateTimeOffset secondDate,
+            string secondParameterName) => new
+            {
+                Condition = firstDate != secondDate,
+                Message = $"Date is not same as {secondParameterName}."
+            };
 
         private void Validate(params (dynamic Rule, string Parameter)[] validations)
         {
