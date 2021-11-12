@@ -27,7 +27,13 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
                    firstDate: student.UpdateDate,
                    secondDate: student.CreatedDate,
                    secondParameterName: nameof(Student.CreatedDate)),
-                Parameter: nameof(Student.UpdateDate))
+                Parameter: nameof(Student.UpdateDate)),
+
+               (Rule: IsInvalid(
+                   firstId: student.UpdatedBy,
+                   secondId: student.CreatedBy,
+                   secondParameterName: nameof(Student.CreatedBy)),
+                Parameter: nameof(Student.UpdatedBy))
            );
         }
 
@@ -70,6 +76,15 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
             {
                 Condition = firstDate != secondDate,
                 Message = $"Date is not same as {secondParameterName}."
+            };
+
+        private static dynamic IsInvalid(
+            Guid firstId,
+            Guid secondId,
+            string secondParameterName) => new
+            {
+                Condition = firstId != secondId,
+                Message = $"Id is not same as {secondParameterName}."
             };
 
         private void Validate(params (dynamic Rule, string Parameter)[] validations)
