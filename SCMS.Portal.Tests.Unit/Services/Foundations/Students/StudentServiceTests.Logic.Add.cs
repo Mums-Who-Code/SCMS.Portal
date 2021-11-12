@@ -27,7 +27,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
                     .ReturnsAsync(retrievedStudent);
 
             //when
-            Student actualStudent = 
+            Student actualStudent =
                 await this.studentService.AddStudentAsync(inputStudent);
 
             //then
