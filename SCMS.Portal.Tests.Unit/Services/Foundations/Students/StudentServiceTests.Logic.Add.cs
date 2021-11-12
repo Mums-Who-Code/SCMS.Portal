@@ -4,6 +4,7 @@
 
 using System.Threading.Tasks;
 using FluentAssertions;
+using Force.DeepCloner;
 using Moq;
 using SCMS.Portal.Web.Models.Foundations.Students;
 using Xunit;
@@ -19,14 +20,15 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             Student randomStudent = CreateRandomStudent();
             Student inputStudent = randomStudent;
             Student retrievedStudent = inputStudent;
-            Student expectedStudent = retrievedStudent;
+            Student expectedStudent = retrievedStudent.DeepClone();
 
             this.apiBrokerMock.Setup(broker =>
                 broker.PostStudentAsync(inputStudent))
                     .ReturnsAsync(retrievedStudent);
 
             //when
-            Student actualStudent = await this.studentService.AddStudentAsyc(inputStudent);
+            Student actualStudent = 
+                await this.studentService.AddStudentAsync(inputStudent);
 
             //then
             actualStudent.Should().BeEquivalentTo(expectedStudent);

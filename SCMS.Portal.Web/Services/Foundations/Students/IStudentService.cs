@@ -9,6 +9,6 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
 {
     public interface IStudentService
     {
-        ValueTask<Student> AddStudentAsyc(Student student);
+        ValueTask<Student> AddStudentAsync(Student student);
     }
 }

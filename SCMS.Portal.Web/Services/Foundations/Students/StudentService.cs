@@ -22,7 +22,7 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
             this.loggingBroker = loggingBroker;
         }
 
-        public ValueTask<Student> AddStudentAsyc(Student student) =>
+        public ValueTask<Student> AddStudentAsync(Student student) =>
             TryCatch(async () =>
             {
                 ValidateStudentOnAdd(student);

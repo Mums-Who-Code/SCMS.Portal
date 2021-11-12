@@ -17,7 +17,6 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
         {
             //given
             Student invalidStudent = null;
-
             var nullStudentException = new NullStudentException();
 
             var expectedStudentValidationException =
@@ -25,23 +24,23 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
 
             //when
             ValueTask<Student> addStudentTask =
-                this.studentService.AddStudentAsyc(invalidStudent);
+                this.studentService.AddStudentAsync(invalidStudent);
 
             //then
             await Assert.ThrowsAsync<StudentValidationException>(() =>
                 addStudentTask.AsTask());
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogError(
-                    It.Is(SameExceptionAs(expectedStudentValidationException))),
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedStudentValidationException))),
                         Times.Once);
 
             this.apiBrokerMock.Verify(broker =>
                 broker.PostStudentAsync(It.IsAny<Student>()),
                     Times.Never());
 
-            this.apiBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.apiBrokerMock.VerifyNoOtherCalls();
         }
 
         [Theory]
@@ -76,16 +75,16 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
                 new StudentValidationException(invalidStudentException);
 
             //when
-            ValueTask<Student> addStudentTask
-                = this.studentService.AddStudentAsyc(invalidStudent);
+            ValueTask<Student> addStudentTask =
+                this.studentService.AddStudentAsync(invalidStudent);
 
             //then
             await Assert.ThrowsAsync<StudentValidationException>(() =>
                 addStudentTask.AsTask());
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogError(It.Is(
-                    SameExceptionAs(expectedStudentValidationException))),
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedStudentValidationException))),
                         Times.Once);
 
             this.apiBrokerMock.Verify(broker =>
