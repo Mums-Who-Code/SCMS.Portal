@@ -54,7 +54,7 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
         private static dynamic IsInvalid(StudentStatus status) => new
         {
             Condition = status != StudentStatus.Active,
-            Message = "Status is invalid."
+            Message = "Value is invalid."
         };
 
         private void Validate(params (dynamic Rule, string Parameter)[] validations)
