@@ -2,6 +2,7 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using Moq;
 using SCMS.Portal.Web.Models.Foundations.Students;
@@ -124,6 +125,43 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             invalidStudentException.AddData(
                 key: nameof(Student.UpdateDate),
                 values: $"Date is not same as {nameof(Student.CreatedDate)}.");
+
+            var expectedStudentValidationException =
+                new StudentValidationException(invalidStudentException);
+
+            //when
+            ValueTask<Student> addStudentTask =
+                this.studentService.AddStudentAsync(invalidStudent);
+
+            //then
+            await Assert.ThrowsAsync<StudentValidationException>(() =>
+                addStudentTask.AsTask());
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedStudentValidationException))),
+                        Times.Once);
+
+            this.apiBrokerMock.Verify(broker =>
+                broker.PostStudentAsync(It.IsAny<Student>()),
+                    Times.Never());
+
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.apiBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowValidationExceptionOnAddIfCreatedByIsNotSameAsUpdatedByAndLogItAsync()
+        {
+            //given
+            Student randomStudent = CreateRandomStudent();
+            Student invalidStudent = randomStudent;
+            invalidStudent.UpdatedBy = Guid.NewGuid();
+            var invalidStudentException = new InvalidStudentException();
+
+            invalidStudentException.AddData(
+                key: nameof(Student.UpdatedBy),
+                values: $"Id is not same as {nameof(Student.CreatedBy)}.");
 
             var expectedStudentValidationException =
                 new StudentValidationException(invalidStudentException);
