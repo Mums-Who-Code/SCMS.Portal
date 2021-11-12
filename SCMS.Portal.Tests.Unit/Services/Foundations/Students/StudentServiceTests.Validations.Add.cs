@@ -186,5 +186,55 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.apiBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Theory]
+        [MemberData(nameof(InvalidMinuteCases))]
+        public async Task ShouldThrowValidationExceptionOnAddIfCreatedDateIsNotRecentAndLogItAsync(
+            int invalidMinutes)
+        {
+            //given
+            DateTimeOffset randomDateTime = GetRandomDateTime();
+            Student randomStudent = CreateRandomStudent(randomDateTime);
+            Student invalidStudent = randomStudent;
+            invalidStudent.CreatedDate = invalidStudent.CreatedDate.AddMinutes(invalidMinutes);
+            invalidStudent.UpdateDate = invalidStudent.CreatedDate;
+            var invalidStudentException = new InvalidStudentException();
+
+            invalidStudentException.AddData(
+                key: nameof(Student.CreatedDate),
+                values: "Date is not recent");
+
+            var expectedStudentValidationException =
+                new StudentValidationException(invalidStudentException);
+
+            this.dateTimeBrokerMock.Setup(broker =>
+                broker.GetCurrentDateTime())
+                    .Returns(randomDateTime);
+
+            //when
+            ValueTask<Student> addStudentTask =
+                this.studentService.AddStudentAsync(invalidStudent);
+
+            //then
+            await Assert.ThrowsAsync<StudentValidationException>(() =>
+                addStudentTask.AsTask());
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTime(),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedStudentValidationException))),
+                        Times.Once);
+
+            this.apiBrokerMock.Verify(broker =>
+                broker.PostStudentAsync(It.IsAny<Student>()),
+                    Times.Never());
+
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.apiBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
