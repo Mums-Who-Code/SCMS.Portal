@@ -5,9 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Runtime.Serialization;
-using Microsoft.Data.SqlClient;
+using System.Net.Http;
 using Moq;
+using RESTFulSense.Exceptions;
 using SCMS.Portal.Web.Brokers.Apis;
 using SCMS.Portal.Web.Brokers.DateTimes;
 using SCMS.Portal.Web.Brokers.Loggings;
@@ -15,6 +15,7 @@ using SCMS.Portal.Web.Models.Foundations.Students;
 using SCMS.Portal.Web.Services.Foundations.Students;
 using Tynamix.ObjectFiller;
 using Xeptions;
+using Xunit;
 
 namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
 {
@@ -37,8 +38,36 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
                 loggingBroker: loggingBrokerMock.Object);
         }
 
-        private static SqlException GetSqlException() =>
-            (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
+        public static TheoryData CriticalDependencyExceptions()
+        {
+            string someMessage = GetRandomMessage();
+
+            var httpResponseMessage =
+                new HttpResponseMessage();
+
+            var httpRequestException =
+                new HttpRequestException();
+
+            var httpReponseUrlNotFoundException =
+                new HttpResponseUrlNotFoundException(
+                    httpResponseMessage,
+                    someMessage);
+
+            var unauthorizedHttpResponseException =
+                new HttpResponseUnauthorizedException(
+                    httpResponseMessage,
+                    someMessage);
+
+            return new TheoryData<Exception>
+            {
+                httpRequestException,
+                httpReponseUrlNotFoundException,
+                unauthorizedHttpResponseException
+            };
+        }
+
+        private static string GetRandomMessage() =>
+            new MnemonicString(wordCount: GetRandomNumber()).GetValue();
 
         private static Student CreateRandomStudent() =>
             CreateStudentFiller(dateTime: GetRandomDateTime()).Create();

@@ -2,8 +2,8 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
-using Microsoft.Data.SqlClient;
 using Moq;
 using SCMS.Portal.Web.Models.Foundations.Students;
 using SCMS.Portal.Web.Models.Foundations.Students.Exceptions;
@@ -13,22 +13,23 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
 {
     public partial class StudentServiceTests
     {
-        [Fact]
-        public async Task ShouldThrowCriticalDependencyExceptionOnAddIfSqlErrorOccursAndLogItAsync()
+        [Theory]
+        [MemberData(nameof(CriticalDependencyExceptions))]
+        public async Task ShouldThrowCriticalDependencyExceptionOnAddIfDependencyErrorOccursAndLogItAsync(
+            Exception criticalDependencyException)
         {
             // given
             Student someStudent = CreateRandomStudent();
-            SqlException sqlException = GetSqlException();
 
-            var failedStudentStorageException =
-                new FailedStudentStorageException(sqlException);
+            var failedStudentDependencyException =
+                new FailedStudentDependencyException(criticalDependencyException);
 
             var expectedStudentDependencyException =
-                new StudentDependencyException(failedStudentStorageException);
+                new StudentDependencyException(failedStudentDependencyException);
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTime())
-                    .Throws(sqlException);
+                    .Throws(criticalDependencyException);
 
             // when
             ValueTask<Student> addStudentTask =

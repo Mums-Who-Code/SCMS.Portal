@@ -7,10 +7,10 @@ using Xeptions;
 
 namespace SCMS.Portal.Web.Models.Foundations.Students.Exceptions
 {
-    public class FailedStudentStorageException : Xeption
+    public class FailedStudentDependencyException : Xeption
     {
-        public FailedStudentStorageException(Exception innerException)
-            : base(message: "Failed student storage error occurred.", innerException)
+        public FailedStudentDependencyException(Exception innerException)
+            : base(message: "Failed student dependency error occurred.", innerException)
         { }
     }
 }
