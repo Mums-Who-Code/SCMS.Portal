@@ -5,6 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Runtime.Serialization;
+using Microsoft.Data.SqlClient;
 using Moq;
 using SCMS.Portal.Web.Brokers.Apis;
 using SCMS.Portal.Web.Brokers.DateTimes;
@@ -35,6 +37,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
                 loggingBroker: loggingBrokerMock.Object);
         }
 
+        private static SqlException GetSqlException() =>
+            (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
+
         private static Student CreateRandomStudent() =>
             CreateStudentFiller(dateTime: GetRandomDateTime()).Create();
 
@@ -61,7 +66,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
 
         private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException)
         {
-            return actualException => actualException.Message == expectedException.Message
+            return actualException =>
+                actualException.Message == expectedException.Message
                 && actualException.InnerException.Message == expectedException.InnerException.Message
                 && (actualException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data);
         }

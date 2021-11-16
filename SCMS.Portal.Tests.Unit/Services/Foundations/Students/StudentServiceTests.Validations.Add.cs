@@ -158,7 +158,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
 
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
-            this.apiBrokerMock.VerifyNoOtherCalls();            
+            this.apiBrokerMock.VerifyNoOtherCalls();
         }
 
         [Fact]
