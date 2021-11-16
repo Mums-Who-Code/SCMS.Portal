@@ -37,6 +37,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
 
         private static Student CreateRandomStudent() =>
             CreateStudentFiller(dateTime: GetRandomDateTime()).Create();
+
         private static Student CreateRandomStudent(DateTimeOffset dateTime) =>
             CreateStudentFiller(dateTime).Create();
 
@@ -44,7 +45,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
 
         private static int GetNegativeRandomNumber() => -1 * GetRandomNumber();
-        private static int GetRandomNumber() => new IntRange(min: 1, max: 10).GetValue();
+        private static int GetRandomNumber() => new IntRange(min: 2, max: 10).GetValue();
 
         public static IEnumerable<object[]> InvalidMinuteCases()
         {

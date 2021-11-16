@@ -33,7 +33,9 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
                    firstId: student.UpdatedBy,
                    secondId: student.CreatedBy,
                    secondParameterName: nameof(Student.CreatedBy)),
-                Parameter: nameof(Student.UpdatedBy))
+                Parameter: nameof(Student.UpdatedBy)),
+
+               (Rule: IsNotRecent(student.CreatedDate), Parameter: nameof(Student.CreatedDate))
            );
         }
 
@@ -86,6 +88,21 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
                 Condition = firstId != secondId,
                 Message = $"Id is not same as {secondParameterName}."
             };
+
+        private dynamic IsNotRecent(DateTimeOffset date) => new
+        {
+            Condition = IsDateNotRecent(date),
+            Message = "Date is not recent"
+        };
+
+        private bool IsDateNotRecent(DateTimeOffset date)
+        {
+            DateTimeOffset currentDateTime = this.dateTimeBroker.GetCurrentDateTime();
+            TimeSpan oneMinute = TimeSpan.FromMinutes(1);
+            TimeSpan timeDifference = currentDateTime.Subtract(date);
+
+            return timeDifference.Duration() > oneMinute;
+        }
 
         private void Validate(params (dynamic Rule, string Parameter)[] validations)
         {

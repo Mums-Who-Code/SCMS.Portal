@@ -2,6 +2,7 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Force.DeepCloner;
@@ -17,10 +18,15 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
         public async Task ShouldAddStudentAsync()
         {
             //given
-            Student randomStudent = CreateRandomStudent();
+            DateTimeOffset randomDateTime = GetRandomDateTime();
+            Student randomStudent = CreateRandomStudent(randomDateTime);
             Student inputStudent = randomStudent;
             Student retrievedStudent = inputStudent;
             Student expectedStudent = retrievedStudent.DeepClone();
+
+            this.dateTimeBrokerMock.Setup(broker =>
+                broker.GetCurrentDateTime())
+                    .Returns(randomDateTime);
 
             this.apiBrokerMock.Setup(broker =>
                 broker.PostStudentAsync(inputStudent))
@@ -33,10 +39,15 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             //then
             actualStudent.Should().BeEquivalentTo(expectedStudent);
 
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTime(),
+                    Times.Once);
+
             this.apiBrokerMock.Verify(broker =>
                 broker.PostStudentAsync(inputStudent),
                     Times.Once);
 
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.apiBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }

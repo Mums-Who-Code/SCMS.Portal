@@ -42,6 +42,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
 
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.apiBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
 
         [Theory]
@@ -99,6 +100,10 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             await Assert.ThrowsAsync<StudentValidationException>(() =>
                 addStudentTask.AsTask());
 
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTime(),
+                    Times.Once);
+
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
                     expectedStudentValidationException))),
@@ -108,6 +113,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
                 broker.PostStudentAsync(It.IsAny<Student>()),
                     Times.Never);
 
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.apiBrokerMock.VerifyNoOtherCalls();
         }
@@ -137,6 +143,10 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             await Assert.ThrowsAsync<StudentValidationException>(() =>
                 addStudentTask.AsTask());
 
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTime(),
+                    Times.Once);
+
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
                     expectedStudentValidationException))),
@@ -146,8 +156,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
                 broker.PostStudentAsync(It.IsAny<Student>()),
                     Times.Never());
 
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
-            this.apiBrokerMock.VerifyNoOtherCalls();
+            this.apiBrokerMock.VerifyNoOtherCalls();            
         }
 
         [Fact]
@@ -174,6 +185,10 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             await Assert.ThrowsAsync<StudentValidationException>(() =>
                 addStudentTask.AsTask());
 
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTime(),
+                    Times.Once);
+
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
                     expectedStudentValidationException))),
@@ -183,6 +198,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
                 broker.PostStudentAsync(It.IsAny<Student>()),
                     Times.Never());
 
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.apiBrokerMock.VerifyNoOtherCalls();
         }
@@ -232,8 +248,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
                 broker.PostStudentAsync(It.IsAny<Student>()),
                     Times.Never());
 
-            this.loggingBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
             this.apiBrokerMock.VerifyNoOtherCalls();
         }
     }
