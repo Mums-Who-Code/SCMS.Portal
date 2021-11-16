@@ -2,7 +2,9 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
+using System.Net.Http;
 using System.Threading.Tasks;
+using RESTFulSense.Exceptions;
 using SCMS.Portal.Web.Models.Foundations.Students;
 using SCMS.Portal.Web.Models.Foundations.Students.Exceptions;
 using Xeptions;
@@ -27,6 +29,27 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
             {
                 throw CreateAndLogValidationException(invalidStudentException);
             }
+            catch (HttpRequestException httpRequestException)
+            {
+                FailedStudentDependencyException failedStudentDependencyException
+                    = new FailedStudentDependencyException(httpRequestException);
+
+                throw CreateAndLogCriticalException(failedStudentDependencyException);
+            }
+            catch (HttpResponseUrlNotFoundException httpResponseUrlNotFoundException)
+            {
+                FailedStudentDependencyException failedStudentDependencyException
+                    = new FailedStudentDependencyException(httpResponseUrlNotFoundException);
+
+                throw CreateAndLogCriticalException(failedStudentDependencyException);
+            }
+            catch (HttpResponseUnauthorizedException unauthorizedHttpResponseException)
+            {
+                FailedStudentDependencyException failedStudentDependencyException
+                    = new FailedStudentDependencyException(unauthorizedHttpResponseException);
+
+                throw CreateAndLogCriticalException(failedStudentDependencyException);
+            }
         }
 
         private StudentValidationException CreateAndLogValidationException(Xeption exception)
@@ -35,6 +58,14 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
             this.loggingBroker.LogError(studentValidationException);
 
             return studentValidationException;
+        }
+
+        private StudentDependencyException CreateAndLogCriticalException(Xeption exception)
+        {
+            var studentDependencyException = new StudentDependencyException(exception);
+            this.loggingBroker.LogCritical(studentDependencyException);
+
+            return studentDependencyException;
         }
     }
 }
