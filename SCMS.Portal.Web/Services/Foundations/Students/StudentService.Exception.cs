@@ -34,21 +34,21 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
                 FailedStudentDependencyException failedStudentDependencyException
                     = new FailedStudentDependencyException(httpRequestException);
 
-                throw CreateAndLogCriticalException(failedStudentDependencyException);
+                throw CreateAndLogCriticalDependencyException(failedStudentDependencyException);
             }
             catch (HttpResponseUrlNotFoundException httpResponseUrlNotFoundException)
             {
                 FailedStudentDependencyException failedStudentDependencyException
                     = new FailedStudentDependencyException(httpResponseUrlNotFoundException);
 
-                throw CreateAndLogCriticalException(failedStudentDependencyException);
+                throw CreateAndLogCriticalDependencyException(failedStudentDependencyException);
             }
             catch (HttpResponseUnauthorizedException unauthorizedHttpResponseException)
             {
                 FailedStudentDependencyException failedStudentDependencyException
                     = new FailedStudentDependencyException(unauthorizedHttpResponseException);
 
-                throw CreateAndLogCriticalException(failedStudentDependencyException);
+                throw CreateAndLogCriticalDependencyException(failedStudentDependencyException);
             }
         }
 
@@ -60,7 +60,7 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
             return studentValidationException;
         }
 
-        private StudentDependencyException CreateAndLogCriticalException(Xeption exception)
+        private StudentDependencyException CreateAndLogCriticalDependencyException(Xeption exception)
         {
             var studentDependencyException = new StudentDependencyException(exception);
             this.loggingBroker.LogCritical(studentDependencyException);

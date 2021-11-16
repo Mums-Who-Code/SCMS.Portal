@@ -56,5 +56,49 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             this.apiBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Theory]
+        [MemberData(nameof(ApiDependencyExceptions))]
+        public async Task ShouldThrowDependencyExceptionOnAddIfErrorOccursAndLogItAsync(
+                Exception apiDependencyException)
+        {
+            // given
+            Student someStudent = CreateRandomStudent();
+
+            var failedStudentDependencyException =
+                new FailedStudentDependencyException(apiDependencyException);
+
+            var expectedStudentDependencyException =
+                new StudentDependencyException(failedStudentDependencyException);
+
+            this.dateTimeBrokerMock.Setup(broker =>
+                broker.GetCurrentDateTime())
+                    .Throws(apiDependencyException);
+
+            // when
+            ValueTask<Student> addStudentTask =
+                this.studentService.AddStudentAsync(someStudent);
+
+            // then
+            await Assert.ThrowsAsync<StudentDependencyException>(() =>
+               addStudentTask.AsTask());
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTime(),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedStudentDependencyException))),
+                        Times.Once);
+
+            this.apiBrokerMock.Verify(broker =>
+                broker.PostStudentAsync(It.IsAny<Student>()),
+                    Times.Never);
+
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.apiBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }

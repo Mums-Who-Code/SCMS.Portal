@@ -37,6 +37,27 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
                 dateTimeBroker: dateTimeBrokerMock.Object,
                 loggingBroker: loggingBrokerMock.Object);
         }
+        public static TheoryData ApiDependencyExceptions()
+        {
+            var responseMessage = new HttpResponseMessage();
+            string exceptionMessage = GetRandomMessage();
+
+            var httpResponseException =
+                new HttpResponseException(
+                    httpResponseMessage: responseMessage,
+                    message: exceptionMessage);
+
+            var httpResponseInternalServerErrorException =
+                new HttpResponseInternalServerErrorException(
+                    responseMessage: responseMessage,
+                    message: exceptionMessage);
+
+            return new TheoryData<Exception>
+            {
+                httpResponseException,
+                httpResponseInternalServerErrorException
+            };
+        }
 
         public static TheoryData CriticalDependencyExceptions()
         {
