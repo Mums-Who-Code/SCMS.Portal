@@ -2,6 +2,7 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using RESTFulSense.Exceptions;
@@ -54,6 +55,13 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
             {
                 var failedStudentDependencyException =
                     new FailedStudentDependencyException(httpResponseException);
+
+                throw CreateAndLogDependencyException(failedStudentDependencyException);
+            }
+            catch (Exception exception)
+            {
+                var failedStudentDependencyException =
+                    new FailedStudentDependencyException(exception);
 
                 throw CreateAndLogDependencyException(failedStudentDependencyException);
             }
