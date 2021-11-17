@@ -50,7 +50,7 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
 
                 throw CreateAndLogCriticalDependencyException(failedStudentDependencyException);
             }
-            catch(HttpResponseException httpResponseException)
+            catch (HttpResponseException httpResponseException)
             {
                 var failedStudentDependencyException =
                     new FailedStudentDependencyException(httpResponseException);
