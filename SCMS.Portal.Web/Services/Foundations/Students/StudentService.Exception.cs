@@ -31,24 +31,31 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
             }
             catch (HttpRequestException httpRequestException)
             {
-                FailedStudentDependencyException failedStudentDependencyException
-                    = new FailedStudentDependencyException(httpRequestException);
+                var failedStudentDependencyException =
+                    new FailedStudentDependencyException(httpRequestException);
 
                 throw CreateAndLogCriticalDependencyException(failedStudentDependencyException);
             }
             catch (HttpResponseUrlNotFoundException httpResponseUrlNotFoundException)
             {
-                FailedStudentDependencyException failedStudentDependencyException
-                    = new FailedStudentDependencyException(httpResponseUrlNotFoundException);
+                FailedStudentDependencyException failedStudentDependencyException =
+                    new FailedStudentDependencyException(httpResponseUrlNotFoundException);
 
                 throw CreateAndLogCriticalDependencyException(failedStudentDependencyException);
             }
             catch (HttpResponseUnauthorizedException unauthorizedHttpResponseException)
             {
-                FailedStudentDependencyException failedStudentDependencyException
-                    = new FailedStudentDependencyException(unauthorizedHttpResponseException);
+                FailedStudentDependencyException failedStudentDependencyException =
+                    new FailedStudentDependencyException(unauthorizedHttpResponseException);
 
                 throw CreateAndLogCriticalDependencyException(failedStudentDependencyException);
+            }
+            catch(HttpResponseException httpResponseException)
+            {
+                var failedStudentDependencyException =
+                    new FailedStudentDependencyException(httpResponseException);
+
+                throw CreateAndLogDependencyException(failedStudentDependencyException);
             }
         }
 
@@ -64,6 +71,14 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
         {
             var studentDependencyException = new StudentDependencyException(exception);
             this.loggingBroker.LogCritical(studentDependencyException);
+
+            return studentDependencyException;
+        }
+
+        private StudentDependencyException CreateAndLogDependencyException(Xeption exception)
+        {
+            var studentDependencyException = new StudentDependencyException(exception);
+            this.loggingBroker.LogError(studentDependencyException);
 
             return studentDependencyException;
         }
