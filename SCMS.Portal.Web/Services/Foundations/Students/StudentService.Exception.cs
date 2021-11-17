@@ -60,6 +60,22 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
 
                 throw CreateAndLogDependencyValidationException(invalidStudentException);
             }
+            catch (HttpResponseConflictException httpResponseConflictException)
+            {
+                var invalidStudentException =
+                    new InvalidStudentException(
+                        httpResponseConflictException);
+
+                throw CreateAndLogDependencyValidationException(invalidStudentException);
+            }
+            catch (HttpResponseFailedDependencyException httpResponseFailedDependencyException)
+            {
+                var invalidStudentException =
+                    new InvalidStudentException(
+                        httpResponseFailedDependencyException);
+
+                throw CreateAndLogDependencyValidationException(invalidStudentException);
+            }
             catch (HttpResponseException httpResponseException)
             {
                 var failedStudentDependencyException =
