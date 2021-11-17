@@ -30,9 +30,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             var expectedStudentDependencyException =
                 new StudentDependencyException(failedStudentDependencyException);
 
-            this.dateTimeBrokerMock.Setup(broker =>
-                broker.GetCurrentDateTime())
-                    .Throws(criticalDependencyException);
+            this.apiBrokerMock.Setup(broker =>
+                broker.PostStudentAsync(It.IsAny<Student>()))
+                    .ThrowsAsync(criticalDependencyException);
 
             // when
             ValueTask<Student> addStudentTask =
@@ -42,8 +42,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             await Assert.ThrowsAsync<StudentDependencyException>(() =>
                addStudentTask.AsTask());
 
-            this.dateTimeBrokerMock.Verify(broker =>
-                broker.GetCurrentDateTime(),
+            this.apiBrokerMock.Verify(broker =>
+                broker.PostStudentAsync(It.IsAny<Student>()),
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
@@ -51,13 +51,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
                     expectedStudentDependencyException))),
                         Times.Once);
 
-            this.apiBrokerMock.Verify(broker =>
-                broker.PostStudentAsync(It.IsAny<Student>()),
-                    Times.Never);
-
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.apiBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
 
         [Theory]
@@ -74,9 +70,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             var expectedStudentDependencyException =
                 new StudentDependencyException(failedStudentDependencyException);
 
-            this.dateTimeBrokerMock.Setup(broker =>
-                broker.GetCurrentDateTime())
-                    .Throws(apiDependencyException);
+            this.apiBrokerMock.Setup(broker =>
+                broker.PostStudentAsync(It.IsAny<Student>()))
+                    .ThrowsAsync(apiDependencyException);
 
             // when
             ValueTask<Student> addStudentTask =
@@ -86,10 +82,6 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             await Assert.ThrowsAsync<StudentDependencyException>(() =>
                addStudentTask.AsTask());
 
-            this.dateTimeBrokerMock.Verify(broker =>
-                broker.GetCurrentDateTime(),
-                    Times.Once);
-
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
                     expectedStudentDependencyException))),
@@ -97,11 +89,11 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
 
             this.apiBrokerMock.Verify(broker =>
                 broker.PostStudentAsync(It.IsAny<Student>()),
-                    Times.Never);
+                    Times.Once);
 
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.apiBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -122,9 +114,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
 
             httpResponseBadRequestException.AddData(exceptionData);
 
-            this.dateTimeBrokerMock.Setup(broker =>
-                broker.GetCurrentDateTime())
-                    .Throws(httpResponseBadRequestException);
+            this.apiBrokerMock.Setup(broker =>
+                broker.PostStudentAsync(It.IsAny<Student>()))
+                    .ThrowsAsync(httpResponseBadRequestException);
 
             var invalidStudentException =
                 new InvalidStudentException(
@@ -142,18 +134,14 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             await Assert.ThrowsAsync<StudentDependencyValidationException>(() =>
                addStudentTask.AsTask());
 
-            this.dateTimeBrokerMock.Verify(broker =>
-                broker.GetCurrentDateTime(),
+            this.apiBrokerMock.Verify(broker =>
+                broker.PostStudentAsync(It.IsAny<Student>()),
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
                     expectedStudentDependencyException))),
                         Times.Once);
-
-            this.apiBrokerMock.Verify(broker =>
-                broker.PostStudentAsync(It.IsAny<Student>()),
-                    Times.Never);
 
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
@@ -173,9 +161,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             var httpResponseMessage = new HttpResponseMessage();
             Student someStudent = CreateRandomStudent();
 
-            this.dateTimeBrokerMock.Setup(broker =>
-                broker.GetCurrentDateTime())
-                    .Throws(dependencyValidationException);
+            this.apiBrokerMock.Setup(broker =>
+                broker.PostStudentAsync(It.IsAny<Student>()))
+                    .ThrowsAsync(dependencyValidationException);
 
             var invalidStudentException =
                 new InvalidStudentException(
@@ -192,8 +180,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             await Assert.ThrowsAsync<StudentDependencyValidationException>(() =>
                addStudentTask.AsTask());
 
-            this.dateTimeBrokerMock.Verify(broker =>
-                broker.GetCurrentDateTime(),
+            this.apiBrokerMock.Verify(broker =>
+                broker.PostStudentAsync(It.IsAny<Student>()),
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
@@ -201,13 +189,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
                     expectedStudentDependencyException))),
                         Times.Once);
 
-            this.apiBrokerMock.Verify(broker =>
-                broker.PostStudentAsync(It.IsAny<Student>()),
-                    Times.Never);
-
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.apiBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -223,9 +207,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             var expectedStudentDependencyException =
                 new StudentDependencyException(failedStudentDependencyException);
 
-            this.dateTimeBrokerMock.Setup(broker =>
-                broker.GetCurrentDateTime())
-                    .Throws(serviceException);
+            this.apiBrokerMock.Setup(broker =>
+                broker.PostStudentAsync(It.IsAny<Student>()))
+                    .ThrowsAsync(serviceException);
 
             // when
             ValueTask<Student> addStudentTask =
@@ -234,9 +218,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             // then
             await Assert.ThrowsAsync<StudentDependencyException>(() =>
                addStudentTask.AsTask());
-
-            this.dateTimeBrokerMock.Verify(broker =>
-                broker.GetCurrentDateTime(),
+            
+            this.apiBrokerMock.Verify(broker =>
+                broker.PostStudentAsync(It.IsAny<Student>()),
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
@@ -244,13 +228,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
                     expectedStudentDependencyException))),
                         Times.Once);
 
-            this.apiBrokerMock.Verify(broker =>
-                broker.PostStudentAsync(It.IsAny<Student>()),
-                    Times.Never);
-
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.apiBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
     }
 }

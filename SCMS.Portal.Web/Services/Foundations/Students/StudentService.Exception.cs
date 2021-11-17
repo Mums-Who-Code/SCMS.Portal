@@ -39,14 +39,14 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
             }
             catch (HttpResponseUrlNotFoundException httpResponseUrlNotFoundException)
             {
-                FailedStudentDependencyException failedStudentDependencyException =
+                var failedStudentDependencyException =
                     new FailedStudentDependencyException(httpResponseUrlNotFoundException);
 
                 throw CreateAndLogCriticalDependencyException(failedStudentDependencyException);
             }
             catch (HttpResponseUnauthorizedException unauthorizedHttpResponseException)
             {
-                FailedStudentDependencyException failedStudentDependencyException =
+                var failedStudentDependencyException =
                     new FailedStudentDependencyException(unauthorizedHttpResponseException);
 
                 throw CreateAndLogCriticalDependencyException(failedStudentDependencyException);

@@ -18,15 +18,10 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
         public async Task ShouldAddStudentAsync()
         {
             //given
-            DateTimeOffset randomDateTime = GetRandomDateTime();
-            Student randomStudent = CreateRandomStudent(randomDateTime);
+            Student randomStudent = CreateRandomStudent();
             Student inputStudent = randomStudent;
             Student retrievedStudent = inputStudent;
             Student expectedStudent = retrievedStudent.DeepClone();
-
-            this.dateTimeBrokerMock.Setup(broker =>
-                broker.GetCurrentDateTime())
-                    .Returns(randomDateTime);
 
             this.apiBrokerMock.Setup(broker =>
                 broker.PostStudentAsync(inputStudent))
@@ -39,17 +34,13 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             //then
             actualStudent.Should().BeEquivalentTo(expectedStudent);
 
-            this.dateTimeBrokerMock.Verify(broker =>
-                broker.GetCurrentDateTime(),
-                    Times.Once);
-
             this.apiBrokerMock.Verify(broker =>
                 broker.PostStudentAsync(inputStudent),
                     Times.Once);
 
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.apiBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
     }
 }
