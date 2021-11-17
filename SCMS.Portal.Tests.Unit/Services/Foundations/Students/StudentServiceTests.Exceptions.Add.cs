@@ -55,9 +55,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
                 broker.PostStudentAsync(It.IsAny<Student>()),
                     Times.Never);
 
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.apiBrokerMock.VerifyNoOtherCalls();
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
 
         [Theory]
@@ -99,9 +99,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
                 broker.PostStudentAsync(It.IsAny<Student>()),
                     Times.Never);
 
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.apiBrokerMock.VerifyNoOtherCalls();
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
 
         [Fact]
