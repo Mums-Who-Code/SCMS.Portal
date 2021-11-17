@@ -105,49 +105,6 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
         }
 
         [Fact]
-        public async Task ShouldThrowServiceExceptiononOnAddIfServiceErrorOccursAndLogItAsync()
-        {
-            // given
-            var serviceException = new Exception();
-            Student someStudent = CreateRandomStudent();
-
-            var failedStudentDependencyException =
-                new FailedStudentDependencyException(serviceException);
-
-            var expectedStudentDependencyException =
-                new StudentDependencyException(failedStudentDependencyException);
-
-            this.dateTimeBrokerMock.Setup(broker =>
-                broker.GetCurrentDateTime())
-                    .Throws(serviceException);
-
-            // when
-            ValueTask<Student> addStudentTask =
-                this.studentService.AddStudentAsync(someStudent);
-
-            // then
-            await Assert.ThrowsAsync<StudentDependencyException>(() =>
-               addStudentTask.AsTask());
-
-            this.dateTimeBrokerMock.Verify(broker =>
-                broker.GetCurrentDateTime(),
-                    Times.Once);
-
-            this.loggingBrokerMock.Verify(broker =>
-                broker.LogError(It.Is(SameExceptionAs(
-                    expectedStudentDependencyException))),
-                        Times.Once);
-
-            this.apiBrokerMock.Verify(broker =>
-                broker.PostStudentAsync(It.IsAny<Student>()),
-                    Times.Never);
-
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
-            this.loggingBrokerMock.VerifyNoOtherCalls();
-            this.apiBrokerMock.VerifyNoOtherCalls();
-        }
-
-        [Fact]
         public async Task ShouldThrowDependencyValidationExceptiononOnAddIfValidationErrorOccursAndLogItAsync()
         {
             // given
@@ -182,6 +139,49 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
 
             // then
             await Assert.ThrowsAsync<StudentDependencyValidationException>(() =>
+               addStudentTask.AsTask());
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTime(),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedStudentDependencyException))),
+                        Times.Once);
+
+            this.apiBrokerMock.Verify(broker =>
+                broker.PostStudentAsync(It.IsAny<Student>()),
+                    Times.Never);
+
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.apiBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptiononOnAddIfServiceErrorOccursAndLogItAsync()
+        {
+            // given
+            var serviceException = new Exception();
+            Student someStudent = CreateRandomStudent();
+
+            var failedStudentDependencyException =
+                new FailedStudentDependencyException(serviceException);
+
+            var expectedStudentDependencyException =
+                new StudentDependencyException(failedStudentDependencyException);
+
+            this.dateTimeBrokerMock.Setup(broker =>
+                broker.GetCurrentDateTime())
+                    .Throws(serviceException);
+
+            // when
+            ValueTask<Student> addStudentTask =
+                this.studentService.AddStudentAsync(someStudent);
+
+            // then
+            await Assert.ThrowsAsync<StudentDependencyException>(() =>
                addStudentTask.AsTask());
 
             this.dateTimeBrokerMock.Verify(broker =>

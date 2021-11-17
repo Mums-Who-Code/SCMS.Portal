@@ -51,6 +51,15 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
 
                 throw CreateAndLogCriticalDependencyException(failedStudentDependencyException);
             }
+            catch (HttpResponseBadRequestException httpBadRequestException)
+            {
+                var invalidStudentException =
+                    new InvalidStudentException(
+                        httpBadRequestException,
+                        httpBadRequestException.Data);
+
+                throw CreateAndLogDependencyValidationException(invalidStudentException);
+            }
             catch (HttpResponseException httpResponseException)
             {
                 var failedStudentDependencyException =
@@ -89,6 +98,14 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
             this.loggingBroker.LogError(studentDependencyException);
 
             return studentDependencyException;
+        }
+
+        private StudentDependencyValidationException CreateAndLogDependencyValidationException(Xeption exception)
+        {
+            var studentDependencyValidationException = new StudentDependencyValidationException(exception);
+            this.loggingBroker.LogError(studentDependencyValidationException);
+
+            return studentDependencyValidationException;
         }
     }
 }

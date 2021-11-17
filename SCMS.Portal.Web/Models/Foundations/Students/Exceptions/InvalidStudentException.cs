@@ -14,8 +14,10 @@ namespace SCMS.Portal.Web.Models.Foundations.Students.Exceptions
             : base(message: "Invalid student, fix the errors and try again.")
         { }
 
-        public InvalidStudentException(Exception exception, IDictionary data)
-            : base(message: "Invalid student, fix the errors and try again.")
+        public InvalidStudentException(Exception innerException, IDictionary data)
+            : base(message: "Invalid student, fix the errors and try again.",
+                  innerException,
+                  data)
         { }
     }
 }
