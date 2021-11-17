@@ -105,7 +105,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
         }
 
         [Fact]
-        public async Task ShouldThrowDependencyValidationExceptiononOnAddIfValidationErrorOccursAndLogItAsync()
+        public async Task ShouldThrowDependencyValidationExceptiononOnAddIfBadRequestAndLogItAsync()
         {
             // given
             IDictionary randomDictionary = CreateRandomDictionary();
@@ -117,7 +117,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
 
             var httpResponseBadRequestException =
                 new HttpResponseBadRequestException(
-                    httpResponseMessage, responseMessage);
+                    httpResponseMessage,
+                    responseMessage);
 
             httpResponseBadRequestException.AddData(exceptionData);
 
@@ -129,6 +130,56 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
                 new InvalidStudentException(
                     httpResponseBadRequestException,
                     exceptionData);
+
+            var expectedStudentDependencyException =
+                new StudentDependencyValidationException(invalidStudentException);
+
+            // when
+            ValueTask<Student> addStudentTask =
+                this.studentService.AddStudentAsync(someStudent);
+
+            // then
+            await Assert.ThrowsAsync<StudentDependencyValidationException>(() =>
+               addStudentTask.AsTask());
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTime(),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedStudentDependencyException))),
+                        Times.Once);
+
+            this.apiBrokerMock.Verify(broker =>
+                broker.PostStudentAsync(It.IsAny<Student>()),
+                    Times.Never);
+
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.apiBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Theory]
+        [MemberData(nameof(DependencyValidationExceptions))]
+        public async Task ShouldThrowDependencyValidationExceptiononOnAddIfValidationErrorOccursAndLogItAsync(
+            Exception dependencyValidationException)
+        {
+            // given
+            IDictionary randomDictionary = CreateRandomDictionary();
+            IDictionary exceptionData = randomDictionary;
+            string randomMessage = GetRandomMessage();
+            string responseMessage = randomMessage;
+            var httpResponseMessage = new HttpResponseMessage();
+            Student someStudent = CreateRandomStudent();
+
+            this.dateTimeBrokerMock.Setup(broker =>
+                broker.GetCurrentDateTime())
+                    .Throws(dependencyValidationException);
+
+            var invalidStudentException =
+                new InvalidStudentException(
+                    dependencyValidationException);
 
             var expectedStudentDependencyException =
                 new StudentDependencyValidationException(invalidStudentException);

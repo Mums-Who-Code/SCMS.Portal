@@ -19,5 +19,10 @@ namespace SCMS.Portal.Web.Models.Foundations.Students.Exceptions
                   innerException,
                   data)
         { }
+
+        public InvalidStudentException(Exception innerException)
+            : base(message: "Invalid student, fix the errors and try again.",
+                  innerException)
+        { }
     }
 }

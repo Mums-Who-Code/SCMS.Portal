@@ -87,6 +87,29 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             };
         }
 
+        public static TheoryData DependencyValidationExceptions()
+        {
+            string exceptionMessage = GetRandomMessage();
+            var responseMessage = new HttpResponseMessage();
+
+
+            var httpResponseConflictException =
+                new HttpResponseConflictException(
+                    responseMessage: responseMessage,
+                    message: exceptionMessage);
+
+            var httpResponseFailedDependencyException =
+                new HttpResponseFailedDependencyException(
+                    responseMessage: responseMessage,
+                    message: exceptionMessage);
+
+            return new TheoryData<Exception>
+            {
+                httpResponseConflictException,
+                httpResponseFailedDependencyException
+            };
+        }
+
         private static string GetRandomMessage() =>
             new MnemonicString(wordCount: GetRandomNumber()).GetValue();
 
