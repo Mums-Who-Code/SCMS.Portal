@@ -96,6 +96,10 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
         private static Student CreateRandomStudent(DateTimeOffset dateTime) =>
             CreateStudentFiller(dateTime).Create();
 
+        private static Dictionary<string, List<string>> CreateRandomDictionary() =>
+            new Filler<Dictionary<string, List<string>>>().Create();
+
+
         private static DateTimeOffset GetRandomDateTime() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
 

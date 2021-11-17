@@ -3,8 +3,11 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Moq;
+using RESTFulSense.Exceptions;
 using SCMS.Portal.Web.Models.Foundations.Students;
 using SCMS.Portal.Web.Models.Foundations.Students.Exceptions;
 using Xunit;
@@ -124,6 +127,61 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
 
             // then
             await Assert.ThrowsAsync<StudentDependencyException>(() =>
+               addStudentTask.AsTask());
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTime(),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedStudentDependencyException))),
+                        Times.Once);
+
+            this.apiBrokerMock.Verify(broker =>
+                broker.PostStudentAsync(It.IsAny<Student>()),
+                    Times.Never);
+
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.apiBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowDependencyValidationExceptiononOnAddIfValidationErrorOccursAndLogItAsync()
+        {
+            // given
+            IDictionary randomDictionary = CreateRandomDictionary();
+            IDictionary exceptionData = randomDictionary;
+            string randomMessage = GetRandomMessage();
+            string responseMessage = randomMessage;
+            var httpResponseMessage = new HttpResponseMessage();
+            Student someStudent = CreateRandomStudent();
+
+            var httpResponseBadRequestException =
+                new HttpResponseBadRequestException(
+                    httpResponseMessage, responseMessage);
+
+            httpResponseBadRequestException.AddData(exceptionData);
+
+            this.dateTimeBrokerMock.Setup(broker =>
+                broker.GetCurrentDateTime())
+                    .Throws(httpResponseBadRequestException);
+
+            var invalidStudentException =
+                new InvalidStudentException(
+                    httpResponseBadRequestException,
+                    exceptionData);
+
+            var expectedStudentDependencyException =
+                new StudentDependencyValidationException(invalidStudentException);
+
+            // when
+            ValueTask<Student> addStudentTask =
+                this.studentService.AddStudentAsync(someStudent);
+
+            // then
+            await Assert.ThrowsAsync<StudentDependencyValidationException>(() =>
                addStudentTask.AsTask());
 
             this.dateTimeBrokerMock.Verify(broker =>
