@@ -13,6 +13,7 @@ using SCMS.Portal.Web.Brokers.Apis;
 using SCMS.Portal.Web.Brokers.Loggings;
 using SCMS.Portal.Web.Brokers.Navigations;
 using SCMS.Portal.Web.Models.Configurations;
+using SCMS.Portal.Web.Services.Foundations.Students;
 
 namespace SCMS.Portal.Web
 {
@@ -30,6 +31,7 @@ namespace SCMS.Portal.Web
             AddHttpClient(services);
             AddRootDirectory(services);
             AddBrokers(services);
+            AddServices(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -69,11 +71,14 @@ namespace SCMS.Portal.Web
             services.AddRazorPages(options =>
             options.RootDirectory = "/Views/Pages");
 
-        private void AddBrokers(IServiceCollection services)
+        private static void AddBrokers(IServiceCollection services)
         {
             services.AddScoped<IApiBroker, ApiBroker>();
             services.AddScoped<ILoggingBroker, LoggingBroker>();
             services.AddScoped<INavigationBroker, NavigationBroker>();
         }
+
+        private static void AddServices(IServiceCollection services) =>
+            services.AddScoped<IStudentService, StudentService>();
     }
 }
