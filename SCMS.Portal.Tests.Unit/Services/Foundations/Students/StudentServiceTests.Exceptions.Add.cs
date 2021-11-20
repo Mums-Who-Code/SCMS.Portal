@@ -201,11 +201,11 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             var serviceException = new Exception();
             Student someStudent = CreateRandomStudent();
 
-            var failedStudentDependencyException =
-                new FailedStudentDependencyException(serviceException);
+            var failedStudentServiceException =
+                new FailedStudentServiceException(serviceException);
 
-            var expectedStudentDependencyException =
-                new StudentDependencyException(failedStudentDependencyException);
+            var expectedStudentServiceException =
+                new StudentServiceException(failedStudentServiceException);
 
             this.apiBrokerMock.Setup(broker =>
                 broker.PostStudentAsync(It.IsAny<Student>()))
@@ -216,7 +216,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
                 this.studentService.AddStudentAsync(someStudent);
 
             // then
-            await Assert.ThrowsAsync<StudentDependencyException>(() =>
+            await Assert.ThrowsAsync<StudentServiceException>(() =>
                addStudentTask.AsTask());
 
             this.apiBrokerMock.Verify(broker =>
@@ -225,7 +225,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
-                    expectedStudentDependencyException))),
+                    expectedStudentServiceException))),
                         Times.Once);
 
             this.loggingBrokerMock.VerifyNoOtherCalls();

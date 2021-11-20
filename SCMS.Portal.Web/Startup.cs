@@ -8,8 +8,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using RESTFulSense.Clients;
 using SCMS.Portal.Web.Brokers.Apis;
+using SCMS.Portal.Web.Brokers.DateTimes;
 using SCMS.Portal.Web.Brokers.Loggings;
 using SCMS.Portal.Web.Brokers.Navigations;
 using SCMS.Portal.Web.Models.Configurations;
@@ -74,7 +76,9 @@ namespace SCMS.Portal.Web
         private static void AddBrokers(IServiceCollection services)
         {
             services.AddScoped<IApiBroker, ApiBroker>();
+            services.AddScoped<ILogger, Logger<LoggingBroker>>();
             services.AddScoped<ILoggingBroker, LoggingBroker>();
+            services.AddScoped<IDateTimeBroker, DateTimeBroker>();
             services.AddScoped<INavigationBroker, NavigationBroker>();
         }
 

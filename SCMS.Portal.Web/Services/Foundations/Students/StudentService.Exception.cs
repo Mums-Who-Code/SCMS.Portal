@@ -83,12 +83,12 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
 
                 throw CreateAndLogDependencyException(failedStudentDependencyException);
             }
-            catch (Exception exception)
+            catch (Exception serviceException)
             {
-                var failedStudentDependencyException =
-                    new FailedStudentDependencyException(exception);
+                var failedStudentServiceException =
+                    new FailedStudentServiceException(serviceException);
 
-                throw CreateAndLogDependencyException(failedStudentDependencyException);
+                throw CreateAndLogServiceException(failedStudentServiceException);
             }
         }
 
@@ -122,6 +122,14 @@ namespace SCMS.Portal.Web.Services.Foundations.Students
             this.loggingBroker.LogError(studentDependencyValidationException);
 
             return studentDependencyValidationException;
+        }
+
+        private StudentServiceException CreateAndLogServiceException(Xeption exception)
+        {
+            var studentServiceException = new StudentServiceException(exception);
+            this.loggingBroker.LogError(studentServiceException);
+
+            return studentServiceException;
         }
     }
 }
