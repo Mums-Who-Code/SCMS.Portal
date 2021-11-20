@@ -23,6 +23,10 @@ namespace SCMS.Portal.Web.Services.Views.StudentViews
             {
                 throw CreateAndLogValidationException(nullStudentViewException);
             }
+            catch (InvalidStudentViewException invalidStudentViewException)
+            {
+                throw CreateAndLogValidationException(invalidStudentViewException);
+            }
         }
 
         private StudentViewValidationException CreateAndLogValidationException(Xeption exception)
