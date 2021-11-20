@@ -10,7 +10,7 @@ namespace SCMS.Portal.Web.Models.Foundations.Students.Exceptions
     public class FailedStudentServiceException : Xeption
     {
         public FailedStudentServiceException(Exception innerException)
-            : base(message: "Failed student dependency error occurred.", innerException)
+            : base(message: "Failed student service error occurred.", innerException)
         { }
     }
 }
