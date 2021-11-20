@@ -36,6 +36,14 @@ namespace SCMS.Portal.Web.Services.Views.StudentViews
             {
                 throw CreateAndLogDependencyValidationException(studentDependencyValidationException);
             }
+            catch (StudentDependencyException studentDependencyException)
+            {
+                throw CreateAndLogDependencyException(studentDependencyException);
+            }
+            catch (StudentServiceException studentServiceException)
+            {
+                throw CreateAndLogDependencyException(studentServiceException);
+            }
         }
 
         private StudentViewValidationException CreateAndLogValidationException(Xeption exception)
@@ -52,6 +60,14 @@ namespace SCMS.Portal.Web.Services.Views.StudentViews
             this.loggingBroker.LogError(studentViewDependencyValidationException);
 
             return studentViewDependencyValidationException;
+        }
+
+        private StudentViewDependencyException CreateAndLogDependencyException(Xeption exception)
+        {
+            var studentViewDependencyException = new StudentViewDependencyException(exception);
+            this.loggingBroker.LogError(studentViewDependencyException);
+
+            return studentViewDependencyException;
         }
     }
 }
