@@ -7,10 +7,10 @@ using Xeptions;
 
 namespace SCMS.Portal.Web.Models.Views.StudentViews.Exceptions
 {
-    public class StudentViewDependencyValidationException : Xeption
+    public class StudentViewDependencyException : Xeption
     {
-        public StudentViewDependencyValidationException(Exception innerException)
-            : base("Student view dependency validation error occured, try again", innerException)
+        public StudentViewDependencyException(Exception innerException)
+            : base("Student view dependency error occured, contact support", innerException)
         { }
     }
 }

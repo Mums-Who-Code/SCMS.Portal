@@ -97,6 +97,17 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
             };
         }
 
+        public static TheoryData StudentServiceDependencyExceptions()
+        {
+            var innerException = new Xeption();
+
+            return new TheoryData<Exception>
+            {
+                new StudentDependencyException(innerException),
+                new StudentServiceException(innerException)
+            };
+        }
+
         private static StudentView CreateRandomStudentView() =>
             CreateStudentViewFiller().Create();
 
