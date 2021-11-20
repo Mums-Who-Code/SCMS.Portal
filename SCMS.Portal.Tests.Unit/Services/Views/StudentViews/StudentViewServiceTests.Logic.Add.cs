@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Force.DeepCloner;
 using Moq;
 using SCMS.Portal.Web.Models.Foundations.Students;
 using SCMS.Portal.Web.Models.Views.StudentViews;
@@ -37,7 +38,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
             };
 
             var inputStudentView = randomStudentView;
-            var expectedStudentView = inputStudentView;
+            var expectedStudentView = inputStudentView.DeepClone();
 
             var randomStudent = new Student
             {
@@ -53,7 +54,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
             };
 
             Student expectedInputStudent = randomStudent;
-            Student returnedStudent = expectedInputStudent;
+            Student returnedStudent = expectedInputStudent.DeepClone();
 
             this.userServiceMock.Setup(service =>
                 service.GetCurrentlyLoggedInUser())

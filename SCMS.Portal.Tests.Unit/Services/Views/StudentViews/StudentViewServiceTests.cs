@@ -15,6 +15,7 @@ using SCMS.Portal.Web.Services.Foundations.Students;
 using SCMS.Portal.Web.Services.Foundations.Users;
 using SCMS.Portal.Web.Services.Views.StudentViews;
 using Tynamix.ObjectFiller;
+using Xeptions;
 
 namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
 {
@@ -75,5 +76,24 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
 
         private static DateTimeOffset GetRandomDate() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
+
+        private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException)
+        {
+            return actualException =>
+                actualException.Message == expectedException.Message
+                && actualException.InnerException.Message == expectedException.InnerException.Message
+                && (actualException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data);
+        }
+
+        private static Filler<StudentView> CreateStudentViewFiller()
+        {
+            var filler = new Filler<StudentView>();
+
+            filler.Setup().
+                OnType<DateTimeOffset>().Use(DateTimeOffset.UtcNow);
+
+            return filler;
+        }
+
     }
 }
