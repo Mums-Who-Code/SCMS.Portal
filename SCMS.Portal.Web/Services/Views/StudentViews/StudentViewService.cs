@@ -13,7 +13,7 @@ using SCMS.Portal.Web.Services.Foundations.Users;
 
 namespace SCMS.Portal.Web.Services.Views.StudentViews
 {
-    public class StudentViewService : IStudentViewService
+    public partial class StudentViewService : IStudentViewService
     {
         private readonly IStudentService studentService;
         private readonly IUserService userService;
@@ -32,13 +32,16 @@ namespace SCMS.Portal.Web.Services.Views.StudentViews
             this.loggingBroker = loggingBroker;
         }
 
-        public async ValueTask<StudentView> AddStudentViewAsync(StudentView studentView)
+        public ValueTask<StudentView> AddStudentViewAsync(StudentView studentView) =>
+        TryCatch(async () =>
         {
+            ValidateStudentViewOnAdd(studentView);
+
             Student student = MapToStudent(studentView);
             await this.studentService.AddStudentAsync(student);
-
             return studentView;
-        }
+        });
+
 
         private Student MapToStudent(StudentView studentView)
         {
