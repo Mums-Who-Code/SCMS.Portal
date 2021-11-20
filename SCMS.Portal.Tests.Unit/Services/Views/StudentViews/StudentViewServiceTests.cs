@@ -5,17 +5,18 @@
 using System;
 using System.Linq.Expressions;
 using KellermanSoftware.CompareNetObjects;
-using Microsoft.AspNetCore.Http;
 using Moq;
 using SCMS.Portal.Web.Brokers.DateTimes;
 using SCMS.Portal.Web.Brokers.Loggings;
 using SCMS.Portal.Web.Models.Foundations.Students;
+using SCMS.Portal.Web.Models.Foundations.Students.Exceptions;
 using SCMS.Portal.Web.Models.Views.StudentViews;
 using SCMS.Portal.Web.Services.Foundations.Students;
 using SCMS.Portal.Web.Services.Foundations.Users;
 using SCMS.Portal.Web.Services.Views.StudentViews;
 using Tynamix.ObjectFiller;
 using Xeptions;
+using Xunit;
 
 namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
 {
@@ -84,6 +85,20 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
                 && actualException.InnerException.Message == expectedException.InnerException.Message
                 && (actualException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data);
         }
+
+        public static TheoryData StudentServiceValidationExceptions()
+        {
+            var innerException = new Xeption();
+
+            return new TheoryData<Exception>
+            {
+                new StudentValidationException(innerException),
+                new StudentDependencyValidationException(innerException)
+            };
+        }
+
+        private static StudentView CreateRandomStudentView() =>
+            CreateStudentViewFiller().Create();
 
         private static Filler<StudentView> CreateStudentViewFiller()
         {

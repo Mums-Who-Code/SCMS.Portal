@@ -218,7 +218,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             // then
             await Assert.ThrowsAsync<StudentDependencyException>(() =>
                addStudentTask.AsTask());
-            
+
             this.apiBrokerMock.Verify(broker =>
                 broker.PostStudentAsync(It.IsAny<Student>()),
                     Times.Once);

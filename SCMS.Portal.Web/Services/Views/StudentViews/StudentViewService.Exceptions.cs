@@ -2,9 +2,9 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
+using System.Threading.Tasks;
 using SCMS.Portal.Web.Models.Views.StudentViews;
 using SCMS.Portal.Web.Models.Views.StudentViews.Exceptions;
-using System.Threading.Tasks;
 using Xeptions;
 
 namespace SCMS.Portal.Web.Services.Views.StudentViews
