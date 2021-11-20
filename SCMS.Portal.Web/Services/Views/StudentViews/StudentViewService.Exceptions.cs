@@ -3,6 +3,7 @@
 // -----------------------------------------------------------------------
 
 using System.Threading.Tasks;
+using SCMS.Portal.Web.Models.Foundations.Students.Exceptions;
 using SCMS.Portal.Web.Models.Views.StudentViews;
 using SCMS.Portal.Web.Models.Views.StudentViews.Exceptions;
 using Xeptions;
@@ -27,6 +28,14 @@ namespace SCMS.Portal.Web.Services.Views.StudentViews
             {
                 throw CreateAndLogValidationException(invalidStudentViewException);
             }
+            catch (StudentValidationException studentValidationException)
+            {
+                throw CreateAndLogDependencyValidationException(studentValidationException);
+            }
+            catch (StudentDependencyValidationException studentDependencyValidationException)
+            {
+                throw CreateAndLogDependencyValidationException(studentDependencyValidationException);
+            }
         }
 
         private StudentViewValidationException CreateAndLogValidationException(Xeption exception)
@@ -35,6 +44,14 @@ namespace SCMS.Portal.Web.Services.Views.StudentViews
             this.loggingBroker.LogError(studentViewValidationException);
 
             return studentViewValidationException;
+        }
+
+        private StudentViewDependencyValidationException CreateAndLogDependencyValidationException(Xeption exception)
+        {
+            var studentViewDependencyValidationException = new StudentViewDependencyValidationException(exception);
+            this.loggingBroker.LogError(studentViewDependencyValidationException);
+
+            return studentViewDependencyValidationException;
         }
     }
 }
