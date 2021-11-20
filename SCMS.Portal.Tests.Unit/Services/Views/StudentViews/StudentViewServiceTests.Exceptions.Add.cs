@@ -105,5 +105,55 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.studentServiceMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnAddIfServiceErrorOccuredAndLogItAsync()
+        {
+            //given
+            StudentView someStudentView = CreateRandomStudentView();
+
+            var serviceException = new Exception();
+
+            var failedStudentViewServiceException =
+                new FailedStudentViewServiceException(serviceException);
+
+            var studentViewServiceException =
+                new StudentViewServiceException(failedStudentViewServiceException);
+
+            this.studentServiceMock.Setup(service =>
+                service.AddStudentAsync(It.IsAny<Student>()))
+                    .ThrowsAsync(serviceException);
+
+            //when
+            ValueTask<StudentView> addStudentViewTask =
+                this.studentViewService.AddStudentViewAsync(someStudentView);
+
+            //then
+            await Assert.ThrowsAsync<StudentViewServiceException>(() =>
+                addStudentViewTask.AsTask());
+
+            this.userServiceMock.Verify(service =>
+                service.GetCurrentlyLoggedInUser(),
+                    Times.Once);
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTime(),
+                    Times.Once);
+
+            this.studentServiceMock.Verify(service =>
+                service.AddStudentAsync(It.IsAny<Student>()),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    studentViewServiceException))),
+                        Times.Once);
+
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.userServiceMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.studentServiceMock.VerifyNoOtherCalls();
+        }
+
     }
 }
