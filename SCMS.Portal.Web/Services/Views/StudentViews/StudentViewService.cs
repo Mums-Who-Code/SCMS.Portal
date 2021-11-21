@@ -16,19 +16,19 @@ namespace SCMS.Portal.Web.Services.Views.StudentViews
     public partial class StudentViewService : IStudentViewService
     {
         private readonly IStudentService studentService;
-        private readonly IUserService userService;
         private readonly IDateTimeBroker dateTimeBroker;
+        private readonly IUserService userService;
         private readonly ILoggingBroker loggingBroker;
 
         public StudentViewService(
             IStudentService studentService,
-            IUserService userService,
             IDateTimeBroker dateTimeBroker,
+            IUserService userService,
             ILoggingBroker loggingBroker)
         {
             this.studentService = studentService;
-            this.userService = userService;
             this.dateTimeBroker = dateTimeBroker;
+            this.userService = userService;
             this.loggingBroker = loggingBroker;
         }
 
@@ -36,17 +36,17 @@ namespace SCMS.Portal.Web.Services.Views.StudentViews
         TryCatch(async () =>
         {
             ValidateStudentViewOnAdd(studentView);
-
             Student student = MapToStudent(studentView);
             await this.studentService.AddStudentAsync(student);
+
             return studentView;
         });
 
 
         private Student MapToStudent(StudentView studentView)
         {
-            Guid currentlyLoggedInUserId = this.userService.GetCurrentlyLoggedInUser();
             DateTimeOffset currentDateTime = dateTimeBroker.GetCurrentDateTime();
+            Guid currentlyLoggedInUserId = this.userService.GetCurrentlyLoggedInUser();
 
             return new Student
             {

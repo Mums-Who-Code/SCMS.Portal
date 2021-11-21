@@ -9,7 +9,7 @@ namespace SCMS.Portal.Web.Models.Views.StudentViews.Exceptions
     public class InvalidStudentViewException : Xeption
     {
         public InvalidStudentViewException()
-            : base("Invalid student view occured, fix errors and try again")
+            : base("Invalid student view error occured, fix errors and try again.")
         { }
     }
 }

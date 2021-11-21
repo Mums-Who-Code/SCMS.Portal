@@ -10,7 +10,7 @@ namespace SCMS.Portal.Web.Models.Views.StudentViews.Exceptions
     public class StudentViewDependencyException : Xeption
     {
         public StudentViewDependencyException(Exception innerException)
-            : base("Student view dependency error occured, contact support", innerException)
+            : base("Student view dependency error occured, contact support.", innerException)
         { }
     }
 }

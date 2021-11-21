@@ -15,8 +15,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
     public partial class StudentViewServiceTests
     {
         [Theory]
-        [MemberData(nameof(StudentServiceValidationExceptions))]
-        public async Task ShouldThrowDependencyValidationExceptionOnAddIfStudentValidationErrorOccuredAndLogItAsync(
+        [MemberData(nameof(DependencyValidationExceptions))]
+        public async Task ShouldThrowDependencyValidationExceptionOnAddIfValidationErrorOccuredAndLogItAsync(
             Exception studentServiceValidationException)
         {
             //given
@@ -25,9 +25,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
             var expectedDependencyValidationException =
                 new StudentViewDependencyValidationException(studentServiceValidationException);
 
-            this.studentServiceMock.Setup(service =>
-                service.AddStudentAsync(It.IsAny<Student>()))
-                    .ThrowsAsync(studentServiceValidationException);
+            this.dateTimeBrokerMock.Setup(service =>
+                service.GetCurrentDateTime())
+                    .Throws(studentServiceValidationException);
 
             //when
             ValueTask<StudentView> addStudentViewTask =
@@ -37,16 +37,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
             await Assert.ThrowsAsync<StudentViewDependencyValidationException>(() =>
                 addStudentViewTask.AsTask());
 
-            this.userServiceMock.Verify(service =>
-                service.GetCurrentlyLoggedInUser(),
-                    Times.Once);
-
-            this.dateTimeBrokerMock.Verify(broker =>
-                broker.GetCurrentDateTime(),
-                    Times.Once);
-
-            this.studentServiceMock.Verify(service =>
-                service.AddStudentAsync(It.IsAny<Student>()),
+            this.dateTimeBrokerMock.Verify(service =>
+                service.GetCurrentDateTime(),
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
@@ -54,15 +46,15 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
                     expectedDependencyValidationException))),
                         Times.Once);
 
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.userServiceMock.VerifyNoOtherCalls();
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.studentServiceMock.VerifyNoOtherCalls();
         }
 
         [Theory]
-        [MemberData(nameof(StudentServiceDependencyExceptions))]
-        public async Task ShouldThrowDependencyExceptionOnAddIfStudentDependencyErrorOccuredAndLogItAsync(
+        [MemberData(nameof(DependencyExceptions))]
+        public async Task ShouldThrowDependencyExceptionOnAddIfDependencyErrorOccuredAndLogItAsync(
             Exception studentServiceDependencyException)
         {
             //given
@@ -71,9 +63,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
             var expectedDependencyException =
                 new StudentViewDependencyException(studentServiceDependencyException);
 
-            this.studentServiceMock.Setup(service =>
-                service.AddStudentAsync(It.IsAny<Student>()))
-                    .ThrowsAsync(studentServiceDependencyException);
+            this.dateTimeBrokerMock.Setup(service =>
+                service.GetCurrentDateTime())
+                    .Throws(studentServiceDependencyException);
 
             //when
             ValueTask<StudentView> addStudentViewTask =
@@ -83,16 +75,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
             await Assert.ThrowsAsync<StudentViewDependencyException>(() =>
                 addStudentViewTask.AsTask());
 
-            this.userServiceMock.Verify(service =>
-                service.GetCurrentlyLoggedInUser(),
-                    Times.Once);
-
-            this.dateTimeBrokerMock.Verify(broker =>
-                broker.GetCurrentDateTime(),
-                    Times.Once);
-
-            this.studentServiceMock.Verify(service =>
-                service.AddStudentAsync(It.IsAny<Student>()),
+            this.dateTimeBrokerMock.Verify(service =>
+                service.GetCurrentDateTime(),
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
@@ -100,9 +84,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
                     expectedDependencyException))),
                         Times.Once);
 
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.userServiceMock.VerifyNoOtherCalls();
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.studentServiceMock.VerifyNoOtherCalls();
         }
 
@@ -120,9 +104,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
             var studentViewServiceException =
                 new StudentViewServiceException(failedStudentViewServiceException);
 
-            this.studentServiceMock.Setup(service =>
-                service.AddStudentAsync(It.IsAny<Student>()))
-                    .ThrowsAsync(serviceException);
+            this.dateTimeBrokerMock.Setup(service =>
+                service.GetCurrentDateTime())
+                    .Throws(serviceException);
 
             //when
             ValueTask<StudentView> addStudentViewTask =
@@ -132,16 +116,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
             await Assert.ThrowsAsync<StudentViewServiceException>(() =>
                 addStudentViewTask.AsTask());
 
-            this.userServiceMock.Verify(service =>
-                service.GetCurrentlyLoggedInUser(),
-                    Times.Once);
-
-            this.dateTimeBrokerMock.Verify(broker =>
-                broker.GetCurrentDateTime(),
-                    Times.Once);
-
-            this.studentServiceMock.Verify(service =>
-                service.AddStudentAsync(It.IsAny<Student>()),
+            this.dateTimeBrokerMock.Verify(service =>
+                service.GetCurrentDateTime(),
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
@@ -149,9 +125,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
                     studentViewServiceException))),
                         Times.Once);
 
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.userServiceMock.VerifyNoOtherCalls();
-            this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.studentServiceMock.VerifyNoOtherCalls();
         }
 

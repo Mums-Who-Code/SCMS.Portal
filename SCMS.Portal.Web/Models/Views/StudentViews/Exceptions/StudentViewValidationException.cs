@@ -9,7 +9,7 @@ namespace SCMS.Portal.Web.Models.Views.StudentViews.Exceptions
     public class StudentViewValidationException : Xeption
     {
         public StudentViewValidationException(Xeption innerXeption)
-            : base("Student view validation error occured, try again", innerXeption)
+            : base("Student view validation error occured, try again.", innerXeption)
         { }
     }
 }

@@ -45,6 +45,27 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
                 dateTimeBroker: this.dateTimeBrokerMock.Object,
                 loggingBroker: this.loggingBrokerMock.Object);
         }
+        public static TheoryData DependencyValidationExceptions()
+        {
+            var innerException = new Xeption();
+
+            return new TheoryData<Exception>
+            {
+                new StudentValidationException(innerException),
+                new StudentDependencyValidationException(innerException)
+            };
+        }
+
+        public static TheoryData DependencyExceptions()
+        {
+            var innerException = new Xeption();
+
+            return new TheoryData<Exception>
+            {
+                new StudentDependencyException(innerException),
+                new StudentServiceException(innerException)
+            };
+        }
 
         private static dynamic CreateRandomStudentViewProperties(
             DateTimeOffset auditDates,
@@ -86,28 +107,6 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
                 && (actualException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data);
         }
 
-        public static TheoryData StudentServiceValidationExceptions()
-        {
-            var innerException = new Xeption();
-
-            return new TheoryData<Exception>
-            {
-                new StudentValidationException(innerException),
-                new StudentDependencyValidationException(innerException)
-            };
-        }
-
-        public static TheoryData StudentServiceDependencyExceptions()
-        {
-            var innerException = new Xeption();
-
-            return new TheoryData<Exception>
-            {
-                new StudentDependencyException(innerException),
-                new StudentServiceException(innerException)
-            };
-        }
-
         private static StudentView CreateRandomStudentView() =>
             CreateStudentViewFiller().Create();
 
@@ -116,7 +115,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
             var filler = new Filler<StudentView>();
 
             filler.Setup().
-                OnType<DateTimeOffset>().Use(DateTimeOffset.UtcNow);
+                OnType<DateTimeOffset>().Use(GetRandomDate());
 
             return filler;
         }

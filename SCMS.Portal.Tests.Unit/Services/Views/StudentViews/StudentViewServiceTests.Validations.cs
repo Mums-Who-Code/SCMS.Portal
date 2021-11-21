@@ -36,12 +36,12 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
                     expectedStudentViewValidationException))),
                         Times.Once);
 
-            this.userServiceMock.Verify(service =>
-                service.GetCurrentlyLoggedInUser(),
-                    Times.Never);
-
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTime(),
+                    Times.Never);
+
+            this.userServiceMock.Verify(service =>
+                service.GetCurrentlyLoggedInUser(),
                     Times.Never);
 
             this.studentServiceMock.Verify(service =>
@@ -49,8 +49,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
                     Times.Never);
 
             this.loggingBrokerMock.VerifyNoOtherCalls();
-            this.userServiceMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.userServiceMock.VerifyNoOtherCalls();
             this.studentServiceMock.VerifyNoOtherCalls();
         }
 
@@ -98,12 +98,12 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
                     expectedStudentViewValidationException))),
                         Times.Once);
 
-            this.userServiceMock.Verify(service =>
-                service.GetCurrentlyLoggedInUser(),
-                    Times.Never);
-
             this.dateTimeBrokerMock.Verify(broker =>
                 broker.GetCurrentDateTime(),
+                    Times.Never);
+
+            this.userServiceMock.Verify(service =>
+                service.GetCurrentlyLoggedInUser(),
                     Times.Never);
 
             this.studentServiceMock.Verify(service =>
@@ -111,8 +111,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
                     Times.Never);
 
             this.loggingBrokerMock.VerifyNoOtherCalls();
-            this.userServiceMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.userServiceMock.VerifyNoOtherCalls();
             this.studentServiceMock.VerifyNoOtherCalls();
         }
     }

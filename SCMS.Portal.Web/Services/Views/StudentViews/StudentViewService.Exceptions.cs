@@ -47,8 +47,8 @@ namespace SCMS.Portal.Web.Services.Views.StudentViews
             }
             catch (Exception serviceException)
             {
-                var failedStudentViewServiceException
-                    = new FailedStudentViewServiceException(serviceException);
+                var failedStudentViewServiceException =
+                    new FailedStudentViewServiceException(serviceException);
 
                 throw CreateAndLogServiceException(failedStudentViewServiceException);
             }
@@ -64,7 +64,7 @@ namespace SCMS.Portal.Web.Services.Views.StudentViews
 
         private StudentViewDependencyValidationException CreateAndLogDependencyValidationException(Xeption exception)
         {
-            var studentViewDependencyValidationException = new StudentViewDependencyValidationException(exception);
+            var studentViewDependencyValidationException = new StudentViewDependencyValidationException(exception.InnerException);
             this.loggingBroker.LogError(studentViewDependencyValidationException);
 
             return studentViewDependencyValidationException;

@@ -22,16 +22,16 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
             Guid currentLoggedInUserId = Guid.NewGuid();
             DateTimeOffset randomDateTime = GetRandomDate();
 
-            dynamic randomStudentProperties =
+            dynamic randomStudentViewProperties =
                 CreateRandomStudentViewProperties(
                     auditDates: randomDateTime,
                     auditIds: currentLoggedInUserId);
 
             var randomStudentView = new StudentView
             {
-                FirstName = randomStudentProperties.FirstName,
-                LastName = randomStudentProperties.LastName,
-                DateOfBirth = randomStudentProperties.DateOfBirth,
+                FirstName = randomStudentViewProperties.FirstName,
+                LastName = randomStudentViewProperties.LastName,
+                DateOfBirth = randomStudentViewProperties.DateOfBirth,
             };
 
             var inputStudentView = randomStudentView;
@@ -39,32 +39,32 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
 
             var randomStudent = new Student
             {
-                Id = randomStudentProperties.Id,
-                FirstName = randomStudentProperties.FirstName,
-                LastName = randomStudentProperties.LastName,
-                DateOfBirth = randomStudentProperties.DateOfBirth,
-                Status = randomStudentProperties.Status,
-                CreatedDate = randomStudentProperties.CreatedDate,
-                UpdatedDate = randomStudentProperties.UpdatedDate,
-                CreatedBy = randomStudentProperties.CreatedBy,
-                UpdatedBy = randomStudentProperties.UpdatedBy,
+                Id = randomStudentViewProperties.Id,
+                FirstName = randomStudentViewProperties.FirstName,
+                LastName = randomStudentViewProperties.LastName,
+                DateOfBirth = randomStudentViewProperties.DateOfBirth,
+                Status = randomStudentViewProperties.Status,
+                CreatedDate = randomStudentViewProperties.CreatedDate,
+                UpdatedDate = randomStudentViewProperties.UpdatedDate,
+                CreatedBy = randomStudentViewProperties.CreatedBy,
+                UpdatedBy = randomStudentViewProperties.UpdatedBy,
             };
 
             Student expectedInputStudent = randomStudent;
-            Student returnedStudent = expectedInputStudent.DeepClone();
-
-            this.userServiceMock.Setup(service =>
-                service.GetCurrentlyLoggedInUser())
-                    .Returns(currentLoggedInUserId);
+            Student persistedStudent = expectedInputStudent.DeepClone();
 
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTime())
                     .Returns(randomDateTime);
 
+            this.userServiceMock.Setup(service =>
+                service.GetCurrentlyLoggedInUser())
+                    .Returns(currentLoggedInUserId);
+
             this.studentServiceMock.Setup(service =>
                 service.AddStudentAsync(It.Is(
                     SameStudentAs(expectedInputStudent))))
-                        .ReturnsAsync(returnedStudent);
+                        .ReturnsAsync(persistedStudent);
 
             //when
             StudentView actualStudentView =
@@ -74,13 +74,14 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
             //then
             actualStudentView.Should().BeEquivalentTo(expectedStudentView);
 
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTime(),
+                    Times.Once);
+
             this.userServiceMock.Verify(service =>
                 service.GetCurrentlyLoggedInUser(),
                     Times.Once);
 
-            this.dateTimeBrokerMock.Verify(broker =>
-                broker.GetCurrentDateTime(),
-                    Times.Once);
 
             this.studentServiceMock.Verify(service =>
                 service.AddStudentAsync(It.Is(
