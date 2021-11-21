@@ -23,7 +23,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
             StudentView someStudentView = CreateRandomStudentView();
 
             var expectedDependencyValidationException =
-                new StudentViewDependencyValidationException(studentServiceValidationException);
+                new StudentViewDependencyValidationException(studentServiceValidationException.InnerException);
 
             this.dateTimeBrokerMock.Setup(service =>
                 service.GetCurrentDateTime())
