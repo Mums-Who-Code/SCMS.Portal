@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Radzen.Blazor" Version="3.13.2" />
     <PackageReference Include="RESTFulSense" Version="2.4.0" />
     <PackageReference Include="Xeption" Version="1.7.0" />
   </ItemGroup>
