@@ -17,8 +17,5 @@ namespace SCMS.Portal.Web.Views.Bases.TextBoxes
 
         public void SetValue(string value) =>
             this.Value = value;
-
-        public void SetPlaceholder(string placeholder) =>
-            this.Placeholder = placeholder;
     }
 }
