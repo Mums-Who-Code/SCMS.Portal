@@ -16,6 +16,7 @@ using SCMS.Portal.Web.Brokers.Loggings;
 using SCMS.Portal.Web.Brokers.Navigations;
 using SCMS.Portal.Web.Models.Configurations;
 using SCMS.Portal.Web.Services.Foundations.Students;
+using Syncfusion.Blazor;
 
 namespace SCMS.Portal.Web
 {
@@ -30,6 +31,7 @@ namespace SCMS.Portal.Web
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddSyncfusionBlazor();
             AddHttpClient(services);
             AddRootDirectory(services);
             AddBrokers(services);
