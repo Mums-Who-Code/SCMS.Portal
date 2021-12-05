@@ -3,10 +3,7 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using Syncfusion.Blazor.Calendars;
 
 namespace SCMS.Portal.Web.Views.Bases.Buttons
 {

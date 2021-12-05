@@ -5,7 +5,6 @@
 using System;
 using System.Threading.Tasks;
 using Moq;
-using SCMS.Portal.Web.Models.Foundations.Students;
 using SCMS.Portal.Web.Models.Views.StudentViews;
 using SCMS.Portal.Web.Models.Views.StudentViews.Exceptions;
 using Xunit;
