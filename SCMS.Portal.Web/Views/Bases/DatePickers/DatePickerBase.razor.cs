@@ -29,10 +29,8 @@ namespace SCMS.Portal.Web.Views.Bases.DatePickers
         }
 
         private async Task OnValueChanged(
-            ChangedEventArgs<DateTimeOffset> changeEventArgs)
-        {
-            await SetValue(changeEventArgs.Value);
-        }
+            ChangedEventArgs<DateTimeOffset> changeEventArgs) =>
+                await SetValue(changeEventArgs.Value);
 
         public void Disable()
         {
