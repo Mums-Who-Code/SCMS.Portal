@@ -3,6 +3,7 @@
 // -----------------------------------------------------------------------
 
 using Microsoft.AspNetCore.Components;
+using SCMS.Portal.Web.Models.Views.Components.Colors;
 
 namespace SCMS.Portal.Web.Views.Bases.Labels
 {
@@ -12,7 +13,7 @@ namespace SCMS.Portal.Web.Views.Bases.Labels
         public string Value { get; set; }
 
         [Parameter]
-        public string Color { get; set; }
+        public Color Color { get; set; }
 
         public void SetValue(string value)
         {
@@ -20,7 +21,7 @@ namespace SCMS.Portal.Web.Views.Bases.Labels
             InvokeAsync(StateHasChanged);
         }
 
-        public void SetColor(string color) =>
+        public void SetColor(Color color) =>
             this.Color = color;
     }
 }

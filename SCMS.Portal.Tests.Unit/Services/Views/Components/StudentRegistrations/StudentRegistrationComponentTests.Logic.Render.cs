@@ -2,9 +2,13 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
+using System;
 using Bunit;
 using FluentAssertions;
+using Moq;
+using SCMS.Portal.Web.Models.Views.Components.Colors;
 using SCMS.Portal.Web.Models.Views.Components.Containers;
+using SCMS.Portal.Web.Models.Views.StudentViews;
 using SCMS.Portal.Web.Views.Components.StudentRegistrations;
 using Xunit;
 
@@ -92,5 +96,50 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             this.renderedStudentRegistrationComponent.Instance.Exception.Should().BeNull();
             this.studentViewServiceMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public void ShouldDisplaySubmittingStatusAndDisabledControlsBeforeStudentRegistrationCompletes()
+        {
+            // given
+            StudentView someStudentView = CreateRandomStudentView();
+
+            this.studentViewServiceMock.Setup(service =>
+                service.AddStudentViewAsync(It.IsAny<StudentView>()))
+                    .ReturnsAsync(
+                        value: someStudentView,
+                        delay: TimeSpan.FromMilliseconds(500));
+
+            // when
+            this.renderedStudentRegistrationComponent =
+                RenderComponent<StudentRegistrationComponent>();
+
+            this.renderedStudentRegistrationComponent.Instance.RegisterButton.Click();
+
+            // then
+            this.renderedStudentRegistrationComponent.Instance.StatusLabel.Value
+                .Should().BeEquivalentTo("Registering... ");
+
+            this.renderedStudentRegistrationComponent.Instance.StatusLabel.Color
+                .Should().Be(Color.Black);
+
+            this.renderedStudentRegistrationComponent.Instance.FirstNameTextBox.IsDisabled
+               .Should().BeTrue();
+
+            this.renderedStudentRegistrationComponent.Instance.LastNameTextBox.IsDisabled
+               .Should().BeTrue();
+
+            this.renderedStudentRegistrationComponent.Instance.DateOfBirthPicker.IsDisabled
+               .Should().BeTrue();
+
+            this.renderedStudentRegistrationComponent.Instance.RegisterButton.IsDisabled
+               .Should().BeTrue();
+
+            this.studentViewServiceMock.Verify(service =>
+                service.AddStudentViewAsync(It.IsAny<StudentView>()),
+                    Times.Once);
+
+            this.studentViewServiceMock.VerifyNoOtherCalls();
+        }
+
     }
 }
