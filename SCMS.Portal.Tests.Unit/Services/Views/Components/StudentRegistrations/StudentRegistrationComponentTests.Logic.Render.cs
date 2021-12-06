@@ -117,7 +117,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
 
             // then
             this.renderedStudentRegistrationComponent.Instance.StatusLabel.Value
-                .Should().BeEquivalentTo("Registering... ");
+                .Should().BeEquivalentTo("Registering...");
 
             this.renderedStudentRegistrationComponent.Instance.StatusLabel.Color
                 .Should().Be(Color.Black);

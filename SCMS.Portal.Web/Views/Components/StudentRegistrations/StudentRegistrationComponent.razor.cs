@@ -3,6 +3,7 @@
 // -----------------------------------------------------------------------
 
 using Microsoft.AspNetCore.Components;
+using SCMS.Portal.Web.Models.Views.Components.Colors;
 using SCMS.Portal.Web.Models.Views.Components.Containers;
 using SCMS.Portal.Web.Models.Views.Components.StudentRegistrations.Exceptions;
 using SCMS.Portal.Web.Models.Views.StudentViews;
@@ -34,7 +35,20 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
             this.State = ComponentState.Content;
         }
 
-        public void RegisterStudentAsync() =>
-            this.studentViewService.AddStudentViewAsync(this.StudentView);
+        public async void RegisterStudentAsync()
+        {
+            ApplyRegisteringStatus();
+            await this.studentViewService.AddStudentViewAsync(this.StudentView);
+        }
+
+        private void ApplyRegisteringStatus()
+        {
+            this.StatusLabel.SetValue("Registering...");
+            this.StatusLabel.SetColor(Color.Black);
+            this.FirstNameTextBox.Disable();
+            this.LastNameTextBox.Disable();
+            this.DateOfBirthPicker.Disable();
+            this.RegisterButton.Disable();
+        }
     }
 }
