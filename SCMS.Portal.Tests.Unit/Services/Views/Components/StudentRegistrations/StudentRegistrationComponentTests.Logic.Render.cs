@@ -83,6 +83,12 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             this.renderedStudentRegistrationComponent.Instance.RegisterButton
                 .Label.Should().Be(expectedRegisterButtonLabel);
 
+            this.renderedStudentRegistrationComponent.Instance.StatusLabel
+                .Should().NotBeNull();
+
+            this.renderedStudentRegistrationComponent.Instance.StatusLabel
+                .Value.Should().BeNull();
+
             this.renderedStudentRegistrationComponent.Instance.Exception.Should().BeNull();
             this.studentViewServiceMock.VerifyNoOtherCalls();
         }

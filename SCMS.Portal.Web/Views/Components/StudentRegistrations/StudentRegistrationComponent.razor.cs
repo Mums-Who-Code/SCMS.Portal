@@ -9,6 +9,7 @@ using SCMS.Portal.Web.Models.Views.StudentViews;
 using SCMS.Portal.Web.Services.Views.StudentViews;
 using SCMS.Portal.Web.Views.Bases.Buttons;
 using SCMS.Portal.Web.Views.Bases.DatePickers;
+using SCMS.Portal.Web.Views.Bases.Labels;
 using SCMS.Portal.Web.Views.Bases.TextBoxes;
 
 namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
@@ -25,5 +26,15 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
         public TextBoxBase LastNameTextBox { get; set; }
         public DatePickerBase DateOfBirthPicker { get; set; }
         public ButtonBase RegisterButton { get; set; }
+        public LabelBase StatusLabel { get; set; }
+
+        protected override void OnInitialized()
+        {
+            this.StudentView = new StudentView();
+            this.State = ComponentState.Content;
+        }
+
+        public void RegisterStudentAsync() =>
+            this.studentViewService.AddStudentViewAsync(this.StudentView);
     }
 }
