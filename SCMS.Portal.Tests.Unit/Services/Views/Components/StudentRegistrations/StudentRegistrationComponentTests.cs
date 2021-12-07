@@ -7,10 +7,13 @@ using Bunit;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using SCMS.Portal.Web.Models.Views.StudentViews;
+using SCMS.Portal.Web.Models.Views.StudentViews.Exceptions;
 using SCMS.Portal.Web.Services.Views.StudentViews;
 using SCMS.Portal.Web.Views.Components.StudentRegistrations;
 using Syncfusion.Blazor;
 using Tynamix.ObjectFiller;
+using Xeptions;
+using Xunit;
 
 namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
 {
@@ -27,6 +30,22 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             this.Services.AddOptions();
             this.JSInterop.Mode = JSRuntimeMode.Loose;
         }
+
+        public static TheoryData StudentViewValidationExceptions()
+        {
+            string randomMessage = GetRandomString();
+            string validationMesage = randomMessage;
+            var innerValidationException = new Xeption(validationMesage);
+
+            return new TheoryData<Exception>
+            {
+                new StudentViewValidationException(innerValidationException),
+                new StudentViewDependencyValidationException(innerValidationException)
+            };
+        }
+
+        private static string GetRandomString() =>
+            new MnemonicString().GetValue();
 
         private static DateTimeOffset GetRandomDateTime() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();

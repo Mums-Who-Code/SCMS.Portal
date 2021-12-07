@@ -5,6 +5,7 @@
 using System;
 using Bunit;
 using FluentAssertions;
+using Force.DeepCloner;
 using Moq;
 using SCMS.Portal.Web.Models.Views.Components.Colors;
 using SCMS.Portal.Web.Models.Views.Components.Containers;
@@ -141,5 +142,54 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             this.studentViewServiceMock.VerifyNoOtherCalls();
         }
 
+        [Fact]
+        public void ShouldRegisterStudent()
+        {
+            // given
+            StudentView randomStudentView = CreateRandomStudentView();
+            StudentView inputStudentView = randomStudentView;
+            StudentView expectedStudentView = inputStudentView.DeepClone();
+            string expectedStatusLabel = "Registration completed.";
+            Color expectedStatusLabelColor = Color.Green;
+
+            // when
+            this.renderedStudentRegistrationComponent =
+                RenderComponent<StudentRegistrationComponent>();
+
+            this.renderedStudentRegistrationComponent.Instance
+                .FirstNameTextBox.SetValue(inputStudentView.FirstName);
+
+            this.renderedStudentRegistrationComponent.Instance
+                .LastNameTextBox.SetValue(inputStudentView.LastName);
+
+            this.renderedStudentRegistrationComponent.Instance
+                .DateOfBirthPicker.SetValue(inputStudentView.DateOfBirth);
+
+            this.renderedStudentRegistrationComponent.Instance
+                .RegisterButton.Click();
+
+            // then
+            this.renderedStudentRegistrationComponent.Instance.FirstNameTextBox
+                .Value.Should().Be(expectedStudentView.FirstName);
+
+            this.renderedStudentRegistrationComponent.Instance.LastNameTextBox
+                .Value.Should().Be(expectedStudentView.LastName);
+
+            this.renderedStudentRegistrationComponent.Instance.DateOfBirthPicker
+                .Value.Should().Be(expectedStudentView.DateOfBirth);
+
+            this.renderedStudentRegistrationComponent.Instance.StatusLabel
+                .Value.Should().Be(expectedStatusLabel);
+
+            this.renderedStudentRegistrationComponent.Instance.StatusLabel
+                .Color.Should().Be(expectedStatusLabelColor);
+
+            this.studentViewServiceMock.Verify(service =>
+                service.AddStudentViewAsync(
+                    this.renderedStudentRegistrationComponent.Instance.StudentView),
+                        Times.Once);
+
+            this.studentViewServiceMock.VerifyNoOtherCalls();
+        }
     }
 }
