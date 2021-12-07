@@ -39,16 +39,23 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
         {
             ApplyRegisteringStatus();
             await this.studentViewService.AddStudentViewAsync(this.StudentView);
+            ApplyRegisteredStatus();
         }
 
         private void ApplyRegisteringStatus()
         {
-            this.StatusLabel.SetValue("Registering...");
             this.StatusLabel.SetColor(Color.Black);
+            this.StatusLabel.SetValue("Registering...");
             this.FirstNameTextBox.Disable();
             this.LastNameTextBox.Disable();
             this.DateOfBirthPicker.Disable();
             this.RegisterButton.Disable();
+        }
+
+        private void ApplyRegisteredStatus()
+        {
+            this.StatusLabel.SetColor(Color.Green);
+            this.StatusLabel.SetValue("Registration completed.");
         }
     }
 }
