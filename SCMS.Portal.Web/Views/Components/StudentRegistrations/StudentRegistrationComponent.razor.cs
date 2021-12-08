@@ -2,6 +2,7 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
+using System;
 using Microsoft.AspNetCore.Components;
 using SCMS.Portal.Web.Models.Views.Components.Colors;
 using SCMS.Portal.Web.Models.Views.Components.Containers;
@@ -70,6 +71,11 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
             {
                 ApplyRegistrationFailed(
                     studentViewDependencyException.Message);
+            }
+            catch(Exception exception)
+            {
+                ApplyRegistrationFailed(
+                    exception.Message);
             }
         }
 
