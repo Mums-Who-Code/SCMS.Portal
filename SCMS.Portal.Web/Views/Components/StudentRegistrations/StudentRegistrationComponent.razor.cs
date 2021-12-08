@@ -6,7 +6,6 @@ using System;
 using Microsoft.AspNetCore.Components;
 using SCMS.Portal.Web.Models.Views.Components.Colors;
 using SCMS.Portal.Web.Models.Views.Components.Containers;
-using SCMS.Portal.Web.Models.Views.Components.StudentRegistrations.Exceptions;
 using SCMS.Portal.Web.Models.Views.StudentViews;
 using SCMS.Portal.Web.Models.Views.StudentViews.Exceptions;
 using SCMS.Portal.Web.Services.Views.StudentViews;
@@ -23,7 +22,6 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
         public IStudentViewService studentViewService { get; set; }
 
         public ComponentState State { get; set; }
-        public StudentRegistrationComponentException Exception { get; set; }
         public StudentView StudentView { get; set; }
         public TextBoxBase FirstNameTextBox { get; set; }
         public TextBoxBase LastNameTextBox { get; set; }

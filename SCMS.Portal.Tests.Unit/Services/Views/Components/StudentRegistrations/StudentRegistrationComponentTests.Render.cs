@@ -28,7 +28,6 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
 
             // then
             initialStudentRegistrationComponent.State.Should().Be(expectedComponentState);
-            initialStudentRegistrationComponent.Exception.Should().BeNull();
             initialStudentRegistrationComponent.FirstNameTextBox.Should().BeNull();
             initialStudentRegistrationComponent.LastNameTextBox.Should().BeNull();
             initialStudentRegistrationComponent.StudentView.Should().BeNull();
@@ -94,7 +93,6 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             this.renderedStudentRegistrationComponent.Instance.StatusLabel
                 .Value.Should().BeNull();
 
-            this.renderedStudentRegistrationComponent.Instance.Exception.Should().BeNull();
             this.studentViewServiceMock.VerifyNoOtherCalls();
         }
 
