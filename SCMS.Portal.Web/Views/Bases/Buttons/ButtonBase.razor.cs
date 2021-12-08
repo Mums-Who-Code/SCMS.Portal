@@ -28,7 +28,7 @@ namespace SCMS.Portal.Web.Views.Bases.Buttons
 
         public void Enable()
         {
-            this.IsDisabled = true;
+            this.IsDisabled = false;
             InvokeAsync(StateHasChanged);
         }
     }

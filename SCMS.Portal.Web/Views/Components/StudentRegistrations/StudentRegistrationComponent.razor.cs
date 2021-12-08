@@ -7,6 +7,7 @@ using SCMS.Portal.Web.Models.Views.Components.Colors;
 using SCMS.Portal.Web.Models.Views.Components.Containers;
 using SCMS.Portal.Web.Models.Views.Components.StudentRegistrations.Exceptions;
 using SCMS.Portal.Web.Models.Views.StudentViews;
+using SCMS.Portal.Web.Models.Views.StudentViews.Exceptions;
 using SCMS.Portal.Web.Services.Views.StudentViews;
 using SCMS.Portal.Web.Views.Bases.Buttons;
 using SCMS.Portal.Web.Views.Bases.DatePickers;
@@ -37,9 +38,27 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
 
         public async void RegisterStudentAsync()
         {
-            ApplyRegisteringStatus();
-            await this.studentViewService.AddStudentViewAsync(this.StudentView);
-            ApplyRegisteredStatus();
+            try
+            {
+                ApplyRegisteringStatus();
+                await this.studentViewService.AddStudentViewAsync(this.StudentView);
+                ApplyRegisteredStatus();
+            }
+            catch (StudentViewValidationException studentViewValidationException)
+            {
+                string validationMessage =
+                    studentViewValidationException.InnerException.Message;
+
+                ApplyRegistrationFailed(validationMessage);
+            }
+            catch (StudentViewDependencyValidationException
+                studentViewDependencyValidationException)
+            {
+                string validationMessage =
+                    studentViewDependencyValidationException.InnerException.Message;
+
+                ApplyRegistrationFailed(validationMessage);
+            }
         }
 
         private void ApplyRegisteringStatus()
@@ -56,6 +75,16 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
         {
             this.StatusLabel.SetColor(Color.Green);
             this.StatusLabel.SetValue("Registration completed.");
+        }
+
+        private void ApplyRegistrationFailed(string validationMessage)
+        {
+            this.StatusLabel.SetValue(validationMessage);
+            this.StatusLabel.SetColor(Color.Red);
+            this.FirstNameTextBox.Enable();
+            this.LastNameTextBox.Enable();
+            this.DateOfBirthPicker.Enable();
+            this.RegisterButton.Enable();
         }
     }
 }
