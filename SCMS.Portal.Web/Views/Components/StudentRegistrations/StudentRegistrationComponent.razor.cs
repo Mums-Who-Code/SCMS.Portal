@@ -59,6 +59,18 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
 
                 ApplyRegistrationFailed(validationMessage);
             }
+            catch (StudentViewDependencyException
+                studentViewDependencyException)
+            {
+                ApplyRegistrationFailed(
+                    studentViewDependencyException.Message);
+            }
+            catch (StudentViewServiceException
+                studentViewDependencyException)
+            {
+                ApplyRegistrationFailed(
+                    studentViewDependencyException.Message);
+            }
         }
 
         private void ApplyRegisteringStatus()
