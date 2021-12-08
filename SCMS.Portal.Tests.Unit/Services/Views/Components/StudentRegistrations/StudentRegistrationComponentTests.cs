@@ -37,10 +37,21 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             string validationMesage = randomMessage;
             var innerValidationException = new Xeption(validationMesage);
 
-            return new TheoryData<Exception>
+            return new TheoryData<Xeption>
             {
                 new StudentViewValidationException(innerValidationException),
                 new StudentViewDependencyValidationException(innerValidationException)
+            };
+        }
+
+        public static TheoryData StudentViewDependencyExceptions()
+        {
+            var innerException = new Xeption();
+
+            return new TheoryData<Xeption>
+            {
+                new StudentViewDependencyException(innerException),
+                new StudentViewServiceException(innerException)
             };
         }
 
