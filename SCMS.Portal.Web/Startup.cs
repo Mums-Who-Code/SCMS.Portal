@@ -16,7 +16,10 @@ using SCMS.Portal.Web.Brokers.Loggings;
 using SCMS.Portal.Web.Brokers.Navigations;
 using SCMS.Portal.Web.Models.Configurations;
 using SCMS.Portal.Web.Services.Foundations.Students;
+using SCMS.Portal.Web.Services.Foundations.Users;
+using SCMS.Portal.Web.Services.Views.StudentViews;
 using Syncfusion.Blazor;
+using Syncfusion.Licensing;
 
 namespace SCMS.Portal.Web
 {
@@ -50,6 +53,7 @@ namespace SCMS.Portal.Web
                 app.UseHsts();
             }
 
+            AddSyncfusionLicense();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
@@ -59,6 +63,12 @@ namespace SCMS.Portal.Web
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
+        }
+
+        private static void AddSyncfusionLicense()
+        {
+            SyncfusionLicenseProvider.RegisterLicense(
+                Environment.GetEnvironmentVariable("SYNCFUSION_LICENSE_KEY"));
         }
 
         private IHttpClientBuilder AddHttpClient(IServiceCollection services)
@@ -84,7 +94,11 @@ namespace SCMS.Portal.Web
             services.AddScoped<INavigationBroker, NavigationBroker>();
         }
 
-        private static void AddServices(IServiceCollection services) =>
+        private static void AddServices(IServiceCollection services)
+        {
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IStudentViewService, StudentViewService>();
+        }
     }
 }
