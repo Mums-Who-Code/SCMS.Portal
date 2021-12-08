@@ -5,31 +5,35 @@
 @using SCMS.Portal.Web.Views.Bases.Labels
 @using SCMS.Portal.Web.Views.Bases.Buttons
 
-<CardBase Title="New Student Registration"
-          SubTitle="Please fill the below form">
-    <Content>
-        <ContainerComponent State=@State>
-            <Content>
-                <div>
-                    <TextBoxBase @ref=@FirstNameTextBox
-                                 @bind-Value=@StudentView.FirstName
-                                 Placeholder="First Name"/>
-                    <br/>
-                    <TextBoxBase @ref=LastNameTextBox
-                                 @bind-Value=@StudentView.LastName
-                                 Placeholder="Last Name"/>
-                    <br/>
-                    <DatePickerBase @ref=@DateOfBirthPicker
-                                    @bind-Value=@StudentView.DateOfBirth/>
-                    <br/>
-                    <LabelBase @ref=@StatusLabel/>
-                </div>
-            </Content>
-        </ContainerComponent>
-    </Content>
-    <Footer>
-        <ButtonBase @ref=@RegisterButton
-                    Label="Register"
-                    OnClick=@RegisterStudentAsync/>
-    </Footer>
-</CardBase>
+<div class="card-container">
+    <CardBase Title="New Student Registration"
+              SubTitle="Please fill the below form">
+        <Content>
+            <ContainerComponent State=@State>
+                <Content>
+                    <div>
+                        <TextBoxBase @ref=@FirstNameTextBox
+                                     @bind-Value=@StudentView.FirstName
+                                     Placeholder="First Name"/>
+                        <br/>
+                        <TextBoxBase @ref=LastNameTextBox
+                                     @bind-Value=@StudentView.LastName
+                                     Placeholder="Last Name"/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <DatePickerBase @ref=@DateOfBirthPicker
+                                        @bind-Value=@StudentView.DateOfBirth/>
+                        <br/>
+                        <LabelBase @ref=@StatusLabel/>
+                    </div>
+                </Content>
+            </ContainerComponent>
+        </Content>
+        <Footer>
+            <ButtonBase @ref=@RegisterButton
+                        Label="Register"
+                        OnClick=@RegisterStudentAsync/>
+        </Footer>
+    </CardBase>
+</div>
