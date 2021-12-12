@@ -18,7 +18,6 @@ using SCMS.Portal.Web.Models.Configurations;
 using SCMS.Portal.Web.Services.Foundations.Schools;
 using SCMS.Portal.Web.Services.Foundations.Students;
 using SCMS.Portal.Web.Services.Foundations.Users;
-using SCMS.Portal.Web.Services.Views.Foundations.SchoolViews;
 using SCMS.Portal.Web.Services.Views.Foundations.StudentViews;
 using Syncfusion.Blazor;
 using Syncfusion.Licensing;
@@ -102,7 +101,6 @@ namespace SCMS.Portal.Web
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IStudentViewService, StudentViewService>();
             services.AddScoped<ISchoolService, SchoolService>();
-            services.AddScoped<ISchoolViewService, SchoolViewService>();
         }
     }
 }
