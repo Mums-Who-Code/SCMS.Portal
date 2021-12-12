@@ -2,9 +2,7 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
-using System;
-
-namespace SCMS.Portal.Web.Models.Views.StudentViews
+namespace SCMS.Portal.Web.Models.Views.Foundations.StudentViews
 {
     public enum StudentGenderView
     {

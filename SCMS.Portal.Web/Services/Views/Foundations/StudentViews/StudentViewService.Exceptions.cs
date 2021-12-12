@@ -5,11 +5,11 @@
 using System;
 using System.Threading.Tasks;
 using SCMS.Portal.Web.Models.Foundations.Students.Exceptions;
-using SCMS.Portal.Web.Models.Views.StudentViews;
-using SCMS.Portal.Web.Models.Views.StudentViews.Exceptions;
+using SCMS.Portal.Web.Models.Views.Foundations.StudentViews;
+using SCMS.Portal.Web.Models.Views.Foundations.StudentViews.Exceptions;
 using Xeptions;
 
-namespace SCMS.Portal.Web.Services.Views.StudentViews
+namespace SCMS.Portal.Web.Services.Views.Foundations.StudentViews
 {
     public partial class StudentViewService
     {

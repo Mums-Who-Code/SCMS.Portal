@@ -9,7 +9,7 @@ using Force.DeepCloner;
 using Moq;
 using SCMS.Portal.Web.Models.Views.Components.Colors;
 using SCMS.Portal.Web.Models.Views.Components.Containers;
-using SCMS.Portal.Web.Models.Views.StudentViews;
+using SCMS.Portal.Web.Models.Views.Foundations.StudentViews;
 using SCMS.Portal.Web.Views.Components.StudentRegistrations;
 using Xunit;
 

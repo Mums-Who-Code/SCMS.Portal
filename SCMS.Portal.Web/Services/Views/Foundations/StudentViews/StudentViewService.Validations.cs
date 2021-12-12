@@ -3,10 +3,10 @@
 // -----------------------------------------------------------------------
 
 using System;
-using SCMS.Portal.Web.Models.Views.StudentViews;
-using SCMS.Portal.Web.Models.Views.StudentViews.Exceptions;
+using SCMS.Portal.Web.Models.Views.Foundations.StudentViews;
+using SCMS.Portal.Web.Models.Views.Foundations.StudentViews.Exceptions;
 
-namespace SCMS.Portal.Web.Services.Views.StudentViews
+namespace SCMS.Portal.Web.Services.Views.Foundations.StudentViews
 {
     public partial class StudentViewService
     {

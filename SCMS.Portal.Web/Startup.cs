@@ -17,7 +17,7 @@ using SCMS.Portal.Web.Brokers.Navigations;
 using SCMS.Portal.Web.Models.Configurations;
 using SCMS.Portal.Web.Services.Foundations.Students;
 using SCMS.Portal.Web.Services.Foundations.Users;
-using SCMS.Portal.Web.Services.Views.StudentViews;
+using SCMS.Portal.Web.Services.Views.Foundations.StudentViews;
 using Syncfusion.Blazor;
 using Syncfusion.Licensing;
 
