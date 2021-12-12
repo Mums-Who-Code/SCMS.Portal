@@ -5,9 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Engine;
 using Moq;
 using SCMS.Portal.Web.Brokers.Loggings;
 using SCMS.Portal.Web.Services.Foundations.Schools;
