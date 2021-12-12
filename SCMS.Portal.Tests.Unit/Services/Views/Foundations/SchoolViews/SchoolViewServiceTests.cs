@@ -5,11 +5,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Moq;
 using SCMS.Portal.Web.Brokers.Loggings;
+using SCMS.Portal.Web.Models.Foundations.Schools.Exceptions;
 using SCMS.Portal.Web.Services.Foundations.Schools;
 using SCMS.Portal.Web.Services.Views.Foundations.SchoolViews;
 using Tynamix.ObjectFiller;
+using Xeptions;
+using Xunit;
 
 namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.SchoolViews
 {
@@ -27,6 +31,25 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.SchoolViews
             this.schoolViewService = new SchoolViewService(
                 schoolService: this.schoolServiceMock.Object,
                 loggingBroker: this.loggingBrokerMock.Object);
+        }
+
+        public static TheoryData DependencyExceptions()
+        {
+            var innerException = new Xeption();
+
+            return new TheoryData<Xeption>
+            {
+                new SchoolDependencyException(innerException),
+                new SchoolServiceException(innerException)
+            };
+        }
+
+        private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException)
+        {
+            return actualException =>
+                actualException.Message == expectedException.Message
+                && actualException.InnerException.Message == expectedException.InnerException.Message
+                && (actualException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data);
         }
 
         private static List<dynamic> CreatedRandomSchoolViewCollections()
