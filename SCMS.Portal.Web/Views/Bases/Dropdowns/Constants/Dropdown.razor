@@ -1,0 +1,13 @@
+﻿@using Syncfusion.Blazor.DropDowns;
+@typeparam TEnum
+
+<SfDropDownList TValue=@TEnum
+				TItem=@string
+				DataSource=@EnumNames
+				Enabled=@IsEnabled
+				style="dropdown-space">
+
+	<DropDownListEvents TValue=@TEnum
+						TItem=@string
+						ValueChange=@OnValueChanged />
+</SfDropDownList>
