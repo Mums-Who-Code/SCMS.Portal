@@ -17,7 +17,8 @@ namespace SCMS.Portal.Web.Services.Views.StudentViews
             Validate(
                (Rule: IsInvalid(text: studentView.FirstName), Parameter: nameof(StudentView.FirstName)),
                (Rule: IsInvalid(text: studentView.LastName), Parameter: nameof(StudentView.LastName)),
-               (Rule: IsInvalid(date: studentView.DateOfBirth), Parameter: nameof(StudentView.DateOfBirth))
+               (Rule: IsInvalid(date: studentView.DateOfBirth), Parameter: nameof(StudentView.DateOfBirth)),
+               (Rule: IsInvalid(id: studentView.SchoolId), Parameter: nameof(StudentView.SchoolId))
             );
         }
 
@@ -39,6 +40,12 @@ namespace SCMS.Portal.Web.Services.Views.StudentViews
         {
             Condition = date == default,
             Message = "Date is required."
+        };
+
+        private static dynamic IsInvalid(Guid id) => new
+        {
+            Condition = id == Guid.Empty,
+            Message = "Id is required."
         };
 
         private void Validate(params (dynamic Rule, string Parameter)[] validations)

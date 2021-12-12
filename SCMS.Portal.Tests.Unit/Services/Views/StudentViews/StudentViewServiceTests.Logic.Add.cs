@@ -32,6 +32,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
                 FirstName = randomStudentViewProperties.FirstName,
                 LastName = randomStudentViewProperties.LastName,
                 DateOfBirth = randomStudentViewProperties.DateOfBirth,
+                Gender = (StudentGenderView) randomStudentViewProperties.Gender,
+                SchoolId = randomStudentViewProperties.SchoolId
             };
 
             var inputStudentView = randomStudentView;
@@ -43,6 +45,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
                 FirstName = randomStudentViewProperties.FirstName,
                 LastName = randomStudentViewProperties.LastName,
                 DateOfBirth = randomStudentViewProperties.DateOfBirth,
+                Gender = (StudentGender) randomStudentViewProperties.Gender,
+                SchoolId = randomStudentViewProperties.SchoolId,
                 Status = randomStudentViewProperties.Status,
                 CreatedDate = randomStudentViewProperties.CreatedDate,
                 UpdatedDate = randomStudentViewProperties.UpdatedDate,
