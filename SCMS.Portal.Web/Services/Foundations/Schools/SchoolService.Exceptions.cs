@@ -49,12 +49,29 @@ namespace SCMS.Portal.Web.Services.Foundations.Schools
                 throw CreateAndLogCriticalDependencyException(
                     failedSchoolDependencyException);
             }
+            catch (HttpResponseException httpResponseException)
+            {
+                var failedSchoolDependencyException =
+                    new FailedSchoolDependencyException(
+                        httpResponseException);
+
+                throw CreateAndLogDependencyException(
+                    failedSchoolDependencyException);
+            }
         }
 
         private SchoolDependencyException CreateAndLogCriticalDependencyException(Xeption exception)
         {
             var schoolDependencyException = new SchoolDependencyException(exception);
             this.loggingBroker.LogCritical(schoolDependencyException);
+
+            throw schoolDependencyException;
+        }
+
+        private SchoolDependencyException CreateAndLogDependencyException(Xeption exception)
+        {
+            var schoolDependencyException = new SchoolDependencyException(exception);
+            this.loggingBroker.LogError(schoolDependencyException);
 
             throw schoolDependencyException;
         }
