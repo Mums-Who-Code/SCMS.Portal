@@ -3,7 +3,6 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Moq;
@@ -32,8 +31,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Schools
                     .ThrowsAsync(apiDependencyException);
 
             // when
-            ValueTask<List<School>> retrieveAllSchoolsTask =
-                this.schoolService.RetrieveAllSchoolsAsync();
+            ValueTask<IQueryable<School>> retrieveAllSchoolsTask =
+                this.schoolService.RetrieveAllSchools();
 
             // then
             await Assert.ThrowsAsync<SchoolDependencyException>(() =>
@@ -69,8 +68,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Schools
                     .ThrowsAsync(apiDependencyException);
 
             // when
-            ValueTask<List<School>> retrieveAllSchoolsTask =
-                this.schoolService.RetrieveAllSchoolsAsync();
+            ValueTask<IQueryable<School>> retrieveAllSchoolsTask =
+                this.schoolService.RetrieveAllSchools();
 
             // then
             await Assert.ThrowsAsync<SchoolDependencyException>(() =>
@@ -106,8 +105,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Schools
                     .ThrowsAsync(serviceException);
 
             // when
-            ValueTask<List<School>> retrieveAllSchoolsTask =
-                this.schoolService.RetrieveAllSchoolsAsync();
+            ValueTask<IQueryable<School>> retrieveAllSchoolsTask =
+                this.schoolService.RetrieveAllSchools();
 
             // then
             await Assert.ThrowsAsync<SchoolServiceException>(() =>
