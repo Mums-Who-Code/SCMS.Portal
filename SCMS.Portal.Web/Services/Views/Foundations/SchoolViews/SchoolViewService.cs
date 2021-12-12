@@ -2,29 +2,31 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using SCMS.Portal.Web.Brokers.Apis;
 using SCMS.Portal.Web.Brokers.Loggings;
 using SCMS.Portal.Web.Models.Foundations.Schools;
+using SCMS.Portal.Web.Models.Views.Foundations.SchoolViews;
+using SCMS.Portal.Web.Services.Foundations.Schools;
 
-namespace SCMS.Portal.Web.Services.Foundations.Schools
+namespace SCMS.Portal.Web.Services.Views.Foundations.SchoolViews
 {
-    public partial class SchoolService : ISchoolService
+    public class SchoolViewService : ISchoolViewService
     {
-        private readonly IApiBroker apiBroker;
+        private readonly ISchoolService schoolService;
         private readonly ILoggingBroker loggingBroker;
 
-        public SchoolService(
-            IApiBroker apiBroker,
+        public SchoolViewService(
+            ISchoolService schoolService,
             ILoggingBroker loggingBroker)
         {
-            this.apiBroker = apiBroker;
+            this.schoolService = schoolService;
             this.loggingBroker = loggingBroker;
         }
 
-        public ValueTask<List<School>> RetrieveAllSchoolsAsync() =>
-        TryCatch(async () => await this.apiBroker.GetAllSchoolsAsync());
+        public ValueTask<List<SchoolView>> RetrieveAllSchoolsAsync() =>
+            throw new NotImplementedException();
     }
 }
