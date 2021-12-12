@@ -10,7 +10,7 @@ using SCMS.Portal.Web.Models.Foundations.Schools;
 
 namespace SCMS.Portal.Web.Services.Foundations.Schools
 {
-    public class SchoolService : ISchoolService
+    public partial class SchoolService : ISchoolService
     {
         private readonly IApiBroker apiBroker;
         private readonly ILoggingBroker loggingBroker;
@@ -23,7 +23,7 @@ namespace SCMS.Portal.Web.Services.Foundations.Schools
             this.loggingBroker = loggingBroker;
         }
 
-        public async ValueTask<IQueryable<School>> RetrieveAllSchools() =>
-            await this.apiBroker.GetAllSchoolsAsync();
+        public ValueTask<IQueryable<School>> RetrieveAllSchools() =>
+        TryCatch(async() => await this.apiBroker.GetAllSchoolsAsync());
     }
 }
