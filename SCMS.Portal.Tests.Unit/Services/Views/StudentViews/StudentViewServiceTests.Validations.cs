@@ -59,13 +59,15 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
         [InlineData("")]
         [InlineData("   ")]
         public async Task ShouldThrowValidationExceptionOnAddIfStudentViewIsInvalidAndLogItAsync(
-            string invalidFirstName)
+            string invalidText)
         {
             //given
             StudentView invalidStudentView = new StudentView
             {
-                FirstName = invalidFirstName,
+                FirstName = invalidText,
+                LastName = invalidText,
                 DateOfBirth = default,
+                Gender = GetValidEnum<StudentGenderView>()
             };
 
             var invalidStudentViewException = new InvalidStudentViewException();
@@ -81,6 +83,10 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
             invalidStudentViewException.AddData(
                 key: nameof(StudentView.DateOfBirth),
                 values: "Date is required.");
+
+            invalidStudentViewException.AddData(
+                key: nameof(StudentView.SchoolId),
+                values: "Id is required.");
 
             var expectedStudentViewValidationException =
                 new StudentViewValidationException(invalidStudentViewException);
