@@ -23,7 +23,7 @@ namespace SCMS.Portal.Web.Services.Foundations.Schools
             this.loggingBroker = loggingBroker;
         }
 
-        public ValueTask<IQueryable<School>> RetrieveAllSchools() =>
-            throw new System.NotImplementedException();
+        public async ValueTask<IQueryable<School>> RetrieveAllSchools() =>
+            await this.apiBroker.GetAllSchoolsAsync();
     }
 }
