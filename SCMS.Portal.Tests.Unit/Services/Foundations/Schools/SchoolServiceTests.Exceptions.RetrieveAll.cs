@@ -87,5 +87,42 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Schools
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.apiBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnRetrieveAllIfServiceErrorOccursAndLogItAsync()
+        {
+            // given
+            var serviceException = new Exception();
+
+            var failedSchoolServiceException =
+                new FailedSchoolServiceException(serviceException);
+
+            var expectedSchoolServiceException =
+                new SchoolServiceException(failedSchoolServiceException);
+
+            this.apiBrokerMock.Setup(broker =>
+                broker.GetAllSchoolsAsync())
+                    .ThrowsAsync(serviceException);
+
+            // when
+            ValueTask<IQueryable<School>> retrieveAllSchoolsTask =
+                this.schoolService.RetrieveAllSchools();
+
+            // then
+            await Assert.ThrowsAsync<SchoolServiceException>(() =>
+               retrieveAllSchoolsTask.AsTask());
+
+            this.apiBrokerMock.Verify(broker =>
+                broker.GetAllSchoolsAsync(),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedSchoolServiceException))),
+                        Times.Once);
+
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.apiBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
