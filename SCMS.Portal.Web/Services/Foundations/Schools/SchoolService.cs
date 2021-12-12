@@ -3,6 +3,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using SCMS.Portal.Web.Brokers.Apis;
 using SCMS.Portal.Web.Brokers.Loggings;

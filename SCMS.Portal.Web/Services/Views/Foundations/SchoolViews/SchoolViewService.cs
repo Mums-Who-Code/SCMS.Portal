@@ -26,19 +26,7 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.SchoolViews
             this.loggingBroker = loggingBroker;
         }
 
-        public async ValueTask<List<SchoolView>> RetrieveAllSchoolsAsync()
-        {
-            List<School> schools =
-                await this.schoolService.RetrieveAllSchoolsAsync();
-
-            return schools.Select(AsSchoolView).ToList();
-        }
-
-        private static Func<School, SchoolView> AsSchoolView =>
-            school => new SchoolView
-            {
-                Id = school.Id,
-                Name = school.Name
-            };
+        public ValueTask<List<SchoolView>> RetrieveAllSchoolsAsync() =>
+            throw new NotImplementedException();
     }
 }
