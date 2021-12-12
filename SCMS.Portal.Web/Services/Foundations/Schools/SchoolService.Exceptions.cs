@@ -59,7 +59,7 @@ namespace SCMS.Portal.Web.Services.Foundations.Schools
                 throw CreateAndLogDependencyException(
                     failedSchoolDependencyException);
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 var failedSchoolServiceException =
                     new FailedSchoolServiceException(exception);
