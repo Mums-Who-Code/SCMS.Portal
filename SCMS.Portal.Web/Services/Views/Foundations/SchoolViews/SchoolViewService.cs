@@ -26,8 +26,8 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.SchoolViews
             this.loggingBroker = loggingBroker;
         }
 
-        public ValueTask<List<SchoolView>> RetrieveAllSchoolViewsAsync() =>
-        TryCatch(async () =>
+        public ValueTask<List<SchoolView>> RetrieveAllSchoolsAsync() =>
+        TryCatch(async() =>
         {
             List<School> schools =
                 await this.schoolService.RetrieveAllSchoolsAsync();

@@ -4,10 +4,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using SCMS.Portal.Web.Brokers.Loggings;
+using SCMS.Portal.Web.Models.Foundations.Schools;
 using SCMS.Portal.Web.Models.Foundations.Schools.Exceptions;
 using SCMS.Portal.Web.Models.Views.Foundations.SchoolViews;
 using SCMS.Portal.Web.Models.Views.Foundations.SchoolViews.Exceptions;
+using SCMS.Portal.Web.Services.Foundations.Schools;
 using Xeptions;
 
 namespace SCMS.Portal.Web.Services.Views.Foundations.SchoolViews
@@ -27,18 +31,10 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.SchoolViews
                 throw CreateAndLogDependencyException(
                     schoolDependencyException);
             }
-            catch (SchoolServiceException schoolServiceException)
+            catch(SchoolServiceException schoolServiceException)
             {
                 throw CreateAndLogDependencyException(
                     schoolServiceException);
-            }
-            catch (Exception exception)
-            {
-                var failedSchoolViewServiceException =
-                    new FailedSchoolViewServiceException(exception);
-
-                throw CreateAndLogServiceException(
-                    failedSchoolViewServiceException);
             }
         }
 
@@ -48,14 +44,6 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.SchoolViews
             this.loggingBroker.LogError(schoolViewDependencyException);
 
             return schoolViewDependencyException;
-        }
-
-        private SchoolViewServiceException CreateAndLogServiceException(Xeption exception)
-        {
-            var schoolViewServiceException = new SchoolViewServiceException(exception);
-            this.loggingBroker.LogError(schoolViewServiceException);
-
-            return schoolViewServiceException;
         }
     }
 }

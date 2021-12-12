@@ -52,7 +52,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.SchoolViews
 
             // when
             List<SchoolView> actualSchoolViews =
-                await this.schoolViewService.RetrieveAllSchoolViewsAsync();
+                await this.schoolViewService.RetrieveAllSchoolsAsync();
 
             // then
             actualSchoolViews.Should().BeEquivalentTo(expectedSchoolViews);
