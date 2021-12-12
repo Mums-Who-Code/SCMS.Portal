@@ -5,11 +5,11 @@
 using System.Threading.Tasks;
 using Moq;
 using SCMS.Portal.Web.Models.Foundations.Students;
-using SCMS.Portal.Web.Models.Views.StudentViews;
-using SCMS.Portal.Web.Models.Views.StudentViews.Exceptions;
+using SCMS.Portal.Web.Models.Views.Foundations.StudentViews;
+using SCMS.Portal.Web.Models.Views.Foundations.StudentViews.Exceptions;
 using Xunit;
 
-namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
+namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.StudentViews
 {
     public partial class StudentViewServiceTests
     {

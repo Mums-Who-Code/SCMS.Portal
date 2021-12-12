@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using SCMS.Portal.Web.Brokers.DateTimes;
 using SCMS.Portal.Web.Brokers.Loggings;
 using SCMS.Portal.Web.Models.Foundations.Students;
-using SCMS.Portal.Web.Models.Views.StudentViews;
+using SCMS.Portal.Web.Models.Views.Foundations.StudentViews;
 using SCMS.Portal.Web.Services.Foundations.Students;
 using SCMS.Portal.Web.Services.Foundations.Users;
 
-namespace SCMS.Portal.Web.Services.Views.StudentViews
+namespace SCMS.Portal.Web.Services.Views.Foundations.StudentViews
 {
     public partial class StudentViewService : IStudentViewService
     {
@@ -54,7 +54,7 @@ namespace SCMS.Portal.Web.Services.Views.StudentViews
                 FirstName = studentView.FirstName,
                 LastName = studentView.LastName,
                 DateOfBirth = studentView.DateOfBirth,
-                Gender = (StudentGender) studentView.Gender,
+                Gender = (StudentGender)studentView.Gender,
                 FideId = studentView.FideId,
                 Notes = studentView.Notes,
                 SchoolId = studentView.SchoolId,

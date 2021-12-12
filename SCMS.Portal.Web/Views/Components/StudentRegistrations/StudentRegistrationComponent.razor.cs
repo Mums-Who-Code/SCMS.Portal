@@ -6,9 +6,9 @@ using System;
 using Microsoft.AspNetCore.Components;
 using SCMS.Portal.Web.Models.Views.Components.Colors;
 using SCMS.Portal.Web.Models.Views.Components.Containers;
-using SCMS.Portal.Web.Models.Views.StudentViews;
-using SCMS.Portal.Web.Models.Views.StudentViews.Exceptions;
-using SCMS.Portal.Web.Services.Views.StudentViews;
+using SCMS.Portal.Web.Models.Views.Foundations.StudentViews;
+using SCMS.Portal.Web.Models.Views.Foundations.StudentViews.Exceptions;
+using SCMS.Portal.Web.Services.Views.Foundations.StudentViews;
 using SCMS.Portal.Web.Views.Bases.Buttons;
 using SCMS.Portal.Web.Views.Bases.DatePickers;
 using SCMS.Portal.Web.Views.Bases.Labels;
@@ -70,7 +70,7 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
                 ApplyRegistrationFailed(
                     studentViewDependencyException.Message);
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 ApplyRegistrationFailed(
                     exception.Message);

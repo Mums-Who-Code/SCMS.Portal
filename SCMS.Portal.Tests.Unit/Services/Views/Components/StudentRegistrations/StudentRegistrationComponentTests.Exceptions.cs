@@ -7,7 +7,7 @@ using Bunit;
 using FluentAssertions;
 using Moq;
 using SCMS.Portal.Web.Models.Views.Components.Colors;
-using SCMS.Portal.Web.Models.Views.StudentViews;
+using SCMS.Portal.Web.Models.Views.Foundations.StudentViews;
 using SCMS.Portal.Web.Views.Components.StudentRegistrations;
 using Xeptions;
 using Xunit;

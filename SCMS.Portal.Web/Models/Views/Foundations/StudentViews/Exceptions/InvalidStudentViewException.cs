@@ -4,7 +4,7 @@
 
 using Xeptions;
 
-namespace SCMS.Portal.Web.Models.Views.StudentViews.Exceptions
+namespace SCMS.Portal.Web.Models.Views.Foundations.StudentViews.Exceptions
 {
     public class InvalidStudentViewException : Xeption
     {

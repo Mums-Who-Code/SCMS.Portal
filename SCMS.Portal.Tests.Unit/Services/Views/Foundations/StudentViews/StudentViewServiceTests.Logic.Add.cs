@@ -8,10 +8,10 @@ using FluentAssertions;
 using Force.DeepCloner;
 using Moq;
 using SCMS.Portal.Web.Models.Foundations.Students;
-using SCMS.Portal.Web.Models.Views.StudentViews;
+using SCMS.Portal.Web.Models.Views.Foundations.StudentViews;
 using Xunit;
 
-namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
+namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.StudentViews
 {
     public partial class StudentViewServiceTests
     {
@@ -32,7 +32,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
                 FirstName = randomStudentViewProperties.FirstName,
                 LastName = randomStudentViewProperties.LastName,
                 DateOfBirth = randomStudentViewProperties.DateOfBirth,
-                Gender = (StudentGenderView) randomStudentViewProperties.Gender,
+                Gender = (StudentGenderView)randomStudentViewProperties.Gender,
                 SchoolId = randomStudentViewProperties.SchoolId
             };
 
@@ -45,7 +45,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
                 FirstName = randomStudentViewProperties.FirstName,
                 LastName = randomStudentViewProperties.LastName,
                 DateOfBirth = randomStudentViewProperties.DateOfBirth,
-                Gender = (StudentGender) randomStudentViewProperties.Gender,
+                Gender = (StudentGender)randomStudentViewProperties.Gender,
                 SchoolId = randomStudentViewProperties.SchoolId,
                 Status = randomStudentViewProperties.Status,
                 CreatedDate = randomStudentViewProperties.CreatedDate,

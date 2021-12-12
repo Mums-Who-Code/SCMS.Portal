@@ -3,9 +3,8 @@
 // -----------------------------------------------------------------------
 
 using System;
-using SCMS.Portal.Web.Models.Foundations.Students;
 
-namespace SCMS.Portal.Web.Models.Views.StudentViews
+namespace SCMS.Portal.Web.Models.Views.Foundations.StudentViews
 {
     public class StudentView
     {
