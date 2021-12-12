@@ -31,7 +31,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.SchoolViews
 
             // when
             ValueTask<List<SchoolView>> retrieveAllSchoolViewsTask =
-                this.schoolViewService.RetrieveAllSchoolsAsync();
+                this.schoolViewService.RetrieveAllSchoolViewsAsync();
 
             // then
             await Assert.ThrowsAsync<SchoolViewDependencyException>(() =>
@@ -70,7 +70,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.SchoolViews
 
             // when
             ValueTask<List<SchoolView>> retrieveAllSchoolViewsTask =
-                this.schoolViewService.RetrieveAllSchoolsAsync();
+                this.schoolViewService.RetrieveAllSchoolViewsAsync();
 
             // then
             await Assert.ThrowsAsync<SchoolViewServiceException>(() =>
