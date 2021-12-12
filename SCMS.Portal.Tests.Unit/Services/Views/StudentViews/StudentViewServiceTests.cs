@@ -3,6 +3,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using KellermanSoftware.CompareNetObjects;
 using Moq;
@@ -78,11 +79,33 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.StudentViews
                 LastName = GetRandomLastName(),
                 DateOfBirth = GetRandomDate(),
                 Status = StudentStatus.Active,
+                Gender = GetValidEnum<StudentGender>(),
+                SchoolId = Guid.NewGuid(),
                 CreatedDate = auditDates,
                 UpdatedDate = auditDates,
                 CreatedBy = auditIds,
                 UpdatedBy = auditIds,
             };
+        }
+
+        private static T GetValidEnum<T>()
+        {
+            int randomNumber = GetLocalRandomNumber();
+
+            while (Enum.IsDefined(typeof(T), randomNumber) is false)
+            {
+                randomNumber = GetLocalRandomNumber();
+            }
+
+            return (T)(object)randomNumber;
+
+            static int GetLocalRandomNumber()
+            {
+                return new IntRange(
+                    min: Enum.GetValues(typeof(T)).Cast<int>().Min(),
+                    max: Enum.GetValues(typeof(T)).Cast<int>().Max())
+                        .GetValue();
+            }
         }
 
         private Expression<Func<Student, bool>> SameStudentAs(Student expectedStudent)
