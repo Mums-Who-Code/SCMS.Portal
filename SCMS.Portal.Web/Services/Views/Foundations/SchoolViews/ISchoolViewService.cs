@@ -6,14 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SCMS.Portal.Web.Models.Foundations.Schools;
+using SCMS.Portal.Web.Models.Views.Foundations.SchoolViews;
 
-namespace SCMS.Portal.Web.Brokers.Apis
+namespace SCMS.Portal.Web.Services.Views.Foundations.SchoolViews
 {
-    public partial class ApiBroker : IApiBroker
+    public interface ISchoolViewService
     {
-        private const string SchoolsRelativeUrl = "api/schools";
-
-        public async ValueTask<List<School>> GetAllSchoolsAsync() =>
-            await this.GetAsync<List<School>>(SchoolsRelativeUrl);
+        ValueTask<List<SchoolView>> RetrieveAllSchoolsAsync();
     }
 }

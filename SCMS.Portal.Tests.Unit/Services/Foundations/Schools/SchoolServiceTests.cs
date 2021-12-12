@@ -3,6 +3,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Http;
@@ -101,10 +102,10 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Schools
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();
 
-        private static IQueryable<School> CreateRandomSchools()
+        private static List<School> CreateRandomSchools()
         {
             return CreateRandomSchoolFiller()
-                .Create(count: GetRandomNumber()).AsQueryable();
+                .Create(count: GetRandomNumber()).ToList();
         }
 
         private static Filler<School> CreateRandomSchoolFiller()
