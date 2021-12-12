@@ -2,7 +2,7 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
@@ -17,17 +17,17 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Schools
         public async Task ShouldRetrieveAllSchools()
         {
             // given
-            IQueryable<School> randomSchools = CreateRandomSchools();
-            IQueryable<School> retrievedSchools = randomSchools;
-            IQueryable<School> expectedSchools = retrievedSchools;
+            List<School> randomSchools = CreateRandomSchools();
+            List<School> retrievedSchools = randomSchools;
+            List<School> expectedSchools = retrievedSchools;
 
             this.apiBrokerMock.Setup(broker =>
                 broker.GetAllSchoolsAsync())
                     .ReturnsAsync(retrievedSchools);
 
             // when
-            IQueryable<School> actualSchools =
-                await this.schoolService.RetrieveAllSchools();
+            List<School> actualSchools =
+                await this.schoolService.RetrieveAllSchoolsAsync();
 
             // then
             actualSchools.Should().BeEquivalentTo(expectedSchools);

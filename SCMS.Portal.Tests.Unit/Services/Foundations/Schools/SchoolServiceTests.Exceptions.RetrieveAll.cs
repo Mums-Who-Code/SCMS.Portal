@@ -3,7 +3,7 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Moq;
 using SCMS.Portal.Web.Models.Foundations.Schools;
@@ -31,8 +31,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Schools
                     .ThrowsAsync(apiDependencyException);
 
             // when
-            ValueTask<IQueryable<School>> retrieveAllSchoolsTask =
-                this.schoolService.RetrieveAllSchools();
+            ValueTask<List<School>> retrieveAllSchoolsTask =
+                this.schoolService.RetrieveAllSchoolsAsync();
 
             // then
             await Assert.ThrowsAsync<SchoolDependencyException>(() =>
@@ -68,8 +68,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Schools
                     .ThrowsAsync(apiDependencyException);
 
             // when
-            ValueTask<IQueryable<School>> retrieveAllSchoolsTask =
-                this.schoolService.RetrieveAllSchools();
+            ValueTask<List<School>> retrieveAllSchoolsTask =
+                this.schoolService.RetrieveAllSchoolsAsync();
 
             // then
             await Assert.ThrowsAsync<SchoolDependencyException>(() =>
@@ -105,8 +105,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Schools
                     .ThrowsAsync(serviceException);
 
             // when
-            ValueTask<IQueryable<School>> retrieveAllSchoolsTask =
-                this.schoolService.RetrieveAllSchools();
+            ValueTask<List<School>> retrieveAllSchoolsTask =
+                this.schoolService.RetrieveAllSchoolsAsync();
 
             // then
             await Assert.ThrowsAsync<SchoolServiceException>(() =>

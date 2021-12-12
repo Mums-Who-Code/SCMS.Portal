@@ -3,7 +3,7 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using RESTFulSense.Exceptions;
@@ -15,9 +15,9 @@ namespace SCMS.Portal.Web.Services.Foundations.Schools
 {
     public partial class SchoolService
     {
-        private delegate ValueTask<IQueryable<School>> RetunringSchoolsFunction();
+        private delegate ValueTask<List<School>> RetunringSchoolsFunction();
 
-        private async ValueTask<IQueryable<School>> TryCatch(RetunringSchoolsFunction retunringSchoolsFunction)
+        private async ValueTask<List<School>> TryCatch(RetunringSchoolsFunction retunringSchoolsFunction)
         {
             try
             {

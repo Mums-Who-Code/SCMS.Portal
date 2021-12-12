@@ -4,12 +4,12 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SCMS.Portal.Web.Models.Foundations.Schools;
+using SCMS.Portal.Web.Models.Views.Foundations.SchoolViews;
 
-namespace SCMS.Portal.Web.Brokers.Apis
+namespace SCMS.Portal.Web.Services.Views.Foundations.SchoolViews
 {
-    public partial interface IApiBroker
+    public interface ISchoolViewService
     {
-        ValueTask<List<School>> GetAllSchoolsAsync();
+        ValueTask<List<SchoolView>> RetrieveAllSchoolViewsAsync();
     }
 }

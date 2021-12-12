@@ -2,7 +2,7 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using SCMS.Portal.Web.Brokers.Apis;
 using SCMS.Portal.Web.Brokers.Loggings;
@@ -23,7 +23,7 @@ namespace SCMS.Portal.Web.Services.Foundations.Schools
             this.loggingBroker = loggingBroker;
         }
 
-        public ValueTask<IQueryable<School>> RetrieveAllSchools() =>
+        public ValueTask<List<School>> RetrieveAllSchoolsAsync() =>
         TryCatch(async () => await this.apiBroker.GetAllSchoolsAsync());
     }
 }
