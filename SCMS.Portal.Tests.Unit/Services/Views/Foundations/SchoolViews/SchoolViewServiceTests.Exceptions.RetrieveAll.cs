@@ -21,13 +21,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.SchoolViews
             Xeption dependencyException)
         {
             // given
-            var failedSchoolViewDependencyException =
-                new FailedSchoolViewDependencyException(
-                    dependencyException);
-
             var expectedSchoolViewDependencyException =
                 new SchoolViewDependencyException(
-                    failedSchoolViewDependencyException);
+                    dependencyException);
 
             this.schoolServiceMock.Setup(service =>
                 service.RetrieveAllSchoolsAsync())
