@@ -24,6 +24,6 @@ namespace SCMS.Portal.Web.Services.Foundations.Schools
         }
 
         public ValueTask<IQueryable<School>> RetrieveAllSchools() =>
-        TryCatch(async() => await this.apiBroker.GetAllSchoolsAsync());
+        TryCatch(async () => await this.apiBroker.GetAllSchoolsAsync());
     }
 }

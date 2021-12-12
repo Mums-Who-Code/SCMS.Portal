@@ -2,14 +2,10 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
-using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using RESTFulSense.Exceptions;
-using SCMS.Portal.Web.Brokers.Apis;
-using SCMS.Portal.Web.Brokers.Loggings;
 using SCMS.Portal.Web.Models.Foundations.Schools;
 using SCMS.Portal.Web.Models.Foundations.Schools.Exceptions;
 using Xeptions;
