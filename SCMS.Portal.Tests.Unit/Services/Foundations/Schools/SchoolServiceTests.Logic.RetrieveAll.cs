@@ -13,8 +13,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Schools
 {
     public partial class SchoolServiceTests
     {
-        [Fact]
-        public async Task ShouldRetrieveAllSchoolsAsync()
+        [Theory]
+        public async Task ShouldThrowDependencyExceptionOnRetrieveAllIfDependencyErrorOccursAndLogItAsync()
         {
             // given
             IQueryable<School> randomSchools = CreateRandomSchools();

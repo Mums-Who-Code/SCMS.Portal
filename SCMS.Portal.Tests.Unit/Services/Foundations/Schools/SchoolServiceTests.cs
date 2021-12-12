@@ -4,12 +4,17 @@
 
 using System;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Net.Http;
 using Moq;
+using RESTFulSense.Exceptions;
 using SCMS.Portal.Web.Brokers.Apis;
 using SCMS.Portal.Web.Brokers.Loggings;
 using SCMS.Portal.Web.Models.Foundations.Schools;
 using SCMS.Portal.Web.Services.Foundations.Schools;
 using Tynamix.ObjectFiller;
+using Xeptions;
+using Xunit;
 
 namespace SCMS.Portal.Tests.Unit.Services.Foundations.Schools
 {
@@ -28,6 +33,45 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Schools
                 apiBroker: this.apiBrokerMock.Object,
                 loggingBroker: this.loggingBrokerMock.Object);
         }
+
+        public static TheoryData CriticalDependencyExceptions()
+        {
+            string someMessage = GetRandomMessage();
+
+            var httpResponseMessage =
+                new HttpResponseMessage();
+
+            var httpRequestException =
+                new HttpRequestException();
+
+            var httpReponseUrlNotFoundException =
+                new HttpResponseUrlNotFoundException(
+                    httpResponseMessage,
+                    someMessage);
+
+            var unauthorizedHttpResponseException =
+                new HttpResponseUnauthorizedException(
+                    httpResponseMessage,
+                    someMessage);
+
+            return new TheoryData<Exception>
+            {
+                httpRequestException,
+                httpReponseUrlNotFoundException,
+                unauthorizedHttpResponseException
+            };
+        }
+
+        private static Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException)
+        {
+            return actualException =>
+                actualException.Message == expectedException.Message
+                && actualException.InnerException.Message == expectedException.InnerException.Message
+                && (actualException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data);
+        }
+
+        private static string GetRandomMessage() =>
+            new MnemonicString().GetValue();
 
         private static DateTimeOffset GetRandomDateTime() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
