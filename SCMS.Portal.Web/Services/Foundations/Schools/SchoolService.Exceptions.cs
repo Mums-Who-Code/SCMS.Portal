@@ -2,6 +2,7 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
+using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -58,6 +59,14 @@ namespace SCMS.Portal.Web.Services.Foundations.Schools
                 throw CreateAndLogDependencyException(
                     failedSchoolDependencyException);
             }
+            catch(Exception exception)
+            {
+                var failedSchoolServiceException =
+                    new FailedSchoolServiceException(exception);
+
+                throw CreateAndLogServiceException(
+                    failedSchoolServiceException);
+            }
         }
 
         private SchoolDependencyException CreateAndLogCriticalDependencyException(Xeption exception)
@@ -74,6 +83,14 @@ namespace SCMS.Portal.Web.Services.Foundations.Schools
             this.loggingBroker.LogError(schoolDependencyException);
 
             throw schoolDependencyException;
+        }
+
+        private SchoolServiceException CreateAndLogServiceException(Xeption exception)
+        {
+            var schoolServiceException = new SchoolServiceException(exception);
+            this.loggingBroker.LogError(schoolServiceException);
+
+            throw schoolServiceException;
         }
     }
 }
