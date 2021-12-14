@@ -20,6 +20,7 @@ using SCMS.Portal.Web.Services.Foundations.Students;
 using SCMS.Portal.Web.Services.Foundations.Users;
 using SCMS.Portal.Web.Services.Views.Foundations.SchoolViews;
 using SCMS.Portal.Web.Services.Views.Foundations.StudentViews;
+using SCMS.Portal.Web.Services.Views.Processings.SchoolViews;
 using Syncfusion.Blazor;
 using Syncfusion.Licensing;
 
@@ -98,11 +99,25 @@ namespace SCMS.Portal.Web
 
         private static void AddServices(IServiceCollection services)
         {
+            AddFoundationServices(services);
+            AddViewServices(services);
+            AddProcessingViewServices(services);
+        }
+
+        private static void AddFoundationServices(IServiceCollection services)
+        {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IStudentService, StudentService>();
-            services.AddScoped<IStudentViewService, StudentViewService>();
             services.AddScoped<ISchoolService, SchoolService>();
+        }
+
+        private static void AddViewServices(IServiceCollection services)
+        {
+            services.AddScoped<IStudentViewService, StudentViewService>();
             services.AddScoped<ISchoolViewService, SchoolViewService>();
         }
+
+        private static void AddProcessingViewServices(IServiceCollection services) =>
+            services.AddScoped<ISchoolViewProcessingService, SchoolViewProcessingService>();
     }
 }
