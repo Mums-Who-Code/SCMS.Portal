@@ -23,7 +23,7 @@ namespace SCMS.Portal.Web.Services.Views.Processings.SchoolViews
             this.loggingBroker = loggingBroker;
         }
 
-        public ValueTask<List<SchoolView>> RetrieveAllSchoolViewsAsync() =>
-            throw new System.NotImplementedException();
+        public async ValueTask<List<SchoolView>> RetrieveAllSchoolViewsAsync() =>
+            await this.schoolViewService.RetrieveAllSchoolViewsAsync();
     }
 }
