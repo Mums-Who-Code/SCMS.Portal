@@ -10,7 +10,7 @@ using SCMS.Portal.Web.Services.Views.Foundations.SchoolViews;
 
 namespace SCMS.Portal.Web.Services.Views.Processings.SchoolViews
 {
-    public class SchoolViewProcessingService : ISchoolViewProcessingService
+    public partial class SchoolViewProcessingService : ISchoolViewProcessingService
     {
         private readonly ISchoolViewService schoolViewService;
         private readonly ILoggingBroker loggingBroker;
@@ -23,7 +23,7 @@ namespace SCMS.Portal.Web.Services.Views.Processings.SchoolViews
             this.loggingBroker = loggingBroker;
         }
 
-        public async ValueTask<List<SchoolView>> RetrieveAllSchoolViewsAsync() =>
-            await this.schoolViewService.RetrieveAllSchoolViewsAsync();
+        public ValueTask<List<SchoolView>> RetrieveAllSchoolViewsAsync() =>
+        TryCatch(async () => await this.schoolViewService.RetrieveAllSchoolViewsAsync());
     }
 }
