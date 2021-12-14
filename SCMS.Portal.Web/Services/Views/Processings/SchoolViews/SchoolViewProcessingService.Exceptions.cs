@@ -2,6 +2,7 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SCMS.Portal.Web.Models.Views.Foundations.SchoolViews;
@@ -29,6 +30,13 @@ namespace SCMS.Portal.Web.Services.Views.Processings.SchoolViews
             {
                 throw CreateAndLogDependencyException(schoolViewServiceException);
             }
+            catch (Exception exception)
+            {
+                var failedSchoolViewProcessingException =
+                    new FailedSchoolViewProcessingException(exception);
+
+                throw CreateAndLogServiceException(failedSchoolViewProcessingException);
+            }
         }
 
         private SchoolViewProcessingDependencyException CreateAndLogDependencyException(Xeption exception)
@@ -39,6 +47,16 @@ namespace SCMS.Portal.Web.Services.Views.Processings.SchoolViews
             this.loggingBroker.LogError(schoolViewProcessingDependencyException);
 
             throw schoolViewProcessingDependencyException;
+        }
+
+        private SchoolViewProcessingServiceException CreateAndLogServiceException(Xeption exception)
+        {
+            var schoolViewProcessingServiceException =
+                new SchoolViewProcessingServiceException(exception);
+
+            this.loggingBroker.LogError(schoolViewProcessingServiceException);
+
+            throw schoolViewProcessingServiceException;
         }
     }
 }

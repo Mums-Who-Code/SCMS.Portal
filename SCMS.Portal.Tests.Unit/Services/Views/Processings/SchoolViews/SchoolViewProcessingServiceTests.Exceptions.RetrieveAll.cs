@@ -61,7 +61,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Processings.SchoolViews
 
             var expectedSchoolViewProcessingServiceException =
                 new SchoolViewProcessingServiceException(
-                    failedSchoolViewProcessingException.InnerException as Xeption);
+                    failedSchoolViewProcessingException);
 
             this.schoolViewServiceMock.Setup(service =>
                 service.RetrieveAllSchoolViewsAsync())
