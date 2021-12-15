@@ -2,14 +2,16 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 
 namespace SCMS.Portal.Web.Views.Bases.Dropdowns.AutoCompletes
 {
-    public partial class DropdownAutoCompleteBase<TClass> : ComponentBase
+    public partial class DropdownAutoCompleteBase<T> : ComponentBase
     {
         [Parameter]
         public string Placeholder { get; set; }
@@ -20,13 +22,15 @@ namespace SCMS.Portal.Web.Views.Bases.Dropdowns.AutoCompletes
         private bool IsEnabled => IsDisabled is false;
 
         [Parameter]
-        public List<TClass> Items { get; set; }
+        public List<T> Items { get; set; }
 
         [Parameter]
         public string Value { get; set; }
 
         [Parameter]
         public EventCallback<string> ValueChanged { get; set; }
+
+        public SfAutoComplete<string, T> SfAutoComplete { get; set; }
 
         public async Task SetValue(string value)
         {
@@ -35,7 +39,7 @@ namespace SCMS.Portal.Web.Views.Bases.Dropdowns.AutoCompletes
         }
 
         public async Task OnValueChanged(
-            ChangeEventArgs<string, TClass> changeEventArgs)
+            ChangeEventArgs<string, T> changeEventArgs)
         {
             await SetValue(changeEventArgs.Value);
         }
@@ -50,6 +54,25 @@ namespace SCMS.Portal.Web.Views.Bases.Dropdowns.AutoCompletes
         {
             this.IsDisabled = false;
             InvokeAsync(StateHasChanged);
+        }
+
+        private async Task OnFilter(FilteringEventArgs args)
+        {
+            args.PreventDefaultAction = true;
+            var orPredicateForQueryFilter = new List<WhereFilter>();
+
+            orPredicateForQueryFilter.Add(new WhereFilter()
+            {
+                Field = "Name",
+                Operator = "contains",
+                value = args.Text,
+                IgnoreCase = true
+            });
+
+            WhereFilter orQueryFilter = WhereFilter.Or(orPredicateForQueryFilter);
+            var query = new Query().Where(orQueryFilter);
+            query = String.IsNullOrEmpty(args.Text) == false ? query : new Query();
+            await SfAutoComplete.Filter(Items, query);
         }
     }
 }

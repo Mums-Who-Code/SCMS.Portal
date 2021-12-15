@@ -1,13 +1,19 @@
 ﻿@using Syncfusion.Blazor.DropDowns;
-@typeparam TClass
+@typeparam T
 
 <SfAutoComplete TValue="@string"
-                TItem="@TClass"
+                TItem="@T"
                 Placeholder="@Placeholder"
                 FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Auto"
                 Enabled="@IsEnabled"
-                DataSource="@Items">
+                DataSource="@Items"
+                AllowFiltering="@true"
+                @ref="@SfAutoComplete">
 
-    <AutoCompleteEvents TItem="@TClass" TValue="@string" ValueChange="@OnValueChanged"/>
-    <AutoCompleteFieldSettings Text="Name" Value="ID"></AutoCompleteFieldSettings>
+    <AutoCompleteEvents TItem="@T" 
+                        TValue="@string" 
+                        ValueChange="@OnValueChanged"
+                        Filtering="@OnFilter"/>
+
+    <AutoCompleteFieldSettings Text="Name" Value="Id"/>
 </SfAutoComplete>
