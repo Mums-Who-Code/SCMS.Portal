@@ -15,6 +15,9 @@ namespace SCMS.Portal.Web.Views.Bases.DatePickers
         public DateTimeOffset Value { get; set; }
 
         [Parameter]
+        public string Placeholder { get; set; }
+
+        [Parameter]
         public EventCallback<DateTimeOffset> ValueChanged { get; set; }
 
         [Parameter]
