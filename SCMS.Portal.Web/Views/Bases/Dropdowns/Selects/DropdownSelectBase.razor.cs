@@ -8,12 +8,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.DropDowns;
 
-namespace SCMS.Portal.Web.Views.Bases.Dropdowns.Constants
+namespace SCMS.Portal.Web.Views.Bases.Dropdowns.Selects
 {
-    public partial class Dropdown<TEnum> : ComponentBase
+    public partial class DropdownSelectBase<TEnum> : ComponentBase
     {
         [Parameter]
         public TEnum Value { get; set; }
+
+        [Parameter]
+        public string Placeholder { get; set; }
 
         [Parameter]
         public EventCallback<TEnum> ValueChanged { get; set; }
@@ -30,6 +33,9 @@ namespace SCMS.Portal.Web.Views.Bases.Dropdowns.Constants
             this.Value = value;
             await ValueChanged.InvokeAsync(value);
         }
+
+        public void SetPlaceholder(string value) =>
+            this.Placeholder = value;
 
         public async Task OnValueChanged(
             ChangeEventArgs<TEnum, string> changeEventArgs)
