@@ -1,8 +1,12 @@
 ﻿@using Syncfusion.Blazor.Calendars
+@using Syncfusion.Blazor.Inputs
 
-<SfDateTimePicker TValue=@DateTimeOffset
-				  Enabled=@IsEnabled>
+<SfDatePicker TValue=@DateTimeOffset
+				  Enabled=@IsEnabled
+				  Placeholder=@Placeholder
+				  FloatLabelType=FloatLabelType.Auto
+				  Format="dd-MMM-yyyy">
 
-	<DateTimePickerEvents TValue=@DateTimeOffset
+	<DatePickerEvents TValue=@DateTimeOffset
 						  ValueChange=@OnValueChanged />
-</SfDateTimePicker>
+</SfDatePicker>
