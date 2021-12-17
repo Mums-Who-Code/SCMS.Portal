@@ -28,7 +28,13 @@ namespace SCMS.Portal.Web.Views.Bases.Dropdowns.AutoCompletes
         public string Value { get; set; }
 
         [Parameter]
+        public T SelectedItem { get; set; }
+
+        [Parameter]
         public EventCallback<string> ValueChanged { get; set; }
+
+        [Parameter]
+        public EventCallback<T> SelectedItemChanged { get; set; }
 
         public SfAutoComplete<string, T> SfAutoComplete { get; set; }
 
@@ -38,10 +44,22 @@ namespace SCMS.Portal.Web.Views.Bases.Dropdowns.AutoCompletes
             await ValueChanged.InvokeAsync(value);
         }
 
+        public async Task SetSelectedItem(T item)
+        {
+            this.SelectedItem = item;
+            await SelectedItemChanged.InvokeAsync(item);
+        }
+
         public async Task OnValueChanged(
             ChangeEventArgs<string, T> changeEventArgs)
         {
             await SetValue(changeEventArgs.Value);
+        }
+
+        public async Task OnValueSelected(
+            SelectEventArgs<T> selectEventArgs)
+        {
+            await SetSelectedItem(selectEventArgs.ItemData);
         }
 
         public void Disable()

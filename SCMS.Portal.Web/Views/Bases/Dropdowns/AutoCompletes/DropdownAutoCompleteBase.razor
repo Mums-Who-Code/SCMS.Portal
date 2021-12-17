@@ -11,9 +11,10 @@
                 @ref="@SfAutoComplete">
 
     <AutoCompleteEvents TItem="@T" 
-                        TValue="@string" 
-                        ValueChange="@OnValueChanged"
-                        Filtering="@OnFilter"/>
+                        TValue="@string"
+                        Filtering="@OnFilter"
+                        OnValueSelect="@OnValueSelected"
+                        ValueChange="@OnValueChanged"/>
 
     <AutoCompleteFieldSettings Text="Name" Value="Id"/>
 </SfAutoComplete>

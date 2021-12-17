@@ -16,6 +16,9 @@ namespace SCMS.Portal.Web.Views.Bases.Dropdowns.Selects
         public TEnum Value { get; set; }
 
         [Parameter]
+        public string Placeholder { get; set; }
+
+        [Parameter]
         public EventCallback<TEnum> ValueChanged { get; set; }
 
         [Parameter]
@@ -30,6 +33,9 @@ namespace SCMS.Portal.Web.Views.Bases.Dropdowns.Selects
             this.Value = value;
             await ValueChanged.InvokeAsync(value);
         }
+
+        public void SetPlaceholder(string value) =>
+            this.Placeholder = value;
 
         public async Task OnValueChanged(
             ChangeEventArgs<TEnum, string> changeEventArgs)
