@@ -2,9 +2,13 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
+using System.Collections.Generic;
 using Bunit;
 using FluentAssertions;
+using Force.DeepCloner;
+using Moq;
 using SCMS.Portal.Web.Models.Views.Components.Containers;
+using SCMS.Portal.Web.Models.Views.Foundations.SchoolViews;
 using SCMS.Portal.Web.Views.Components.SchoolSelections;
 using Xunit;
 
@@ -34,6 +38,14 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.SchoolSelections
             // given
             ComponentState expectedComponentState = ComponentState.Content;
 
+            List<SchoolView> randomSchoolViews = CreateRandomSchoolViews();
+            List<SchoolView> returningSchoolViews = randomSchoolViews;
+            List<SchoolView> expectedSchoolViews = returningSchoolViews.DeepClone();
+
+            this.schoolViewServiceMock.Setup(service =>
+                service.RetrieveAllSchoolViewsAsync())
+                    .ReturnsAsync(returningSchoolViews);
+
             string expectedSchoolDropdownPlaceholder = "School";
 
             // when
@@ -51,6 +63,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.SchoolSelections
                 .SchoolViews.Should().NotBeNull();
 
             this.renderedSchoolSelectionComponent.Instance
+                .SchoolViews.Should().BeEquivalentTo(expectedSchoolViews);
+
+            this.renderedSchoolSelectionComponent.Instance
                 .SchoolsDropdown.Should().NotBeNull();
 
             this.renderedSchoolSelectionComponent.Instance
@@ -59,6 +74,10 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.SchoolSelections
 
             this.renderedSchoolSelectionComponent.Instance
                 .SelectedSchool.Should().BeNull();
+
+            this.schoolViewServiceMock.Verify(service =>
+                service.RetrieveAllSchoolViewsAsync(),
+                    Times.Once());
 
             this.schoolViewServiceMock.VerifyNoOtherCalls();
         }

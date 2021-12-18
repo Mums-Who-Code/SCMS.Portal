@@ -1,1 +1,14 @@
-﻿
+﻿@using SCMS.Portal.Web.Models.Views.Foundations.SchoolViews
+@using SCMS.Portal.Web.Views.Components.Containers
+@using SCMS.Portal.Web.Views.Bases.Dropdowns.AutoCompletes
+
+<ContainerComponent State=@State>
+    <Content>
+        <DropdownAutoCompleteBase @ref=@SchoolsDropdown
+                                  Placeholder="School"
+                                  Items=@SchoolViews
+                                  T="SchoolView"
+                                  SelectedItemChanged="@OnSelectedItemChanged" />
+
+    </Content>
+</ContainerComponent>

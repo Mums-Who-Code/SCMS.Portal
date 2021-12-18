@@ -3,6 +3,7 @@
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using SCMS.Portal.Web.Models.Views.Components.Containers;
 using SCMS.Portal.Web.Models.Views.Foundations.SchoolViews;
@@ -21,5 +22,22 @@ namespace SCMS.Portal.Web.Views.Components.SchoolSelections
         public DropdownAutoCompleteBase<SchoolView> SchoolsDropdown { get; set; }
         public SchoolView SelectedSchool { get; set; }
         public EventCallback<SchoolView> SetSelectedSchool { get; set; }
+
+        protected override async Task OnInitializedAsync()
+        {
+            this.SchoolViews = await this.SchoolViewService.RetrieveAllSchoolViewsAsync();
+            this.State = ComponentState.Content;
+        }
+
+        public async Task OnSelectedItemChanged(SchoolView schoolView)
+        {
+            await SetSelectedSchoolValue(schoolView);
+        }
+
+        public async Task SetSelectedSchoolValue(SchoolView schoolView)
+        {
+            this.SelectedSchool = schoolView;
+            await SetSelectedSchool.InvokeAsync();
+        }
     }
 }

@@ -2,12 +2,16 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
+using System.Collections.Generic;
+using System.Linq;
 using Bunit;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using SCMS.Portal.Web.Models.Views.Foundations.SchoolViews;
 using SCMS.Portal.Web.Services.Views.Foundations.SchoolViews;
 using SCMS.Portal.Web.Views.Components.SchoolSelections;
 using Syncfusion.Blazor;
+using Tynamix.ObjectFiller;
 
 namespace SCMS.Portal.Tests.Unit.Services.Views.Components.SchoolSelections
 {
@@ -24,5 +28,18 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.SchoolSelections
             this.Services.AddOptions();
             this.JSInterop.Mode = JSRuntimeMode.Loose;
         }
+
+        private static int GetRandomNumber() =>
+            new IntRange(min: 2, max: 10).GetValue();
+
+        private static List<SchoolView> CreateRandomSchoolViews()
+        {
+            return CreateRandomSchoolViewFiller()
+                .Create(count: GetRandomNumber()).ToList();
+        }
+
+        private static Filler<SchoolView> CreateRandomSchoolViewFiller() =>
+            new Filler<SchoolView>();
+
     }
 }
