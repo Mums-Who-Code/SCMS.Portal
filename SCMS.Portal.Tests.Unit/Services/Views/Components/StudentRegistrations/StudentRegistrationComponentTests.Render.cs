@@ -162,6 +162,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             this.renderedStudentRegistrationComponent.Instance.DateOfBirthPicker.IsDisabled
                .Should().BeTrue();
 
+            this.renderedStudentRegistrationComponent.Instance.GenderDropdown.IsDisabled
+                .Should().BeTrue();
+
             this.renderedStudentRegistrationComponent.Instance.RegisterButton.IsDisabled
                .Should().BeTrue();
 
