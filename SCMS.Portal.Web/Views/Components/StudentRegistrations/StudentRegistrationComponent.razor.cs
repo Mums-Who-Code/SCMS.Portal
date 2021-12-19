@@ -107,6 +107,7 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
             this.FirstNameTextBox.Enable();
             this.LastNameTextBox.Enable();
             this.DateOfBirthPicker.Enable();
+            this.GenderDropdown.Enable();
             this.RegisterButton.Enable();
         }
     }
