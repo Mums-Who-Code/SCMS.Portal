@@ -239,6 +239,12 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
                 .GenderDropdown.SetValue(inputStudentView.Gender);
 
             this.renderedStudentRegistrationComponent.Instance
+                .FideIdTextBox.SetValue(inputStudentView.FideId);
+
+            this.renderedStudentRegistrationComponent.Instance
+                .NotesTextBox.SetValue(inputStudentView.Notes);
+
+            this.renderedStudentRegistrationComponent.Instance
                 .SchoolSelectionComponent.SelectedSchool =
                    selectedSchool;
 
@@ -257,6 +263,12 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
 
             this.renderedStudentRegistrationComponent.Instance.GenderDropdown
                 .Value.Should().Be(expectedStudentView.Gender);
+
+            this.renderedStudentRegistrationComponent.Instance.FideIdTextBox
+                .Value.Should().Be(expectedStudentView.FideId);
+
+            this.renderedStudentRegistrationComponent.Instance.NotesTextBox
+                .Value.Should().Be(expectedStudentView.Notes);
 
             this.renderedStudentRegistrationComponent.Instance.SchoolSelectionComponent
                 .SelectedSchool.Id.Should().Be(expectedSchoolView.Id);
