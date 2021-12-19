@@ -124,6 +124,11 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
         {
             // given
             StudentView someStudentView = CreateRandomStudentView();
+            List<SchoolView> someSchoolViews = CreateRandomSchoolViews();
+
+            this.schoolViewServiceMock.Setup(service =>
+                service.RetrieveAllSchoolViewsAsync())
+                    .ReturnsAsync(someSchoolViews);
 
             this.studentViewServiceMock.Setup(service =>
                 service.AddStudentViewAsync(It.IsAny<StudentView>()))
@@ -134,6 +139,10 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             // when
             this.renderedStudentRegistrationComponent =
                 RenderComponent<StudentRegistrationComponent>();
+
+            this.renderedStudentRegistrationComponent.Instance
+                .SchoolSelectionComponent.SelectedSchool =
+                    someSchoolViews.FirstOrDefault();
 
             this.renderedStudentRegistrationComponent.Instance.RegisterButton.Click();
 
