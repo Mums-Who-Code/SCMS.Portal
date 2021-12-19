@@ -184,6 +184,13 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             StudentView expectedStudentView = inputStudentView.DeepClone();
             string expectedStatusLabel = "Registration completed.";
             Color expectedStatusLabelColor = Color.Green;
+            List<SchoolView> someSchoolViews = CreateRandomSchoolViews();
+            SchoolView selectedSchool = someSchoolViews.FirstOrDefault();
+            SchoolView expectedSchoolView = selectedSchool.DeepClone();
+
+            this.schoolViewServiceMock.Setup(service =>
+                service.RetrieveAllSchoolViewsAsync())
+                    .ReturnsAsync(someSchoolViews);
 
             // when
             this.renderedStudentRegistrationComponent =
@@ -199,6 +206,13 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
                 .DateOfBirthPicker.SetValue(inputStudentView.DateOfBirth);
 
             this.renderedStudentRegistrationComponent.Instance
+                .GenderDropdown.SetValue(inputStudentView.Gender);
+
+            this.renderedStudentRegistrationComponent.Instance
+                .SchoolSelectionComponent.SelectedSchool =
+                   selectedSchool;
+
+            this.renderedStudentRegistrationComponent.Instance
                 .RegisterButton.Click();
 
             // then
@@ -210,6 +224,12 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
 
             this.renderedStudentRegistrationComponent.Instance.DateOfBirthPicker
                 .Value.Should().Be(expectedStudentView.DateOfBirth);
+
+            this.renderedStudentRegistrationComponent.Instance.GenderDropdown
+                .Value.Should().Be(expectedStudentView.Gender);
+
+            this.renderedStudentRegistrationComponent.Instance.SchoolSelectionComponent
+                .SelectedSchool.Should().Be(expectedSchoolView);
 
             this.renderedStudentRegistrationComponent.Instance.StatusLabel
                 .Value.Should().Be(expectedStatusLabel);
