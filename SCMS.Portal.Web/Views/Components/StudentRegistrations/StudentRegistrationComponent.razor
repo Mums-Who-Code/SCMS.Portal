@@ -35,6 +35,15 @@
                                             TEnum="StudentGenderView"/>
                         <br/>
                         <br/>
+                        <TextBoxBase @ref=@FideIdTextBox
+                                     @bind-Value=@StudentView.FideId
+                                     Placeholder="Fide Id"/>
+                        <br/>
+                        <TextBoxBase @ref=@NotesTextBox
+                                     @bind-Value=@StudentView.Notes
+                                     Placeholder="Notes"/>
+                        <br/>
+                        <br/>
                         <SchoolSelectionComponent @ref=@SchoolSelectionComponent/>
                         <LabelBase @ref=@StatusLabel/>
                     </div>
