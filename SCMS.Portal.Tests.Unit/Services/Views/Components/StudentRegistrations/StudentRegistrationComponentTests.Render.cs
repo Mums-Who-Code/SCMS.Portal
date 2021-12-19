@@ -229,7 +229,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
                 .Value.Should().Be(expectedStudentView.Gender);
 
             this.renderedStudentRegistrationComponent.Instance.SchoolSelectionComponent
-                .SelectedSchool.Should().Be(expectedSchoolView);
+                .SelectedSchool.Id.Should().Be(expectedSchoolView.Id);
 
             this.renderedStudentRegistrationComponent.Instance.StatusLabel
                 .Value.Should().Be(expectedStatusLabel);

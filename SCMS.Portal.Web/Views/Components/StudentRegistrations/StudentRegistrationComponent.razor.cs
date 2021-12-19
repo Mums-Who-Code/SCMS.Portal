@@ -45,6 +45,7 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
             try
             {
                 ApplyRegisteringStatus();
+                this.StudentView.SchoolId = this.SchoolSelectionComponent.SelectedSchool.Id;
                 await this.studentViewService.AddStudentViewAsync(this.StudentView);
                 ApplyRegisteredStatus();
             }
@@ -89,6 +90,7 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
             this.FirstNameTextBox.Disable();
             this.LastNameTextBox.Disable();
             this.DateOfBirthPicker.Disable();
+            this.GenderDropdown.Disable();
             this.RegisterButton.Disable();
         }
 
