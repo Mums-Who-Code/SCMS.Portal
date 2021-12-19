@@ -32,6 +32,19 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.SchoolSelections
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();
 
+        private static SchoolView CreateRandomSchoolView() =>
+            CreateRandomSchoolViewFiller().Create();
+
+        private static List<SchoolView> CreateRandomSchoolViewsWith(SchoolView schoolView)
+        {
+            List<SchoolView> schoolViews = CreateRandomSchoolViewFiller()
+                .Create(count: GetRandomNumber()).ToList();
+
+            schoolViews.Add(schoolView);
+
+            return schoolViews;
+        }
+
         private static List<SchoolView> CreateRandomSchoolViews()
         {
             return CreateRandomSchoolViewFiller()

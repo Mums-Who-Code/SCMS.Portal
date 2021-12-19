@@ -81,5 +81,43 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.SchoolSelections
 
             this.schoolViewServiceMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public void ShouldSetSelectedSchool()
+        {
+            // given
+            SchoolView randomSchoolView = CreateRandomSchoolView();
+            SchoolView selectedSchool = randomSchoolView;
+
+            List<SchoolView> randomSchoolViews =
+                CreateRandomSchoolViewsWith(selectedSchool);
+
+            List<SchoolView> returningSchoolViews =
+                randomSchoolViews;
+
+            this.schoolViewServiceMock.Setup(service =>
+                service.RetrieveAllSchoolViewsAsync())
+                    .ReturnsAsync(returningSchoolViews);
+
+            // when
+            this.renderedSchoolSelectionComponent =
+                RenderComponent<SchoolSelectionComponent>();
+
+            this.renderedSchoolSelectionComponent.Instance
+                .OnSelectedItemChanged(selectedSchool);
+
+            // then
+            this.renderedSchoolSelectionComponent.Instance
+                .SelectedSchool.Should().NotBeNull();
+
+            this.renderedSchoolSelectionComponent.Instance
+                .SelectedSchool.Should().Be(selectedSchool);
+
+            this.schoolViewServiceMock.Verify(service =>
+                service.RetrieveAllSchoolViewsAsync(),
+                    Times.Once());
+
+            this.schoolViewServiceMock.VerifyNoOtherCalls();
+        }
     }
 }
