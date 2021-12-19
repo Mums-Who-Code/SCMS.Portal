@@ -36,6 +36,7 @@ namespace SCMS.Portal.Web.Views.Components.SchoolSelections
 
         public async Task SetSelectedSchoolValue(SchoolView schoolView)
         {
+            this.SelectedSchool = schoolView;
             await SetSelectedSchool.InvokeAsync();
         }
     }
