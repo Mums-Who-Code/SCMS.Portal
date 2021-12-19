@@ -1,9 +1,12 @@
-﻿@using SCMS.Portal.Web.Views.Bases.Cards
+﻿@using SCMS.Portal.Web.Models.Views.Foundations.StudentViews
+@using SCMS.Portal.Web.Views.Bases.Cards
 @using SCMS.Portal.Web.Views.Components.Containers
 @using SCMS.Portal.Web.Views.Bases.TextBoxes
 @using SCMS.Portal.Web.Views.Bases.DatePickers
 @using SCMS.Portal.Web.Views.Bases.Labels
 @using SCMS.Portal.Web.Views.Bases.Buttons
+@using SCMS.Portal.Web.Views.Bases.Dropdowns.Selects;
+@using SCMS.Portal.Web.Views.Components.SchoolSelections;
 
 <div class="card-container">
     <CardBase Title="New Student Registration"
@@ -21,9 +24,18 @@
                                      Placeholder="Last Name"/>
                         <br/>
                         <br/>
-                        <br/>
                         <DatePickerBase @ref=@DateOfBirthPicker
                                         @bind-Value=@StudentView.DateOfBirth/>
+                        <br/>
+                        <br/>
+                        <LabelBase @ref=@GenderLabel/>
+                        <DropdownSelectBase @ref=@GenderDropdown
+                                            @bind-Value=@StudentView.Gender
+                                            TEnum="StudentGenderView"/>
+                        <br/>
+                        <br/>
+                        <SchoolSelectionComponent @ref=@SelectedSchool/>
+                        <br/>
                         <br/>
                         <LabelBase @ref=@StatusLabel/>
                     </div>

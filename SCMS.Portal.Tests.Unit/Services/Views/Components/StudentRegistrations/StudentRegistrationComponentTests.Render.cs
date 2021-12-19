@@ -3,12 +3,14 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using Bunit;
 using FluentAssertions;
 using Force.DeepCloner;
 using Moq;
 using SCMS.Portal.Web.Models.Views.Components.Colors;
 using SCMS.Portal.Web.Models.Views.Components.Containers;
+using SCMS.Portal.Web.Models.Views.Foundations.SchoolViews;
 using SCMS.Portal.Web.Models.Views.Foundations.StudentViews;
 using SCMS.Portal.Web.Views.Components.StudentRegistrations;
 using Xunit;
@@ -40,10 +42,16 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
         {
             // given
             ComponentState expectedComponentState = ComponentState.Content;
-
+            List<SchoolView> someSchoolViews = CreateRandomSchoolViews();
             string expectedFirstNameTextBoxPlaceholder = "First Name";
             string expectedLastNameTextBoxPlaceholder = "Last Name";
+            string expectedDateOfBirthPickerPlaceholder = "Date of Birth";
+            string expectedGenderLabel = "Gender";
             string expectedRegisterButtonLabel = "Register";
+
+            this.schoolViewServiceMock.Setup(service =>
+                service.RetrieveAllSchoolViewsAsync())
+                    .ReturnsAsync(someSchoolViews);
 
             // when
             this.renderedStudentRegistrationComponent =
@@ -79,6 +87,21 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
 
             this.renderedStudentRegistrationComponent.Instance.DateOfBirthPicker
                 .IsDisabled.Should().BeFalse();
+
+            this.renderedStudentRegistrationComponent.Instance.DateOfBirthPicker
+                .Placeholder.Should().Be(expectedDateOfBirthPickerPlaceholder);
+
+            this.renderedStudentRegistrationComponent.Instance.GenderLabel
+                .Should().Be(expectedGenderLabel);
+
+            this.renderedStudentRegistrationComponent.Instance.GenderDropdown
+                .Should().NotBeNull();
+
+            this.renderedStudentRegistrationComponent.Instance.GenderDropdown
+                .IsDisabled.Should().BeFalse();
+
+            this.renderedStudentRegistrationComponent.Instance.SelectedSchool
+                .Should().NotBeNull();
 
             this.renderedStudentRegistrationComponent.Instance.RegisterButton
                 .Should().NotBeNull();
