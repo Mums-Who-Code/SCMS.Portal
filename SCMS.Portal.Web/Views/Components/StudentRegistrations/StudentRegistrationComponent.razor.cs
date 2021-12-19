@@ -11,8 +11,10 @@ using SCMS.Portal.Web.Models.Views.Foundations.StudentViews.Exceptions;
 using SCMS.Portal.Web.Services.Views.Foundations.StudentViews;
 using SCMS.Portal.Web.Views.Bases.Buttons;
 using SCMS.Portal.Web.Views.Bases.DatePickers;
+using SCMS.Portal.Web.Views.Bases.Dropdowns.Selects;
 using SCMS.Portal.Web.Views.Bases.Labels;
 using SCMS.Portal.Web.Views.Bases.TextBoxes;
+using SCMS.Portal.Web.Views.Components.SchoolSelections;
 
 namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
 {
@@ -26,6 +28,9 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
         public TextBoxBase FirstNameTextBox { get; set; }
         public TextBoxBase LastNameTextBox { get; set; }
         public DatePickerBase DateOfBirthPicker { get; set; }
+        public LabelBase GenderLabel { get; set; }
+        public DropdownSelectBase<StudentGenderView> GenderDropdown { get; set; }
+        public SchoolSelectionComponent SchoolSelectionComponent { get; set; }
         public ButtonBase RegisterButton { get; set; }
         public LabelBase StatusLabel { get; set; }
 
@@ -40,6 +45,7 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
             try
             {
                 ApplyRegisteringStatus();
+                this.StudentView.SchoolId = this.SchoolSelectionComponent.SelectedSchool.Id;
                 await this.studentViewService.AddStudentViewAsync(this.StudentView);
                 ApplyRegisteredStatus();
             }
@@ -84,6 +90,7 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
             this.FirstNameTextBox.Disable();
             this.LastNameTextBox.Disable();
             this.DateOfBirthPicker.Disable();
+            this.GenderDropdown.Disable();
             this.RegisterButton.Disable();
         }
 
@@ -100,6 +107,7 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
             this.FirstNameTextBox.Enable();
             this.LastNameTextBox.Enable();
             this.DateOfBirthPicker.Enable();
+            this.GenderDropdown.Enable();
             this.RegisterButton.Enable();
         }
     }

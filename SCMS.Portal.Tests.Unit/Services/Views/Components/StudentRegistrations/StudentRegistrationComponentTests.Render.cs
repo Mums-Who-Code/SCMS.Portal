@@ -3,12 +3,15 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Bunit;
 using FluentAssertions;
 using Force.DeepCloner;
 using Moq;
 using SCMS.Portal.Web.Models.Views.Components.Colors;
 using SCMS.Portal.Web.Models.Views.Components.Containers;
+using SCMS.Portal.Web.Models.Views.Foundations.SchoolViews;
 using SCMS.Portal.Web.Models.Views.Foundations.StudentViews;
 using SCMS.Portal.Web.Views.Components.StudentRegistrations;
 using Xunit;
@@ -31,6 +34,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             initialStudentRegistrationComponent.FirstNameTextBox.Should().BeNull();
             initialStudentRegistrationComponent.LastNameTextBox.Should().BeNull();
             initialStudentRegistrationComponent.StudentView.Should().BeNull();
+            initialStudentRegistrationComponent.DateOfBirthPicker.Should().BeNull();
+            initialStudentRegistrationComponent.SchoolSelectionComponent.Should().BeNull();
         }
 
         [Fact]
@@ -38,14 +43,23 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
         {
             // given
             ComponentState expectedComponentState = ComponentState.Content;
-
+            List<SchoolView> someSchoolViews = CreateRandomSchoolViews();
             string expectedFirstNameTextBoxPlaceholder = "First Name";
             string expectedLastNameTextBoxPlaceholder = "Last Name";
+            string expectedDateOfBirthPickerPlaceholder = "Date of Birth";
             string expectedRegisterButtonLabel = "Register";
+
+            this.schoolViewServiceMock.Setup(service =>
+                service.RetrieveAllSchoolViewsAsync())
+                    .ReturnsAsync(someSchoolViews);
 
             // when
             this.renderedStudentRegistrationComponent =
                 RenderComponent<StudentRegistrationComponent>();
+
+            this.renderedStudentRegistrationComponent.Instance
+                .SchoolSelectionComponent.SelectedSchool =
+                    someSchoolViews.FirstOrDefault();
 
             // then
             this.renderedStudentRegistrationComponent.Instance.StudentView
@@ -78,6 +92,15 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             this.renderedStudentRegistrationComponent.Instance.DateOfBirthPicker
                 .IsDisabled.Should().BeFalse();
 
+            this.renderedStudentRegistrationComponent.Instance.DateOfBirthPicker
+                .Placeholder.Should().Be(expectedDateOfBirthPickerPlaceholder);
+
+            this.renderedStudentRegistrationComponent.Instance.GenderDropdown
+                .Should().NotBeNull();
+
+            this.renderedStudentRegistrationComponent.Instance.GenderDropdown
+                .IsDisabled.Should().BeFalse();
+
             this.renderedStudentRegistrationComponent.Instance.RegisterButton
                 .Should().NotBeNull();
 
@@ -101,6 +124,11 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
         {
             // given
             StudentView someStudentView = CreateRandomStudentView();
+            List<SchoolView> someSchoolViews = CreateRandomSchoolViews();
+
+            this.schoolViewServiceMock.Setup(service =>
+                service.RetrieveAllSchoolViewsAsync())
+                    .ReturnsAsync(someSchoolViews);
 
             this.studentViewServiceMock.Setup(service =>
                 service.AddStudentViewAsync(It.IsAny<StudentView>()))
@@ -111,6 +139,10 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             // when
             this.renderedStudentRegistrationComponent =
                 RenderComponent<StudentRegistrationComponent>();
+
+            this.renderedStudentRegistrationComponent.Instance
+                .SchoolSelectionComponent.SelectedSchool =
+                    someSchoolViews.FirstOrDefault();
 
             this.renderedStudentRegistrationComponent.Instance.RegisterButton.Click();
 
@@ -129,6 +161,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
 
             this.renderedStudentRegistrationComponent.Instance.DateOfBirthPicker.IsDisabled
                .Should().BeTrue();
+
+            this.renderedStudentRegistrationComponent.Instance.GenderDropdown.IsDisabled
+                .Should().BeTrue();
 
             this.renderedStudentRegistrationComponent.Instance.RegisterButton.IsDisabled
                .Should().BeTrue();
@@ -149,6 +184,13 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             StudentView expectedStudentView = inputStudentView.DeepClone();
             string expectedStatusLabel = "Registration completed.";
             Color expectedStatusLabelColor = Color.Green;
+            List<SchoolView> someSchoolViews = CreateRandomSchoolViews();
+            SchoolView selectedSchool = someSchoolViews.FirstOrDefault();
+            SchoolView expectedSchoolView = selectedSchool.DeepClone();
+
+            this.schoolViewServiceMock.Setup(service =>
+                service.RetrieveAllSchoolViewsAsync())
+                    .ReturnsAsync(someSchoolViews);
 
             // when
             this.renderedStudentRegistrationComponent =
@@ -164,6 +206,13 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
                 .DateOfBirthPicker.SetValue(inputStudentView.DateOfBirth);
 
             this.renderedStudentRegistrationComponent.Instance
+                .GenderDropdown.SetValue(inputStudentView.Gender);
+
+            this.renderedStudentRegistrationComponent.Instance
+                .SchoolSelectionComponent.SelectedSchool =
+                   selectedSchool;
+
+            this.renderedStudentRegistrationComponent.Instance
                 .RegisterButton.Click();
 
             // then
@@ -175,6 +224,12 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
 
             this.renderedStudentRegistrationComponent.Instance.DateOfBirthPicker
                 .Value.Should().Be(expectedStudentView.DateOfBirth);
+
+            this.renderedStudentRegistrationComponent.Instance.GenderDropdown
+                .Value.Should().Be(expectedStudentView.Gender);
+
+            this.renderedStudentRegistrationComponent.Instance.SchoolSelectionComponent
+                .SelectedSchool.Id.Should().Be(expectedSchoolView.Id);
 
             this.renderedStudentRegistrationComponent.Instance.StatusLabel
                 .Value.Should().Be(expectedStatusLabel);
