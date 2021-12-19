@@ -35,7 +35,6 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             initialStudentRegistrationComponent.FirstNameTextBox.Should().BeNull();
             initialStudentRegistrationComponent.LastNameTextBox.Should().BeNull();
             initialStudentRegistrationComponent.DateOfBirthPicker.Should().BeNull();
-            initialStudentRegistrationComponent.GenderLabel.Should().BeNull();
             initialStudentRegistrationComponent.GenderDropdown.Should().BeNull();
             initialStudentRegistrationComponent.FideIdTextBox.Should().BeNull();
             initialStudentRegistrationComponent.NotesTextBox.Should().BeNull();
@@ -108,6 +107,24 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
 
             this.renderedStudentRegistrationComponent.Instance.GenderDropdown
                 .IsDisabled.Should().BeFalse();
+
+            this.renderedStudentRegistrationComponent.Instance.FideIdTextBox
+                .Should().NotBeNull();
+
+            this.renderedStudentRegistrationComponent.Instance.FideIdTextBox
+                .IsDisabled.Should().BeFalse();
+
+            this.renderedStudentRegistrationComponent.Instance.FideIdTextBox
+                .Placeholder.Should().Be(expectedFideIdTextBoxPlaceholder);
+
+            this.renderedStudentRegistrationComponent.Instance.NotesTextBox
+                .Should().NotBeNull();
+
+            this.renderedStudentRegistrationComponent.Instance.NotesTextBox
+                .IsDisabled.Should().BeFalse();
+
+            this.renderedStudentRegistrationComponent.Instance.NotesTextBox
+                .Placeholder.Should().Be(expectedNotesTextBoxPlaceholder);
 
             this.renderedStudentRegistrationComponent.Instance.RegisterButton
                 .Should().NotBeNull();
