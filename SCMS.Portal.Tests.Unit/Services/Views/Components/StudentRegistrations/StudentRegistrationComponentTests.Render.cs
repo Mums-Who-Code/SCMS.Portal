@@ -31,6 +31,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             initialStudentRegistrationComponent.FirstNameTextBox.Should().BeNull();
             initialStudentRegistrationComponent.LastNameTextBox.Should().BeNull();
             initialStudentRegistrationComponent.StudentView.Should().BeNull();
+            initialStudentRegistrationComponent.DateOfBirthPicker.Should().BeNull();
+            initialStudentRegistrationComponent.SelectedSchool.Should().BeNull();
         }
 
         [Fact]

@@ -11,8 +11,10 @@ using SCMS.Portal.Web.Models.Views.Foundations.StudentViews.Exceptions;
 using SCMS.Portal.Web.Services.Views.Foundations.StudentViews;
 using SCMS.Portal.Web.Views.Bases.Buttons;
 using SCMS.Portal.Web.Views.Bases.DatePickers;
+using SCMS.Portal.Web.Views.Bases.Dropdowns.Selects;
 using SCMS.Portal.Web.Views.Bases.Labels;
 using SCMS.Portal.Web.Views.Bases.TextBoxes;
+using SCMS.Portal.Web.Views.Components.SchoolSelections;
 
 namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
 {
@@ -26,6 +28,8 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
         public TextBoxBase FirstNameTextBox { get; set; }
         public TextBoxBase LastNameTextBox { get; set; }
         public DatePickerBase DateOfBirthPicker { get; set; }
+        public DropdownSelectBase<StudentGenderView> GenderDropdown { get; set; }
+        public SchoolSelectionComponent SelectedSchool { get; set; }
         public ButtonBase RegisterButton { get; set; }
         public LabelBase StatusLabel { get; set; }
 
