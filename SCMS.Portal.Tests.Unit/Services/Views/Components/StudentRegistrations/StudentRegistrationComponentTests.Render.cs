@@ -31,13 +31,17 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
 
             // then
             initialStudentRegistrationComponent.State.Should().Be(expectedComponentState);
+            initialStudentRegistrationComponent.StudentView.Should().BeNull();
             initialStudentRegistrationComponent.FirstNameTextBox.Should().BeNull();
             initialStudentRegistrationComponent.LastNameTextBox.Should().BeNull();
             initialStudentRegistrationComponent.DateOfBirthPicker.Should().BeNull();
+            initialStudentRegistrationComponent.GenderLabel.Should().BeNull();
+            initialStudentRegistrationComponent.GenderDropdown.Should().BeNull();
             initialStudentRegistrationComponent.FideIdTextBox.Should().BeNull();
             initialStudentRegistrationComponent.NotesTextBox.Should().BeNull();
             initialStudentRegistrationComponent.SchoolSelectionComponent.Should().BeNull();
-            initialStudentRegistrationComponent.StudentView.Should().BeNull();
+            initialStudentRegistrationComponent.RegisterButton.Should().BeNull();
+            initialStudentRegistrationComponent.StatusLabel.Should().BeNull();
         }
 
         [Fact]
@@ -49,6 +53,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             string expectedFirstNameTextBoxPlaceholder = "First Name";
             string expectedLastNameTextBoxPlaceholder = "Last Name";
             string expectedDateOfBirthPickerPlaceholder = "Date of Birth";
+            string expectedFideIdTextBoxPlaceholder = "Fide Id";
+            string expectedNotesTextBoxPlaceholder = "Notes";
             string expectedRegisterButtonLabel = "Register";
 
             this.schoolViewServiceMock.Setup(service =>
