@@ -3,10 +3,13 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Bunit;
 using FluentAssertions;
 using Moq;
 using SCMS.Portal.Web.Models.Views.Components.Colors;
+using SCMS.Portal.Web.Models.Views.Foundations.SchoolViews;
 using SCMS.Portal.Web.Models.Views.Foundations.StudentViews;
 using SCMS.Portal.Web.Views.Components.StudentRegistrations;
 using Xeptions;
@@ -25,6 +28,12 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             string expectedErrorMessage =
                 studentViewValidationException.InnerException.Message;
 
+            List<SchoolView> someSchoolViews = CreateRandomSchoolViews();
+
+            this.schoolViewServiceMock.Setup(service =>
+                service.RetrieveAllSchoolViewsAsync())
+                    .ReturnsAsync(someSchoolViews);
+
             this.studentViewServiceMock.Setup(service =>
                 service.AddStudentViewAsync(It.IsAny<StudentView>()))
                     .ThrowsAsync(studentViewValidationException);
@@ -32,6 +41,10 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             // when
             this.renderedStudentRegistrationComponent =
                 RenderComponent<StudentRegistrationComponent>();
+
+            this.renderedStudentRegistrationComponent.Instance
+                .SchoolSelectionComponent.SelectedSchool =
+                    someSchoolViews.FirstOrDefault();
 
             this.renderedStudentRegistrationComponent.Instance
                 .RegisterButton.Click();
@@ -51,6 +64,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
 
             this.renderedStudentRegistrationComponent.Instance
                 .DateOfBirthPicker.IsDisabled.Should().BeFalse();
+
+            this.renderedStudentRegistrationComponent.Instance
+                .GenderDropdown.IsDisabled.Should().BeFalse();
 
             this.renderedStudentRegistrationComponent.Instance
                 .RegisterButton.IsDisabled.Should().BeFalse();
