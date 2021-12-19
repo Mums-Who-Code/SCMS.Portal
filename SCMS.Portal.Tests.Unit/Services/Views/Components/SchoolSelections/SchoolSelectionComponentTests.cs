@@ -8,10 +8,13 @@ using Bunit;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using SCMS.Portal.Web.Models.Views.Foundations.SchoolViews;
+using SCMS.Portal.Web.Models.Views.Foundations.SchoolViews.Exceptions;
 using SCMS.Portal.Web.Services.Views.Foundations.SchoolViews;
 using SCMS.Portal.Web.Views.Components.SchoolSelections;
 using Syncfusion.Blazor;
 using Tynamix.ObjectFiller;
+using Xeptions;
+using Xunit;
 
 namespace SCMS.Portal.Tests.Unit.Services.Views.Components.SchoolSelections
 {
@@ -27,6 +30,15 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.SchoolSelections
             this.Services.AddSyncfusionBlazor();
             this.Services.AddOptions();
             this.JSInterop.Mode = JSRuntimeMode.Loose;
+        }
+
+        public static TheoryData DependencyExceptions()
+        {
+            return new TheoryData<Xeption>()
+            {
+                new SchoolViewDependencyException(new Xeption()),
+                new SchoolViewServiceException(new Xeption())
+            };
         }
 
         private static int GetRandomNumber() =>
