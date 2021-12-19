@@ -75,6 +75,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.SchoolSelections
             this.renderedSchoolSelectionComponent.Instance
                 .SelectedSchool.Should().BeNull();
 
+            this.renderedSchoolSelectionComponent.Instance
+                .Exception.Should().BeNull();
+
             this.schoolViewServiceMock.Verify(service =>
                 service.RetrieveAllSchoolViewsAsync(),
                     Times.Once());
@@ -112,6 +115,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.SchoolSelections
 
             this.renderedSchoolSelectionComponent.Instance
                 .SelectedSchool.Should().Be(selectedSchool);
+
+            this.renderedSchoolSelectionComponent.Instance
+                .Exception.Should().BeNull();
 
             this.schoolViewServiceMock.Verify(service =>
                 service.RetrieveAllSchoolViewsAsync(),
