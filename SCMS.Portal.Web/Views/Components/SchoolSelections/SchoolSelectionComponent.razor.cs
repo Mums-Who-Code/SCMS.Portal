@@ -2,6 +2,7 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
@@ -24,7 +25,7 @@ namespace SCMS.Portal.Web.Views.Components.SchoolSelections
         public DropdownAutoCompleteBase<SchoolView> SchoolsDropdown { get; set; }
         public SchoolView SelectedSchool { get; set; }
         public EventCallback<SchoolView> SetSelectedSchool { get; set; }
-        public SchoolSelectionComponentDependencyException Exception { get; set; }
+        public SchoolSelectionComponentException Exception { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -36,20 +37,33 @@ namespace SCMS.Portal.Web.Views.Components.SchoolSelections
             catch (SchoolViewDependencyException schoolViewDependencyException)
             {
                 this.State = ComponentState.Error;
-                this.Exception = new SchoolSelectionComponentDependencyException(
+                this.Exception = new SchoolSelectionComponentException(
                     schoolViewDependencyException);
             }
             catch (SchoolViewServiceException schoolViewServiceException)
             {
                 this.State = ComponentState.Error;
-                this.Exception = new SchoolSelectionComponentDependencyException(
+                this.Exception = new SchoolSelectionComponentException(
                     schoolViewServiceException);
+            }
+            catch (Exception exception)
+            {
+                this.State = ComponentState.Error;
+                this.Exception = new SchoolSelectionComponentException(exception);
             }
         }
 
         public async Task OnSelectedItemChanged(SchoolView schoolView)
         {
-            await SetSelectedSchoolValue(schoolView);
+            try
+            {
+                await SetSelectedSchoolValue(schoolView);
+            }
+            catch (Exception exception)
+            {
+                this.State = ComponentState.Error;
+                this.Exception = new SchoolSelectionComponentException(exception);
+            }
         }
 
         public async Task SetSelectedSchoolValue(SchoolView schoolView)

@@ -18,14 +18,14 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.SchoolSelections
     {
         [Theory]
         [MemberData(nameof(DependencyExceptions))]
-        public void ShouldThrowDependencyExceptionOnRenderIfDependencyErrorOccurs(
+        public void ShouldRenderErrorContentOnRenderIfDependencyErrorOccurs(
             Xeption dependencyException)
         {
             // given
             var expectedComponentState = ComponentState.Error;
 
-            var expectedSchoolSelectionCompoenentDependencyException =
-                new SchoolSelectionComponentDependencyException(
+            var expectedSchoolSelectionCompoenentException =
+                new SchoolSelectionComponentException(
                     dependencyException);
 
             this.schoolViewServiceMock.Setup(service =>
@@ -39,7 +39,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.SchoolSelections
             // then
             this.renderedSchoolSelectionComponent.Instance.
                 Exception.Should().BeEquivalentTo(
-                    expectedSchoolSelectionCompoenentDependencyException);
+                    expectedSchoolSelectionCompoenentException);
 
             this.renderedSchoolSelectionComponent.Instance
                 .State.Should().Be(expectedComponentState);
@@ -55,21 +55,21 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.SchoolSelections
         }
 
         [Fact]
-        public void ShouldThrowServiceExceptionOnRenderIfServiceErrorOccurs()
+        public void ShouldRenderErrorContentOnRenderIfServiceErrorOccurs()
         {
             // given
             var expectedComponentState = ComponentState.Error;
             var exception = new Exception();
 
             var expectedSchoolSelectionCompoenentServiceException =
-                new SchoolSelectionComponentServiceException(
+                new SchoolSelectionComponentException(
                     exception);
 
             this.schoolViewServiceMock.Setup(service =>
                 service.RetrieveAllSchoolViewsAsync())
                     .ThrowsAsync(exception);
 
-            // when .
+            // when
             this.renderedSchoolSelectionComponent =
                 RenderComponent<SchoolSelectionComponent>();
 

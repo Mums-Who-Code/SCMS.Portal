@@ -7,10 +7,10 @@ using Xeptions;
 
 namespace SCMS.Portal.Web.Models.Views.Components.SchoolSelections.Exceptions
 {
-    public class SchoolSelectionComponentServiceException : Xeption
+    public class SchoolSelectionComponentException : Xeption
     {
-        public SchoolSelectionComponentServiceException(Exception innerException)
-            : base(message: "School selection service error occurred, contact support.",
+        public SchoolSelectionComponentException(Exception innerException)
+            : base(message: "School selection error occurred, contact support.",
                   innerException)
         { }
     }
