@@ -38,7 +38,6 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             initialStudentRegistrationComponent.GenderDropdown.Should().BeNull();
             initialStudentRegistrationComponent.FideIdTextBox.Should().BeNull();
             initialStudentRegistrationComponent.NotesTextBox.Should().BeNull();
-            initialStudentRegistrationComponent.SchoolSelectionComponent.Should().BeNull();
             initialStudentRegistrationComponent.RegisterButton.Should().BeNull();
             initialStudentRegistrationComponent.StatusLabel.Should().BeNull();
         }

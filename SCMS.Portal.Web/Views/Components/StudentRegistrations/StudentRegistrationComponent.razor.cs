@@ -93,6 +93,8 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
             this.LastNameTextBox.Disable();
             this.DateOfBirthPicker.Disable();
             this.GenderDropdown.Disable();
+            this.FideIdTextBox.Disable();
+            this.NotesTextBox.Disable();
             this.RegisterButton.Disable();
         }
 
