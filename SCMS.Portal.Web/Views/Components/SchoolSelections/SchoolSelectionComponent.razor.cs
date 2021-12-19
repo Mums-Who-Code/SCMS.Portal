@@ -24,7 +24,7 @@ namespace SCMS.Portal.Web.Views.Components.SchoolSelections
         public DropdownAutoCompleteBase<SchoolView> SchoolsDropdown { get; set; }
         public SchoolView SelectedSchool { get; set; }
         public EventCallback<SchoolView> SetSelectedSchool { get; set; }
-        public SchoolSelectionComponentException Exception { get; set; }
+        public SchoolSelectionComponentDependencyException Exception { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -36,13 +36,13 @@ namespace SCMS.Portal.Web.Views.Components.SchoolSelections
             catch (SchoolViewDependencyException schoolViewDependencyException)
             {
                 this.State = ComponentState.Error;
-                this.Exception = new SchoolSelectionComponentException(
+                this.Exception = new SchoolSelectionComponentDependencyException(
                     schoolViewDependencyException);
             }
             catch (SchoolViewServiceException schoolViewServiceException)
             {
                 this.State = ComponentState.Error;
-                this.Exception = new SchoolSelectionComponentException(
+                this.Exception = new SchoolSelectionComponentDependencyException(
                     schoolViewServiceException);
             }
         }
