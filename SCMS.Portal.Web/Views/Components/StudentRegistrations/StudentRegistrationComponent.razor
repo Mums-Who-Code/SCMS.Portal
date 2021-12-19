@@ -25,16 +25,17 @@
                         <br/>
                         <br/>
                         <DatePickerBase @ref=@DateOfBirthPicker
-                                        @bind-Value=@StudentView.DateOfBirth/>
+                                        @bind-Value=@StudentView.DateOfBirth
+                                        Placeholder="Date of Birth"/>
                         <br/>
                         <br/>
-                        <LabelBase @ref=@GenderLabel/>
+                        <LabelBase @ref=@GenderLabel Value="Gender"/>
                         <DropdownSelectBase @ref=@GenderDropdown
                                             @bind-Value=@StudentView.Gender
                                             TEnum="StudentGenderView"/>
                         <br/>
                         <br/>
-                        <SchoolSelectionComponent @ref=@SelectedSchool/>
+                        <SchoolSelectionComponent @ref=@SchoolSelectionComponent/>
                         <br/>
                         <br/>
                         <LabelBase @ref=@StatusLabel/>

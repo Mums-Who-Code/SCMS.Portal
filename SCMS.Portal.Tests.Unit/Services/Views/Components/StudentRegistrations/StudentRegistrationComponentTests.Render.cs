@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Bunit;
 using FluentAssertions;
 using Force.DeepCloner;
@@ -34,7 +35,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             initialStudentRegistrationComponent.LastNameTextBox.Should().BeNull();
             initialStudentRegistrationComponent.StudentView.Should().BeNull();
             initialStudentRegistrationComponent.DateOfBirthPicker.Should().BeNull();
-            initialStudentRegistrationComponent.SelectedSchool.Should().BeNull();
+            initialStudentRegistrationComponent.SchoolSelectionComponent.Should().BeNull();
         }
 
         [Fact]
@@ -46,7 +47,6 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             string expectedFirstNameTextBoxPlaceholder = "First Name";
             string expectedLastNameTextBoxPlaceholder = "Last Name";
             string expectedDateOfBirthPickerPlaceholder = "Date of Birth";
-            string expectedGenderLabel = "Gender";
             string expectedRegisterButtonLabel = "Register";
 
             this.schoolViewServiceMock.Setup(service =>
@@ -56,6 +56,10 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             // when
             this.renderedStudentRegistrationComponent =
                 RenderComponent<StudentRegistrationComponent>();
+
+            this.renderedStudentRegistrationComponent.Instance
+                .SchoolSelectionComponent.SelectedSchool =
+                    someSchoolViews.FirstOrDefault();
 
             // then
             this.renderedStudentRegistrationComponent.Instance.StudentView
@@ -91,17 +95,11 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             this.renderedStudentRegistrationComponent.Instance.DateOfBirthPicker
                 .Placeholder.Should().Be(expectedDateOfBirthPickerPlaceholder);
 
-            this.renderedStudentRegistrationComponent.Instance.GenderLabel
-                .Should().Be(expectedGenderLabel);
-
             this.renderedStudentRegistrationComponent.Instance.GenderDropdown
                 .Should().NotBeNull();
 
             this.renderedStudentRegistrationComponent.Instance.GenderDropdown
                 .IsDisabled.Should().BeFalse();
-
-            this.renderedStudentRegistrationComponent.Instance.SelectedSchool
-                .Should().NotBeNull();
 
             this.renderedStudentRegistrationComponent.Instance.RegisterButton
                 .Should().NotBeNull();
