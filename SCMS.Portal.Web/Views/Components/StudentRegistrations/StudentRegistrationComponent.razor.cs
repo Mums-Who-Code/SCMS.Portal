@@ -30,6 +30,8 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
         public DatePickerBase DateOfBirthPicker { get; set; }
         public LabelBase GenderLabel { get; set; }
         public DropdownSelectBase<StudentGenderView> GenderDropdown { get; set; }
+        public TextBoxBase FideIdTextBox { get; set; }
+        public TextBoxBase NotesTextBox { get; set; }
         public SchoolSelectionComponent SchoolSelectionComponent { get; set; }
         public ButtonBase RegisterButton { get; set; }
         public LabelBase StatusLabel { get; set; }

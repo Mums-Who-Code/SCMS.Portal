@@ -33,9 +33,11 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             initialStudentRegistrationComponent.State.Should().Be(expectedComponentState);
             initialStudentRegistrationComponent.FirstNameTextBox.Should().BeNull();
             initialStudentRegistrationComponent.LastNameTextBox.Should().BeNull();
-            initialStudentRegistrationComponent.StudentView.Should().BeNull();
             initialStudentRegistrationComponent.DateOfBirthPicker.Should().BeNull();
+            initialStudentRegistrationComponent.FideIdTextBox.Should().BeNull();
+            initialStudentRegistrationComponent.NotesTextBox.Should().BeNull();
             initialStudentRegistrationComponent.SchoolSelectionComponent.Should().BeNull();
+            initialStudentRegistrationComponent.StudentView.Should().BeNull();
         }
 
         [Fact]

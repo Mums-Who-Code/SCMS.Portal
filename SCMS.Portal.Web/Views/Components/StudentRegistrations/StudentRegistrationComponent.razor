@@ -19,7 +19,7 @@
                                      @bind-Value=@StudentView.FirstName
                                      Placeholder="First Name"/>
                         <br/>
-                        <TextBoxBase @ref=LastNameTextBox
+                        <TextBoxBase @ref=@LastNameTextBox
                                      @bind-Value=@StudentView.LastName
                                      Placeholder="Last Name"/>
                         <br/>
@@ -36,8 +36,6 @@
                         <br/>
                         <br/>
                         <SchoolSelectionComponent @ref=@SchoolSelectionComponent/>
-                        <br/>
-                        <br/>
                         <LabelBase @ref=@StatusLabel/>
                     </div>
                 </Content>
