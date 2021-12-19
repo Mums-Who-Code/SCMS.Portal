@@ -2,7 +2,7 @@
 @using SCMS.Portal.Web.Views.Components.Containers
 @using SCMS.Portal.Web.Views.Bases.Dropdowns.AutoCompletes
 
-<ContainerComponent State=@State>
+<ContainerComponent State=@State Error=@Exception.Message>
     <Content>
         <DropdownAutoCompleteBase @ref=@SchoolsDropdown
                                   Placeholder="School"

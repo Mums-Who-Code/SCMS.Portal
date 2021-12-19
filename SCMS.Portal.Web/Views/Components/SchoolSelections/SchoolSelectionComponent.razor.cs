@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components;
 using SCMS.Portal.Web.Models.Views.Components.Containers;
 using SCMS.Portal.Web.Models.Views.Components.SchoolSelections.Exceptions;
 using SCMS.Portal.Web.Models.Views.Foundations.SchoolViews;
+using SCMS.Portal.Web.Models.Views.Foundations.SchoolViews.Exceptions;
 using SCMS.Portal.Web.Services.Views.Foundations.SchoolViews;
 using SCMS.Portal.Web.Views.Bases.Dropdowns.AutoCompletes;
 
@@ -27,8 +28,23 @@ namespace SCMS.Portal.Web.Views.Components.SchoolSelections
 
         protected override async Task OnInitializedAsync()
         {
-            this.SchoolViews = await this.SchoolViewService.RetrieveAllSchoolViewsAsync();
-            this.State = ComponentState.Content;
+            try
+            {
+                this.SchoolViews = await this.SchoolViewService.RetrieveAllSchoolViewsAsync();
+                this.State = ComponentState.Content;
+            }
+            catch (SchoolViewDependencyException schoolViewDependencyException)
+            {
+                this.State = ComponentState.Error;
+                this.Exception = new SchoolSelectionComponentException(
+                    schoolViewDependencyException);
+            }
+            catch (SchoolViewServiceException schoolViewServiceException)
+            {
+                this.State = ComponentState.Error;
+                this.Exception = new SchoolSelectionComponentException(
+                    schoolViewServiceException);
+            }
         }
 
         public async Task OnSelectedItemChanged(SchoolView schoolView)
