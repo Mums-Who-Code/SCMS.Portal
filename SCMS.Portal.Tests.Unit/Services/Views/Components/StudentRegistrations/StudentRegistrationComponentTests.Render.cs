@@ -31,11 +31,15 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
 
             // then
             initialStudentRegistrationComponent.State.Should().Be(expectedComponentState);
+            initialStudentRegistrationComponent.StudentView.Should().BeNull();
             initialStudentRegistrationComponent.FirstNameTextBox.Should().BeNull();
             initialStudentRegistrationComponent.LastNameTextBox.Should().BeNull();
-            initialStudentRegistrationComponent.StudentView.Should().BeNull();
             initialStudentRegistrationComponent.DateOfBirthPicker.Should().BeNull();
-            initialStudentRegistrationComponent.SchoolSelectionComponent.Should().BeNull();
+            initialStudentRegistrationComponent.GenderDropdown.Should().BeNull();
+            initialStudentRegistrationComponent.FideIdTextBox.Should().BeNull();
+            initialStudentRegistrationComponent.NotesTextBox.Should().BeNull();
+            initialStudentRegistrationComponent.RegisterButton.Should().BeNull();
+            initialStudentRegistrationComponent.StatusLabel.Should().BeNull();
         }
 
         [Fact]
@@ -47,6 +51,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             string expectedFirstNameTextBoxPlaceholder = "First Name";
             string expectedLastNameTextBoxPlaceholder = "Last Name";
             string expectedDateOfBirthPickerPlaceholder = "Date of Birth";
+            string expectedFideIdTextBoxPlaceholder = "Fide Id";
+            string expectedNotesTextBoxPlaceholder = "Notes";
             string expectedRegisterButtonLabel = "Register";
 
             this.schoolViewServiceMock.Setup(service =>
@@ -100,6 +106,24 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
 
             this.renderedStudentRegistrationComponent.Instance.GenderDropdown
                 .IsDisabled.Should().BeFalse();
+
+            this.renderedStudentRegistrationComponent.Instance.FideIdTextBox
+                .Should().NotBeNull();
+
+            this.renderedStudentRegistrationComponent.Instance.FideIdTextBox
+                .IsDisabled.Should().BeFalse();
+
+            this.renderedStudentRegistrationComponent.Instance.FideIdTextBox
+                .Placeholder.Should().Be(expectedFideIdTextBoxPlaceholder);
+
+            this.renderedStudentRegistrationComponent.Instance.NotesTextBox
+                .Should().NotBeNull();
+
+            this.renderedStudentRegistrationComponent.Instance.NotesTextBox
+                .IsDisabled.Should().BeFalse();
+
+            this.renderedStudentRegistrationComponent.Instance.NotesTextBox
+                .Placeholder.Should().Be(expectedNotesTextBoxPlaceholder);
 
             this.renderedStudentRegistrationComponent.Instance.RegisterButton
                 .Should().NotBeNull();
@@ -165,6 +189,12 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             this.renderedStudentRegistrationComponent.Instance.GenderDropdown.IsDisabled
                 .Should().BeTrue();
 
+            this.renderedStudentRegistrationComponent.Instance.FideIdTextBox.IsDisabled
+               .Should().BeTrue();
+
+            this.renderedStudentRegistrationComponent.Instance.NotesTextBox.IsDisabled
+               .Should().BeTrue();
+
             this.renderedStudentRegistrationComponent.Instance.RegisterButton.IsDisabled
                .Should().BeTrue();
 
@@ -209,6 +239,12 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
                 .GenderDropdown.SetValue(inputStudentView.Gender);
 
             this.renderedStudentRegistrationComponent.Instance
+                .FideIdTextBox.SetValue(inputStudentView.FideId);
+
+            this.renderedStudentRegistrationComponent.Instance
+                .NotesTextBox.SetValue(inputStudentView.Notes);
+
+            this.renderedStudentRegistrationComponent.Instance
                 .SchoolSelectionComponent.SelectedSchool =
                    selectedSchool;
 
@@ -227,6 +263,12 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
 
             this.renderedStudentRegistrationComponent.Instance.GenderDropdown
                 .Value.Should().Be(expectedStudentView.Gender);
+
+            this.renderedStudentRegistrationComponent.Instance.FideIdTextBox
+                .Value.Should().Be(expectedStudentView.FideId);
+
+            this.renderedStudentRegistrationComponent.Instance.NotesTextBox
+                .Value.Should().Be(expectedStudentView.Notes);
 
             this.renderedStudentRegistrationComponent.Instance.SchoolSelectionComponent
                 .SelectedSchool.Id.Should().Be(expectedSchoolView.Id);

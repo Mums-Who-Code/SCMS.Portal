@@ -65,6 +65,12 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
                 .GenderDropdown.IsDisabled.Should().BeFalse();
 
             this.renderedStudentRegistrationComponent.Instance
+                .FideIdTextBox.IsDisabled.Should().BeFalse();
+
+            this.renderedStudentRegistrationComponent.Instance
+                .NotesTextBox.IsDisabled.Should().BeFalse();
+
+            this.renderedStudentRegistrationComponent.Instance
                 .RegisterButton.IsDisabled.Should().BeFalse();
 
             this.studentViewServiceMock.Verify(service =>
@@ -120,6 +126,12 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
                 .GenderDropdown.IsDisabled.Should().BeFalse();
 
             this.renderedStudentRegistrationComponent.Instance
+                .FideIdTextBox.IsDisabled.Should().BeFalse();
+
+            this.renderedStudentRegistrationComponent.Instance
+                .NotesTextBox.IsDisabled.Should().BeFalse();
+
+            this.renderedStudentRegistrationComponent.Instance
                 .RegisterButton.IsDisabled.Should().BeFalse();
 
             this.studentViewServiceMock.Verify(service =>
@@ -171,6 +183,12 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
 
             this.renderedStudentRegistrationComponent.Instance
                 .GenderDropdown.IsDisabled.Should().BeFalse();
+
+            this.renderedStudentRegistrationComponent.Instance
+                .FideIdTextBox.IsDisabled.Should().BeFalse();
+
+            this.renderedStudentRegistrationComponent.Instance
+                .NotesTextBox.IsDisabled.Should().BeFalse();
 
             this.renderedStudentRegistrationComponent.Instance
                 .RegisterButton.IsDisabled.Should().BeFalse();

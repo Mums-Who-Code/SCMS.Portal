@@ -30,6 +30,8 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
         public DatePickerBase DateOfBirthPicker { get; set; }
         public LabelBase GenderLabel { get; set; }
         public DropdownSelectBase<StudentGenderView> GenderDropdown { get; set; }
+        public TextBoxBase FideIdTextBox { get; set; }
+        public TextBoxBase NotesTextBox { get; set; }
         public SchoolSelectionComponent SchoolSelectionComponent { get; set; }
         public ButtonBase RegisterButton { get; set; }
         public LabelBase StatusLabel { get; set; }
@@ -91,6 +93,8 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
             this.LastNameTextBox.Disable();
             this.DateOfBirthPicker.Disable();
             this.GenderDropdown.Disable();
+            this.FideIdTextBox.Disable();
+            this.NotesTextBox.Disable();
             this.RegisterButton.Disable();
         }
 
@@ -108,6 +112,8 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
             this.LastNameTextBox.Enable();
             this.DateOfBirthPicker.Enable();
             this.GenderDropdown.Enable();
+            this.FideIdTextBox.Enable();
+            this.NotesTextBox.Enable();
             this.RegisterButton.Enable();
         }
     }
