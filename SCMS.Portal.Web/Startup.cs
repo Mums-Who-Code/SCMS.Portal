@@ -79,7 +79,8 @@ namespace SCMS.Portal.Web
             return services.AddHttpClient<IRESTFulApiFactoryClient, RESTFulApiFactoryClient>(client =>
             {
                 LocalConfigurations localConfigurations = Configuration.Get<LocalConfigurations>();
-                string apiUrl = localConfigurations.ApiConfigurations.Url;
+                ApiConfigurations apiConfigurations = localConfigurations.ApiConfigurations;
+                string apiUrl = apiConfigurations.Url;
                 client.BaseAddress = new Uri(apiUrl);
             });
         }
