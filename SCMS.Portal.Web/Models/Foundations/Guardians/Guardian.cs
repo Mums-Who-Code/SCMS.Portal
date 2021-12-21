@@ -16,6 +16,7 @@ namespace SCMS.Portal.Web.Models.Foundations.Guardians
         public string CountryCode { get; set; }
         public string ContactNumber { get; set; }
         public string Occupation { get; set; }
+        public Guid StudentId { get; set; }
         public DateTimeOffset CreatedDate { get; set; }
         public DateTimeOffset UpdatedDate { get; set; }
 
