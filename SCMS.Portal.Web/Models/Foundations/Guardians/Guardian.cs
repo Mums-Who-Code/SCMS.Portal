@@ -19,9 +19,7 @@ namespace SCMS.Portal.Web.Models.Foundations.Guardians
         public Guid StudentId { get; set; }
         public DateTimeOffset CreatedDate { get; set; }
         public DateTimeOffset UpdatedDate { get; set; }
-
         public Guid CreatedBy { get; set; }
-
         public Guid UpdatedBy { get; set; }
     }
 }
