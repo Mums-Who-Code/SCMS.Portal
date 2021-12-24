@@ -10,7 +10,7 @@ using SCMS.Portal.Web.Models.Foundations.Guardians;
 
 namespace SCMS.Portal.Web.Services.Foundations.Guardians
 {
-    public class GuardianService : IGuardianService
+    public partial class GuardianService : IGuardianService
     {
         private readonly IApiBroker apiBroker;
         private readonly IDateTimeBroker dateTimeBroker;

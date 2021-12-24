@@ -3,6 +3,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Linq.Expressions;
 using System.Net.NetworkInformation;
 using Moq;
 using SCMS.Portal.Web.Brokers.Apis;
@@ -12,6 +13,7 @@ using SCMS.Portal.Web.Models.Foundations.Guardians;
 using SCMS.Portal.Web.Models.Foundations.Students;
 using SCMS.Portal.Web.Services.Foundations.Guardians;
 using Tynamix.ObjectFiller;
+using Xeptions;
 
 namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
 {
@@ -36,6 +38,14 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
 
         private static Guardian CreateRandomGuardian() =>
             CreateGuardianFiller().Create();
+
+        private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException)
+        {
+            return actualException =>
+                actualException.Message == expectedException.Message
+                && actualException.InnerException.Message == expectedException.InnerException.Message
+                && (actualException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data);
+        }
 
         private static Filler<Guardian> CreateGuardianFiller()
         {
