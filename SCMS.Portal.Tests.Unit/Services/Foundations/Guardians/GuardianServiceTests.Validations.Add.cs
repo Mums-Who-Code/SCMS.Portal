@@ -2,13 +2,8 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Moq;
-using NuGet.Frameworks;
 using SCMS.Portal.Web.Models.Foundations.Guardians;
 using SCMS.Portal.Web.Models.Foundations.Guardians.Exceptions;
 using Xunit;

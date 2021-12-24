@@ -4,13 +4,11 @@
 
 using System;
 using System.Linq.Expressions;
-using System.Net.NetworkInformation;
 using Moq;
 using SCMS.Portal.Web.Brokers.Apis;
 using SCMS.Portal.Web.Brokers.DateTimes;
 using SCMS.Portal.Web.Brokers.Loggings;
 using SCMS.Portal.Web.Models.Foundations.Guardians;
-using SCMS.Portal.Web.Models.Foundations.Students;
 using SCMS.Portal.Web.Services.Foundations.Guardians;
 using Tynamix.ObjectFiller;
 using Xeptions;

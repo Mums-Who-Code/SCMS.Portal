@@ -26,8 +26,13 @@ namespace SCMS.Portal.Web.Services.Foundations.Guardians
             this.loggingBroker = loggingBroker;
         }
 
-        public async ValueTask<Guardian> AddGuardianAsync(Guardian guardian) =>
-            await this.apiBroker.PostGuardianAsync(guardian);
-        
+        public ValueTask<Guardian> AddGuardianAsync(Guardian guardian) =>
+        TryCatch(async () =>
+        {
+            ValidateGuardianOnAdd(guardian);
+
+            return await this.apiBroker.PostGuardianAsync(guardian);
+        });
+
     }
 }
