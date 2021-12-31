@@ -147,5 +147,46 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.apiBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Theory]
+        [MemberData(nameof(DependencyValidationExceptions))]
+        public async Task ShouldThrowDepedencyValidationExceptionOnAddIfValidationErrorOccursAndLogItAsync(
+            Exception dependencyValidaionException)
+        {
+            // given
+            Guardian someGuardian = CreateRandomGuardian();
+
+            var invalidGuardianException =
+                new InvalidGuardianException(
+                    dependencyValidaionException);
+
+            this.apiBrokerMock.Setup(broker =>
+                broker.PostGuardianAsync(It.IsAny<Guardian>()))
+                    .ThrowsAsync(dependencyValidaionException);
+
+            var expectedGuardianDependencyException =
+                new GuardianDependencyValidationException(invalidGuardianException);
+
+            // when
+            ValueTask<Guardian> addGuardianTask =
+                this.guardianService.AddGuardianAsync(someGuardian);
+
+            // then
+            await Assert.ThrowsAsync<GuardianDependencyValidationException>(() =>
+                addGuardianTask.AsTask());
+
+            this.apiBrokerMock.Verify(broker =>
+                broker.PostGuardianAsync(It.IsAny<Guardian>()),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                        expectedGuardianDependencyException))),
+                            Times.Once);
+
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.apiBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }

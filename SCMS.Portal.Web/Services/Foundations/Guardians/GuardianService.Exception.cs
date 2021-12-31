@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using RESTFulSense.Exceptions;
 using SCMS.Portal.Web.Models.Foundations.Guardians;
 using SCMS.Portal.Web.Models.Foundations.Guardians.Exceptions;
-using SCMS.Portal.Web.Models.Foundations.Students.Exceptions;
 using Xeptions;
 
 namespace SCMS.Portal.Web.Services.Foundations.Guardians
@@ -60,9 +59,9 @@ namespace SCMS.Portal.Web.Services.Foundations.Guardians
 
                 throw CreateAndLogDependencyValidationException(invalidGuardianException);
             }
-            catch(HttpResponseFailedDependencyException httpResponseFailedDependencyException)
+            catch (HttpResponseFailedDependencyException httpResponseFailedDependencyException)
             {
-                var invalidGuardianException = 
+                var invalidGuardianException =
                     new InvalidGuardianException(
                         httpResponseFailedDependencyException);
 
