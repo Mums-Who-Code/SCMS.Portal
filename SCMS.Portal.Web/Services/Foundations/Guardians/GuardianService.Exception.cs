@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using RESTFulSense.Exceptions;
 using SCMS.Portal.Web.Models.Foundations.Guardians;
 using SCMS.Portal.Web.Models.Foundations.Guardians.Exceptions;
+using SCMS.Portal.Web.Models.Foundations.Students.Exceptions;
 using Xeptions;
 
 namespace SCMS.Portal.Web.Services.Foundations.Guardians
@@ -50,6 +51,23 @@ namespace SCMS.Portal.Web.Services.Foundations.Guardians
 
                 throw CreateAndLogCriticalDependencyException(failedGuardianDependencyException);
             }
+            catch (HttpResponseBadRequestException httpBadRquestException)
+            {
+                var invalidGuardianException =
+                    new InvalidGuardianException(
+                        httpBadRquestException,
+                        httpBadRquestException.Data);
+
+                throw CreateAndLogDependencyValidationException(invalidGuardianException);
+            }
+            catch(HttpResponseFailedDependencyException httpResponseFailedDependencyException)
+            {
+                var invalidGuardianException = 
+                    new InvalidGuardianException(
+                        httpResponseFailedDependencyException);
+
+                throw CreateAndLogDependencyValidationException(invalidGuardianException);
+            }
             catch (HttpResponseException httpResponseException)
             {
                 var failedGuardianDependencyException =
@@ -81,6 +99,14 @@ namespace SCMS.Portal.Web.Services.Foundations.Guardians
             this.loggingBroker.LogError(guardianDependencyException);
 
             return guardianDependencyException;
+        }
+
+        private GuardianDependencyValidationException CreateAndLogDependencyValidationException(Xeption exception)
+        {
+            var guardianDependencyValidationException = new GuardianDependencyValidationException(exception);
+            this.loggingBroker.LogError(guardianDependencyValidationException);
+
+            return guardianDependencyValidationException;
         }
     }
 }
