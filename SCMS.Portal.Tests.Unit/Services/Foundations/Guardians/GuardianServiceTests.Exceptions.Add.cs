@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Moq;
 using SCMS.Portal.Web.Models.Foundations.Guardians;
 using SCMS.Portal.Web.Models.Foundations.Guardians.Exceptions;
-using SCMS.Portal.Web.Models.Foundations.Students.Exceptions;
 using Xunit;
 
 namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
@@ -22,7 +21,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
             // given
             Guardian someGuardian = CreateRandomGuardian();
 
-            var failedGuardianDependencyException = 
+            var failedGuardianDependencyException =
                 new FailedGuardianDependencyException(criticalDependencyException);
 
             var expectedGuardianDependencyException =
@@ -33,15 +32,15 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
                     .ThrowsAsync(criticalDependencyException);
 
             // when
-            ValueTask<Guardian> addGuardianTask = 
+            ValueTask<Guardian> addGuardianTask =
                 this.guardianService.AddGuardianAsync(someGuardian);
 
             // then
-            await Assert.ThrowsAsync<StudentDependencyException>(() =>
+            await Assert.ThrowsAsync<GuardianDependencyException>(() =>
                 addGuardianTask.AsTask());
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogError(It.Is(SameExceptionAs(
+                broker.LogCritical(It.Is(SameExceptionAs(
                     expectedGuardianDependencyException))),
                         Times.Once());
 

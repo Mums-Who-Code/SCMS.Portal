@@ -40,8 +40,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
         public static TheoryData CriticalDependencyExceptions()
         {
             string someMessage = GetRandomMessage();
-            
-            var httpResponseMessage = 
+
+            var httpResponseMessage =
                 new HttpResponseMessage();
 
             var httpRequestException =
@@ -84,9 +84,12 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
         private static Filler<Guardian> CreateGuardianFiller()
         {
             var filler = new Filler<Guardian>();
+            Guid id = Guid.NewGuid();
 
             filler.Setup()
-                .OnType<DateTimeOffset>().Use(DateTimeOffset.UtcNow);
+                .OnProperty(guardian => guardian.Title).Use(Title.Dr)
+                .OnType<DateTimeOffset>().Use(DateTimeOffset.UtcNow)
+                .OnType<Guid>().Use(id);
 
             return filler;
         }
