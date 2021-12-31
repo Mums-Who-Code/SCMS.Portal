@@ -2,6 +2,7 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using RESTFulSense.Exceptions;
@@ -82,6 +83,13 @@ namespace SCMS.Portal.Web.Services.Foundations.Guardians
 
                 throw CreateAndLogDependencyException(failedGuardianDependencyException);
             }
+            catch (Exception serviceException)
+            {
+                var failedGuardianServiceException =
+                    new FailedGuardianServiceException(serviceException);
+
+                throw CreateAndLogServiceException(failedGuardianServiceException);
+            }
         }
 
         private GuardianValidationException CreateAndLogValidationException(Xeption exception)
@@ -114,6 +122,14 @@ namespace SCMS.Portal.Web.Services.Foundations.Guardians
             this.loggingBroker.LogError(guardianDependencyValidationException);
 
             return guardianDependencyValidationException;
+        }
+
+        private GuardianServiceException CreateAndLogServiceException(Xeption exception)
+        {
+            var guardianServiceException = new GuardianServiceException(exception);
+            this.loggingBroker.LogError(guardianServiceException);
+
+            return guardianServiceException;
         }
     }
 }
