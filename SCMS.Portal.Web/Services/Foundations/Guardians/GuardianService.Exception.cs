@@ -67,6 +67,14 @@ namespace SCMS.Portal.Web.Services.Foundations.Guardians
 
                 throw CreateAndLogDependencyValidationException(invalidGuardianException);
             }
+            catch (HttpResponseConflictException httpResponseConflictException)
+            {
+                var invalidGuardianException =
+                    new InvalidGuardianException(
+                        httpResponseConflictException);
+
+                throw CreateAndLogDependencyValidationException(invalidGuardianException);
+            }
             catch (HttpResponseException httpResponseException)
             {
                 var failedGuardianDependencyException =
