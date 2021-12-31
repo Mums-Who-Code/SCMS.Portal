@@ -4,7 +4,9 @@
 
 using System;
 using System.Linq.Expressions;
+using System.Net.Http;
 using Moq;
+using RESTFulSense.Exceptions;
 using SCMS.Portal.Web.Brokers.Apis;
 using SCMS.Portal.Web.Brokers.DateTimes;
 using SCMS.Portal.Web.Brokers.Loggings;
@@ -12,6 +14,7 @@ using SCMS.Portal.Web.Models.Foundations.Guardians;
 using SCMS.Portal.Web.Services.Foundations.Guardians;
 using Tynamix.ObjectFiller;
 using Xeptions;
+using Xunit;
 
 namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
 {
@@ -34,6 +37,37 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
                 loggingBroker: loggingBrokerMock.Object);
         }
 
+        public static TheoryData CriticalDependencyExceptions()
+        {
+            string someMessage = GetRandomMessage();
+            
+            var httpResponseMessage = 
+                new HttpResponseMessage();
+
+            var httpRequestException =
+                new HttpRequestException();
+
+            var httpResponseUrlNotFoundException =
+                new HttpResponseUrlNotFoundException(
+                    httpResponseMessage,
+                    someMessage);
+
+            var unauthorisedHttpResponseException =
+                new HttpResponseUnauthorizedException(
+                    httpResponseMessage,
+                    someMessage);
+
+            return new TheoryData<Exception>
+            {
+                httpRequestException,
+                httpResponseUrlNotFoundException,
+                unauthorisedHttpResponseException
+            };
+        }
+
+        private static string GetRandomMessage() =>
+            new MnemonicString(wordCount: GetRandomNumber()).GetValue();
+
         private static Guardian CreateRandomGuardian() =>
             CreateGuardianFiller().Create();
 
@@ -44,6 +78,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
                 && actualException.InnerException.Message == expectedException.InnerException.Message
                 && (actualException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data);
         }
+
+        private static int GetRandomNumber() => new IntRange(min: 2, max: 10).GetValue();
 
         private static Filler<Guardian> CreateGuardianFiller()
         {

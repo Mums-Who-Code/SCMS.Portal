@@ -3,8 +3,6 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Data;
-using System.Reflection.Metadata;
 using SCMS.Portal.Web.Models.Foundations.Guardians;
 using SCMS.Portal.Web.Models.Foundations.Guardians.Exceptions;
 
@@ -18,13 +16,13 @@ namespace SCMS.Portal.Web.Services.Foundations.Guardians
 
             Validate(
                 (Rule: IsInvalid(id: guardian.Id), Parameter: nameof(Guardian.Id)),
-                (Rule: IsInvalid(title:guardian.Title), Parameter: nameof(Guardian.Title)),
+                (Rule: IsInvalid(title: guardian.Title), Parameter: nameof(Guardian.Title)),
                 (Rule: IsInvalid(text: guardian.FirstName), Parameter: nameof(Guardian.FirstName)),
                 (Rule: IsInvalid(text: guardian.LastName), Parameter: nameof(Guardian.LastName)),
                 (Rule: IsInvalid(text: guardian.EmailId), Parameter: nameof(Guardian.EmailId)),
-                (Rule: IsInvalid(text:guardian.CountryCode), Parameter: nameof(Guardian.CountryCode)),
+                (Rule: IsInvalid(text: guardian.CountryCode), Parameter: nameof(Guardian.CountryCode)),
                 (Rule: IsInvalid(text: guardian.ContactNumber), Parameter: nameof(Guardian.ContactNumber)),
-                (Rule: IsInvalid(text:guardian.Occupation), Parameter: nameof(Guardian.Occupation)),
+                (Rule: IsInvalid(text: guardian.Occupation), Parameter: nameof(Guardian.Occupation)),
                 (Rule: IsInvalid(id: guardian.StudentId), Parameter: nameof(Guardian.StudentId)),
                 (Rule: IsInvalid(date: guardian.CreatedDate), Parameter: nameof(Guardian.CreatedDate)),
                 (Rule: IsInvalid(id: guardian.CreatedBy), Parameter: nameof(Guardian.CreatedBy))
@@ -67,7 +65,7 @@ namespace SCMS.Portal.Web.Services.Foundations.Guardians
         {
             var invalidGuardianException = new InvalidGuardianException();
 
-            foreach((dynamic rule, string parameter) in validations)
+            foreach ((dynamic rule, string parameter) in validations)
             {
                 if (rule.Condition)
                 {

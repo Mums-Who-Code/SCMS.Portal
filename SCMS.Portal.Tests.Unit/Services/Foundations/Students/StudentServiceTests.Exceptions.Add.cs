@@ -21,7 +21,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
         public async Task ShouldThrowCriticalDependencyExceptionOnAddIfDependencyErrorOccursAndLogItAsync(
             Exception criticalDependencyException)
         {
-            // given
+            //given
             Student someStudent = CreateRandomStudent();
 
             var failedStudentDependencyException =
@@ -34,11 +34,11 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
                 broker.PostStudentAsync(It.IsAny<Student>()))
                     .ThrowsAsync(criticalDependencyException);
 
-            // when
+            //when
             ValueTask<Student> addStudentTask =
                 this.studentService.AddStudentAsync(someStudent);
 
-            // then
+            //then
             await Assert.ThrowsAsync<StudentDependencyException>(() =>
                addStudentTask.AsTask());
 

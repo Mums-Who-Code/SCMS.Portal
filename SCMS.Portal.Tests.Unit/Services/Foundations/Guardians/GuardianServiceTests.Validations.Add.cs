@@ -4,7 +4,6 @@
 
 using System.Threading.Tasks;
 using Moq;
-using NuGet.Frameworks;
 using SCMS.Portal.Web.Models.Foundations.Guardians;
 using SCMS.Portal.Web.Models.Foundations.Guardians.Exceptions;
 using Xunit;
@@ -16,18 +15,18 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
         [Fact]
         public async Task ShouldThrowValidationExceptionOnAddIfGuardianIsNullAndLogItAsync()
         {
-            //given
+            // given
             Guardian invalidGuardian = null;
             var nullGuardianException = new NullGuardianException();
 
             var expectedGuardianValidationException =
                 new GuardianValidationException(nullGuardianException);
 
-            //when
+            // when
             ValueTask<Guardian> addGuardianTask =
                 this.guardianService.AddGuardianAsync(invalidGuardian);
 
-            //then
+            // then
             await Assert.ThrowsAsync<GuardianValidationException>(() =>
                 addGuardianTask.AsTask());
 
@@ -51,7 +50,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
         [InlineData("   ")]
         public async Task ShouldThrowValidationExceptionOnAddIfGuardianIsInvalidAndLogItAsync(string invalidFirstName)
         {
-            //given
+            // given
             Guardian invalidGuardian = new Guardian
             {
                 FirstName = invalidFirstName,
@@ -107,11 +106,11 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
             var expectedGuardianValidationException =
                 new GuardianValidationException(invalidGuardianException);
 
-            //when
+            // when
             ValueTask<Guardian> addGuardianTask =
                 this.guardianService.AddGuardianAsync(invalidGuardian);
 
-            //then
+            // then
             await Assert.ThrowsAsync<GuardianValidationException>(() =>
                 addGuardianTask.AsTask());
 

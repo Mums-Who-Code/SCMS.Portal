@@ -125,18 +125,6 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
         private static int GetNegativeRandomNumber() => -1 * GetRandomNumber();
         private static int GetRandomNumber() => new IntRange(min: 2, max: 10).GetValue();
 
-        public static IEnumerable<object[]> InvalidMinuteCases()
-        {
-            int randomMoreThanMinuteFromNow = GetRandomNumber();
-            int randomMoreThanMinuteBeforeNow = GetNegativeRandomNumber();
-
-            return new List<object[]>
-            {
-                new object[] { randomMoreThanMinuteFromNow },
-                new object[] { randomMoreThanMinuteBeforeNow }
-            };
-        }
-
         private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException)
         {
             return actualException =>
