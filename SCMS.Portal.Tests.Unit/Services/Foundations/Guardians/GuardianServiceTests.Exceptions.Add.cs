@@ -53,5 +53,44 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
 
+        [Theory]
+        [MemberData(nameof(ApiDependencyExceptions))]
+        public async Task ShouldThrowDependencyExceptionOnAddIfErrorOccursAndLogItAsync(
+            Exception apiDependencyException)
+        {
+            // given
+            Guardian someGuardian = CreateRandomGuardian();
+
+            var failedGuardianDependencyException =
+                new FailedGuardianDependencyException(apiDependencyException);
+
+            var expectedGuardianDependencyException =
+                new GuardianDependencyException(failedGuardianDependencyException);
+
+            this.apiBrokerMock.Setup(broker =>
+                broker.PostGuardianAsync(It.IsAny<Guardian>()))
+                    .ThrowsAsync(apiDependencyException);
+
+            // when
+            ValueTask<Guardian> addGuardianTask =
+                this.guardianService.AddGuardianAsync(someGuardian);
+
+            // then
+            await Assert.ThrowsAsync<GuardianDependencyException>(() =>
+                addGuardianTask.AsTask());
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedGuardianDependencyException))),
+                        Times.Once());
+
+            this.apiBrokerMock.Verify(broker =>
+                broker.PostGuardianAsync(It.IsAny<Guardian>()),
+                    Times.Once);
+
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
