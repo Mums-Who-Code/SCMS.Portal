@@ -3,6 +3,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Net.Http;
 using Moq;
@@ -92,6 +93,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
 
         private static Guardian CreateRandomGuardian() =>
             CreateGuardianFiller().Create();
+        private static Dictionary<string, List<string>> CreateRandomDictionary() =>
+            new Filler<Dictionary<string, List<string>>>().Create();
+
 
         private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException)
         {
