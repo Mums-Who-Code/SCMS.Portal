@@ -50,6 +50,13 @@ namespace SCMS.Portal.Web.Services.Foundations.Guardians
 
                 throw CreateAndLogCriticalDependencyException(failedGuardianDependencyException);
             }
+            catch (HttpResponseException httpResponseException)
+            {
+                var failedGuardianDependencyException =
+                    new FailedGuardianDependencyException(httpResponseException);
+
+                throw CreateAndLogDependencyException(failedGuardianDependencyException);
+            }
         }
 
         private GuardianValidationException CreateAndLogValidationException(Xeption exception)
@@ -64,6 +71,14 @@ namespace SCMS.Portal.Web.Services.Foundations.Guardians
         {
             var guardianDependencyException = new GuardianDependencyException(exception);
             this.loggingBroker.LogCritical(guardianDependencyException);
+
+            return guardianDependencyException;
+        }
+
+        private GuardianDependencyException CreateAndLogDependencyException(Xeption exception)
+        {
+            var guardianDependencyException = new GuardianDependencyException(exception);
+            this.loggingBroker.LogError(guardianDependencyException);
 
             return guardianDependencyException;
         }
