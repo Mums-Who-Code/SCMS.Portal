@@ -23,6 +23,10 @@ namespace SCMS.Portal.Web.Services.Foundations.Guardians
             {
                 throw CreateAndLogValidationException(nullGuardianException);
             }
+            catch (InvalidGuardianException invalidGuardianException)
+            {
+                throw CreateAndLogValidationException(invalidGuardianException);
+            }
         }
 
         private GuardianValidationException CreateAndLogValidationException(Xeption exception)
