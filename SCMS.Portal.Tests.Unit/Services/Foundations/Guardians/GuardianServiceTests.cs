@@ -11,32 +11,33 @@ using RESTFulSense.Exceptions;
 using SCMS.Portal.Web.Brokers.Apis;
 using SCMS.Portal.Web.Brokers.DateTimes;
 using SCMS.Portal.Web.Brokers.Loggings;
-using SCMS.Portal.Web.Models.Foundations.Students;
-using SCMS.Portal.Web.Services.Foundations.Students;
+using SCMS.Portal.Web.Models.Foundations.Guardians;
+using SCMS.Portal.Web.Services.Foundations.Guardians;
 using Tynamix.ObjectFiller;
 using Xeptions;
 using Xunit;
 
-namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
+namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
 {
-    public partial class StudentServiceTests
+    public partial class GuardianServiceTests
     {
         private readonly Mock<IApiBroker> apiBrokerMock;
         private readonly Mock<IDateTimeBroker> dateTimeBrokerMock;
         private readonly Mock<ILoggingBroker> loggingBrokerMock;
-        private readonly IStudentService studentService;
+        private readonly IGuardianService guardianService;
 
-        public StudentServiceTests()
+        public GuardianServiceTests()
         {
             this.apiBrokerMock = new Mock<IApiBroker>();
             this.dateTimeBrokerMock = new Mock<IDateTimeBroker>();
             this.loggingBrokerMock = new Mock<ILoggingBroker>();
 
-            this.studentService = new StudentService(
+            this.guardianService = new GuardianService(
                 apiBroker: apiBrokerMock.Object,
                 dateTimeBroker: dateTimeBrokerMock.Object,
                 loggingBroker: loggingBrokerMock.Object);
         }
+
         public static TheoryData ApiDependencyExceptions()
         {
             var responseMessage = new HttpResponseMessage();
@@ -69,12 +70,12 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             var httpRequestException =
                 new HttpRequestException();
 
-            var httpReponseUrlNotFoundException =
+            var httpResponseUrlNotFoundException =
                 new HttpResponseUrlNotFoundException(
                     httpResponseMessage,
                     someMessage);
 
-            var unauthorizedHttpResponseException =
+            var unauthorisedHttpResponseException =
                 new HttpResponseUnauthorizedException(
                     httpResponseMessage,
                     someMessage);
@@ -82,8 +83,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
             return new TheoryData<Exception>
             {
                 httpRequestException,
-                httpReponseUrlNotFoundException,
-                unauthorizedHttpResponseException
+                httpResponseUrlNotFoundException,
+                unauthorisedHttpResponseException
             };
         }
 
@@ -113,17 +114,11 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
         private static string GetRandomMessage() =>
             new MnemonicString(wordCount: GetRandomNumber()).GetValue();
 
-        private static Student CreateRandomStudent() =>
-            CreateStudentFiller(dateTime: GetRandomDateTime()).Create();
-
+        private static Guardian CreateRandomGuardian() =>
+            CreateGuardianFiller().Create();
         private static Dictionary<string, List<string>> CreateRandomDictionary() =>
             new Filler<Dictionary<string, List<string>>>().Create();
 
-        private static DateTimeOffset GetRandomDateTime() =>
-            new DateTimeRange(earliestDate: new DateTime()).GetValue();
-
-        private static int GetNegativeRandomNumber() => -1 * GetRandomNumber();
-        private static int GetRandomNumber() => new IntRange(min: 2, max: 10).GetValue();
 
         private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException)
         {
@@ -132,15 +127,18 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Students
                 && actualException.InnerException.Message == expectedException.InnerException.Message
                 && (actualException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data);
         }
-        private static Filler<Student> CreateStudentFiller(DateTimeOffset dateTime)
+
+        private static int GetRandomNumber() => new IntRange(min: 2, max: 10).GetValue();
+
+        private static Filler<Guardian> CreateGuardianFiller()
         {
-            var filler = new Filler<Student>();
-            Guid userId = Guid.NewGuid();
+            var filler = new Filler<Guardian>();
+            Guid id = Guid.NewGuid();
 
             filler.Setup()
-                .OnProperty(student => student.Status).Use(StudentStatus.Active)
-                .OnType<DateTimeOffset>().Use(dateTime)
-                .OnType<Guid>().Use(userId);
+                .OnProperty(guardian => guardian.Title).Use(Title.Dr)
+                .OnType<DateTimeOffset>().Use(DateTimeOffset.UtcNow)
+                .OnType<Guid>().Use(id);
 
             return filler;
         }

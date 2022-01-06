@@ -349,4 +349,4 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-/SMCS.Services.Api/appsettings.Development.json
+/SCMS.Portal.Web/appsettings.Development.json
