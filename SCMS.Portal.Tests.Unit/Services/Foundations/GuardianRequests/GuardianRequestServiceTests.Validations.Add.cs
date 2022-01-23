@@ -54,7 +54,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.GuardianRequests
             GuardianRequest invalidGuardianRequest = new GuardianRequest
             {
                 FirstName = invalidFirstName,
-                Title = GuardianRequestTitle.None
+                Title = GuardianRequestTitle.None,
+                ContactLevel = GetInvalidEnum<GuardianRequestContactLevel>(),
+                Relationship = GetInvalidEnum<GuardianRequestRelationship>()
             };
 
             var invalidGuardianRequestException = new InvalidGuardianRequestException();
@@ -73,6 +75,14 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.GuardianRequests
 
             invalidGuardianRequestException.AddData(
                 key: nameof(GuardianRequest.Title),
+                values: "Value is invalid.");
+
+            invalidGuardianRequestException.AddData(
+                key: nameof(GuardianRequest.ContactLevel),
+                values: "Value is invalid.");
+
+            invalidGuardianRequestException.AddData(
+                key: nameof(GuardianRequest.Relationship),
                 values: "Value is invalid.");
 
             invalidGuardianRequestException.AddData(

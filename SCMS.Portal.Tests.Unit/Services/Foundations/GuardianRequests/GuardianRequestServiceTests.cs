@@ -111,6 +111,22 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.GuardianRequests
             };
         }
 
+        private static T GetInvalidEnum<T>()
+        {
+            int randomNumber = GetLocalRandomNumber();
+
+            while (Enum.IsDefined(typeof(T), randomNumber) is true)
+            {
+                randomNumber = GetLocalRandomNumber();
+            }
+
+            return (T)(object)randomNumber;
+
+            static int GetLocalRandomNumber() =>
+                new IntRange(min: int.MinValue, max: int.MaxValue)
+                    .GetValue();
+        }
+
         private static string GetRandomMessage() =>
             new MnemonicString(wordCount: GetRandomNumber()).GetValue();
 
