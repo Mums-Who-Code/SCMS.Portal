@@ -3,6 +3,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
@@ -37,12 +38,14 @@ namespace SCMS.Portal.Web.Views.Components.SchoolSelections
             catch (SchoolViewDependencyException schoolViewDependencyException)
             {
                 this.State = ComponentState.Error;
+
                 this.Exception = new SchoolSelectionComponentException(
                     schoolViewDependencyException);
             }
             catch (SchoolViewServiceException schoolViewServiceException)
             {
                 this.State = ComponentState.Error;
+
                 this.Exception = new SchoolSelectionComponentException(
                     schoolViewServiceException);
             }

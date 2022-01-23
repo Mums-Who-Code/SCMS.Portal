@@ -1,0 +1,37 @@
+﻿@using SCMS.Portal.Web.Models.Views.Foundations.StudentViews
+@using SCMS.Portal.Web.Views.Bases.Cards
+@using SCMS.Portal.Web.Views.Components.Containers
+@using SCMS.Portal.Web.Views.Bases.TextBoxes
+@using SCMS.Portal.Web.Views.Bases.DatePickers
+@using SCMS.Portal.Web.Views.Bases.Labels
+@using SCMS.Portal.Web.Views.Bases.Buttons
+@using SCMS.Portal.Web.Views.Bases.Dropdowns.Selects;
+
+<div>
+    <TextBoxBase @ref=@FirstNameTextBox
+                    @bind-Value=@StudentView.FirstName
+                    Placeholder="First Name"/>
+    <br/>
+    <TextBoxBase @ref=LastNameTextBox
+                    @bind-Value=@StudentView.LastName
+                    Placeholder="Last Name"/>
+    <br/>
+    <br/>
+    <br/>
+    <DatePickerBase @ref=@DateOfBirthPicker
+                    @bind-Value=@StudentView.DateOfBirth/>
+    <br/>
+    <br/>
+    <DropdownSelectBase @ref=@GenderDropdown
+                        @bind-Value=@StudentView.Gender
+                        Placeholder="Gender"
+                        TEnum="StudentGenderView"/>
+    <br/>
+    <br/>
+    <LabelBase @ref=@StatusLabel/>
+    <br/>
+    <br/>
+    <ButtonBase @ref=@RegisterButton
+                    Label="Register"
+                    OnClick=@RegisterStudentAsync/>
+</div>

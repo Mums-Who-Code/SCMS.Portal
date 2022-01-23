@@ -3,12 +3,12 @@
 // -----------------------------------------------------------------------
 
 using System.Threading.Tasks;
-using SCMS.Portal.Web.Models.Foundations.Guardians;
+using SCMS.Portal.Web.Models.Foundations.GuardianRequests;
 
-namespace SCMS.Portal.Web.Brokers.Apis
+namespace SCMS.Portal.Web.Services.Foundations.GuardianRequests
 {
-    public partial interface IApiBroker
+    public interface IGuardianRequestService
     {
-        ValueTask<Guardian> PostGuardianAsync(Guardian guardian);
+        ValueTask<GuardianRequest> AddGuardianRequestAsync(GuardianRequest guardianRequest);
     }
 }

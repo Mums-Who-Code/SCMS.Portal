@@ -4,11 +4,11 @@
 
 using Xeptions;
 
-namespace SCMS.Portal.Web.Models.Foundations.Guardians.Exceptions
+namespace SCMS.Portal.Web.Models.Foundations.GuardianRequests.Exceptions
 {
-    public class GuardianValidationException : Xeption
+    public class GuardianRequestValidationException : Xeption
     {
-        public GuardianValidationException(Xeption innerException)
+        public GuardianRequestValidationException(Xeption innerException)
             : base("Guardian validation error occured, try again.", innerException) { }
     }
 }

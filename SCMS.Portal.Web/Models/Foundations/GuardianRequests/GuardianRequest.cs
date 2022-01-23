@@ -4,18 +4,20 @@
 
 using System;
 
-namespace SCMS.Portal.Web.Models.Foundations.Guardians
+namespace SCMS.Portal.Web.Models.Foundations.GuardianRequests
 {
-    public class Guardian
+    public class GuardianRequest
     {
         public Guid Id { get; set; }
-        public Title Title { get; set; }
+        public GuardianRequestTitle Title { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EmailId { get; set; }
         public string CountryCode { get; set; }
         public string ContactNumber { get; set; }
         public string Occupation { get; set; }
+        public GuardianRequestContactLevel ContactLevel { get; set; }
+        public GuardianRequestRelationship Relationship { get; set; }
         public Guid StudentId { get; set; }
         public DateTimeOffset CreatedDate { get; set; }
         public DateTimeOffset UpdatedDate { get; set; }

@@ -15,7 +15,7 @@ using SCMS.Portal.Web.Brokers.DateTimes;
 using SCMS.Portal.Web.Brokers.Loggings;
 using SCMS.Portal.Web.Brokers.Navigations;
 using SCMS.Portal.Web.Models.Configurations;
-using SCMS.Portal.Web.Services.Foundations.Guardians;
+using SCMS.Portal.Web.Services.Foundations.GuardianRequests;
 using SCMS.Portal.Web.Services.Foundations.Schools;
 using SCMS.Portal.Web.Services.Foundations.Students;
 using SCMS.Portal.Web.Services.Foundations.Users;
@@ -111,7 +111,7 @@ namespace SCMS.Portal.Web
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<ISchoolService, SchoolService>();
-            services.AddScoped<IGuardianService, GuardianService>();
+            services.AddScoped<IGuardianRequestService, GuardianRequestService>();
         }
 
         private static void AddViewServices(IServiceCollection services)

@@ -11,28 +11,28 @@ using RESTFulSense.Exceptions;
 using SCMS.Portal.Web.Brokers.Apis;
 using SCMS.Portal.Web.Brokers.DateTimes;
 using SCMS.Portal.Web.Brokers.Loggings;
-using SCMS.Portal.Web.Models.Foundations.Guardians;
-using SCMS.Portal.Web.Services.Foundations.Guardians;
+using SCMS.Portal.Web.Models.Foundations.GuardianRequests;
+using SCMS.Portal.Web.Services.Foundations.GuardianRequests;
 using Tynamix.ObjectFiller;
 using Xeptions;
 using Xunit;
 
-namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
+namespace SCMS.Portal.Tests.Unit.Services.Foundations.GuardianRequests
 {
-    public partial class GuardianServiceTests
+    public partial class GuardianRequestServiceTests
     {
         private readonly Mock<IApiBroker> apiBrokerMock;
         private readonly Mock<IDateTimeBroker> dateTimeBrokerMock;
         private readonly Mock<ILoggingBroker> loggingBrokerMock;
-        private readonly IGuardianService guardianService;
+        private readonly IGuardianRequestService guardianRequestService;
 
-        public GuardianServiceTests()
+        public GuardianRequestServiceTests()
         {
             this.apiBrokerMock = new Mock<IApiBroker>();
             this.dateTimeBrokerMock = new Mock<IDateTimeBroker>();
             this.loggingBrokerMock = new Mock<ILoggingBroker>();
 
-            this.guardianService = new GuardianService(
+            this.guardianRequestService = new GuardianRequestService(
                 apiBroker: apiBrokerMock.Object,
                 dateTimeBroker: dateTimeBrokerMock.Object,
                 loggingBroker: loggingBrokerMock.Object);
@@ -114,11 +114,11 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
         private static string GetRandomMessage() =>
             new MnemonicString(wordCount: GetRandomNumber()).GetValue();
 
-        private static Guardian CreateRandomGuardian() =>
-            CreateGuardianFiller().Create();
+        private static GuardianRequest CreateRandomGuardianRequest() =>
+            CreateGuardianRequestFiller().Create();
+
         private static Dictionary<string, List<string>> CreateRandomDictionary() =>
             new Filler<Dictionary<string, List<string>>>().Create();
-
 
         private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException)
         {
@@ -130,13 +130,13 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
 
         private static int GetRandomNumber() => new IntRange(min: 2, max: 10).GetValue();
 
-        private static Filler<Guardian> CreateGuardianFiller()
+        private static Filler<GuardianRequest> CreateGuardianRequestFiller()
         {
-            var filler = new Filler<Guardian>();
+            var filler = new Filler<GuardianRequest>();
             Guid id = Guid.NewGuid();
 
             filler.Setup()
-                .OnProperty(guardian => guardian.Title).Use(Title.Dr)
+                .OnProperty(guardian => guardian.Title).Use(GuardianRequestTitle.Dr)
                 .OnType<DateTimeOffset>().Use(DateTimeOffset.UtcNow)
                 .OnType<Guid>().Use(id);
 
