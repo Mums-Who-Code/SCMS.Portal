@@ -17,6 +17,8 @@ namespace SCMS.Portal.Web.Services.Foundations.GuardianRequests
             Validate(
                 (Rule: IsInvalid(id: guardianRequest.Id), Parameter: nameof(GuardianRequest.Id)),
                 (Rule: IsInvalid(title: guardianRequest.Title), Parameter: nameof(GuardianRequest.Title)),
+                (Rule: IsInvalid(value: guardianRequest.ContactLevel), Parameter: nameof(GuardianRequest.ContactLevel)),
+                (Rule: IsInvalid(value: guardianRequest.Relationship), Parameter: nameof(GuardianRequest.Relationship)),
                 (Rule: IsInvalid(text: guardianRequest.FirstName), Parameter: nameof(GuardianRequest.FirstName)),
                 (Rule: IsInvalid(text: guardianRequest.LastName), Parameter: nameof(GuardianRequest.LastName)),
                 (Rule: IsInvalid(text: guardianRequest.EmailId), Parameter: nameof(GuardianRequest.EmailId)),
@@ -58,6 +60,12 @@ namespace SCMS.Portal.Web.Services.Foundations.GuardianRequests
         private static dynamic IsInvalid(GuardianRequestTitle title) => new
         {
             Condition = title == GuardianRequestTitle.None,
+            Message = "Value is invalid."
+        };
+
+        private static dynamic IsInvalid<T>(T value) => new
+        {
+            Condition = Enum.IsDefined(typeof(T), value) is false,
             Message = "Value is invalid."
         };
 
