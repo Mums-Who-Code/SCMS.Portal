@@ -8,13 +8,13 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Moq;
 using RESTFulSense.Exceptions;
-using SCMS.Portal.Web.Models.Foundations.Guardians;
-using SCMS.Portal.Web.Models.Foundations.Guardians.Exceptions;
+using SCMS.Portal.Web.Models.Foundations.GuardianRequests;
+using SCMS.Portal.Web.Models.Foundations.GuardianRequests.Exceptions;
 using Xunit;
 
-namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
+namespace SCMS.Portal.Tests.Unit.Services.Foundations.GuardianRequests
 {
-    public partial class GuardianServiceTests
+    public partial class GuardianRequestServiceTests
     {
         [Theory]
         [MemberData(nameof(CriticalDependencyExceptions))]
@@ -22,33 +22,33 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
             Exception criticalDependencyException)
         {
             // given
-            Guardian someGuardian = CreateRandomGuardian();
+            GuardianRequest someGuardianRequest = CreateRandomGuardianRequest();
 
-            var failedGuardianDependencyException =
-                new FailedGuardianDependencyException(criticalDependencyException);
+            var failedGuardianRequestDependencyException =
+                new FailedGuardianRequestDependencyException(criticalDependencyException);
 
-            var expectedGuardianDependencyException =
-                new GuardianDependencyException(failedGuardianDependencyException);
+            var expectedGuardianRequestDependencyException =
+                new GuardianRequestDependencyException(failedGuardianRequestDependencyException);
 
             this.apiBrokerMock.Setup(broker =>
-                broker.PostGuardianAsync(It.IsAny<Guardian>()))
+                broker.PostGuardianRequestAsync(It.IsAny<GuardianRequest>()))
                     .ThrowsAsync(criticalDependencyException);
 
             // when
-            ValueTask<Guardian> addGuardianTask =
-                this.guardianService.AddGuardianAsync(someGuardian);
+            ValueTask<GuardianRequest> addGuardianRequestTask =
+                this.guardianRequestService.AddGuardianRequestAsync(someGuardianRequest);
 
             // then
-            await Assert.ThrowsAsync<GuardianDependencyException>(() =>
-                addGuardianTask.AsTask());
+            await Assert.ThrowsAsync<GuardianRequestDependencyException>(() =>
+                addGuardianRequestTask.AsTask());
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogCritical(It.Is(SameExceptionAs(
-                    expectedGuardianDependencyException))),
+                    expectedGuardianRequestDependencyException))),
                         Times.Once());
 
             this.apiBrokerMock.Verify(broker =>
-                broker.PostGuardianAsync(It.IsAny<Guardian>()),
+                broker.PostGuardianRequestAsync(It.IsAny<GuardianRequest>()),
                     Times.Once);
 
             this.loggingBrokerMock.VerifyNoOtherCalls();
@@ -62,33 +62,34 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
             Exception apiDependencyException)
         {
             // given
-            Guardian someGuardian = CreateRandomGuardian();
+            GuardianRequest someGuardianRequest = CreateRandomGuardianRequest();
 
-            var failedGuardianDependencyException =
-                new FailedGuardianDependencyException(apiDependencyException);
+            var failedGuardianRequestDependencyException =
+                new FailedGuardianRequestDependencyException(apiDependencyException);
 
-            var expectedGuardianDependencyException =
-                new GuardianDependencyException(failedGuardianDependencyException);
+            var expectedGuardianRequestDependencyException =
+                new GuardianRequestDependencyException(
+                    failedGuardianRequestDependencyException);
 
             this.apiBrokerMock.Setup(broker =>
-                broker.PostGuardianAsync(It.IsAny<Guardian>()))
+                broker.PostGuardianRequestAsync(It.IsAny<GuardianRequest>()))
                     .ThrowsAsync(apiDependencyException);
 
             // when
-            ValueTask<Guardian> addGuardianTask =
-                this.guardianService.AddGuardianAsync(someGuardian);
+            ValueTask<GuardianRequest> addGuardianRequestTask =
+                this.guardianRequestService.AddGuardianRequestAsync(someGuardianRequest);
 
             // then
-            await Assert.ThrowsAsync<GuardianDependencyException>(() =>
-                addGuardianTask.AsTask());
+            await Assert.ThrowsAsync<GuardianRequestDependencyException>(() =>
+                addGuardianRequestTask.AsTask());
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
-                    expectedGuardianDependencyException))),
+                    expectedGuardianRequestDependencyException))),
                         Times.Once());
 
             this.apiBrokerMock.Verify(broker =>
-                broker.PostGuardianAsync(It.IsAny<Guardian>()),
+                broker.PostGuardianRequestAsync(It.IsAny<GuardianRequest>()),
                     Times.Once);
 
             this.loggingBrokerMock.VerifyNoOtherCalls();
@@ -105,7 +106,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
             string randomMessage = GetRandomMessage();
             string responseMessage = randomMessage;
             var httpResponseMessage = new HttpResponseMessage();
-            Guardian someGuardian = CreateRandomGuardian();
+            GuardianRequest someGuardianRequest = CreateRandomGuardianRequest();
 
             var httpResponseBadRequestException =
                 new HttpResponseBadRequestException(
@@ -115,32 +116,33 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
             httpResponseBadRequestException.AddData(exceptionData);
 
             this.apiBrokerMock.Setup(broker =>
-                broker.PostGuardianAsync(It.IsAny<Guardian>()))
+                broker.PostGuardianRequestAsync(It.IsAny<GuardianRequest>()))
                     .ThrowsAsync(httpResponseBadRequestException);
 
-            var invalidGuardianException =
-                new InvalidGuardianException(
+            var invalidGuardianRequestException =
+                new InvalidGuardianRequestException(
                     httpResponseBadRequestException,
                     exceptionData);
 
-            var expectedGuardianDependencyError =
-                new GuardianDependencyValidationException(invalidGuardianException);
+            var expectedGuardianRequestDependencyError =
+                new GuardianRequestDependencyValidationException(
+                    invalidGuardianRequestException);
 
             // when
-            ValueTask<Guardian> addGuardianTask =
-                this.guardianService.AddGuardianAsync(someGuardian);
+            ValueTask<GuardianRequest> addGuardianRequestTask =
+                this.guardianRequestService.AddGuardianRequestAsync(someGuardianRequest);
 
             // then
-            await Assert.ThrowsAsync<GuardianDependencyValidationException>(() =>
-                addGuardianTask.AsTask());
+            await Assert.ThrowsAsync<GuardianRequestDependencyValidationException>(() =>
+                addGuardianRequestTask.AsTask());
 
             this.apiBrokerMock.Verify(broker =>
-                broker.PostGuardianAsync(It.IsAny<Guardian>()),
+                broker.PostGuardianRequestAsync(It.IsAny<GuardianRequest>()),
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
-                        expectedGuardianDependencyError))),
+                        expectedGuardianRequestDependencyError))),
                             Times.Once);
 
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
@@ -154,34 +156,36 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
             Exception dependencyValidaionException)
         {
             // given
-            Guardian someGuardian = CreateRandomGuardian();
+            GuardianRequest someGuardianRequest = CreateRandomGuardianRequest();
 
-            var invalidGuardianException =
-                new InvalidGuardianException(
+            var invalidGuardianRequestException =
+                new InvalidGuardianRequestException(
                     dependencyValidaionException);
 
             this.apiBrokerMock.Setup(broker =>
-                broker.PostGuardianAsync(It.IsAny<Guardian>()))
+                broker.PostGuardianRequestAsync(It.IsAny<GuardianRequest>()))
                     .ThrowsAsync(dependencyValidaionException);
 
-            var expectedGuardianDependencyException =
-                new GuardianDependencyValidationException(invalidGuardianException);
+            var expectedGuardianRequestDependencyException =
+                new GuardianRequestDependencyValidationException(
+                    invalidGuardianRequestException);
 
             // when
-            ValueTask<Guardian> addGuardianTask =
-                this.guardianService.AddGuardianAsync(someGuardian);
+            ValueTask<GuardianRequest> addGuardianRequestTask =
+                this.guardianRequestService.AddGuardianRequestAsync(
+                    someGuardianRequest);
 
             // then
-            await Assert.ThrowsAsync<GuardianDependencyValidationException>(() =>
-                addGuardianTask.AsTask());
+            await Assert.ThrowsAsync<GuardianRequestDependencyValidationException>(() =>
+                addGuardianRequestTask.AsTask());
 
             this.apiBrokerMock.Verify(broker =>
-                broker.PostGuardianAsync(It.IsAny<Guardian>()),
+                broker.PostGuardianRequestAsync(It.IsAny<GuardianRequest>()),
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
-                        expectedGuardianDependencyException))),
+                        expectedGuardianRequestDependencyException))),
                             Times.Once);
 
             this.loggingBrokerMock.VerifyNoOtherCalls();
@@ -194,33 +198,34 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.Guardians
         {
             // given
             var serviceException = new Exception();
-            Guardian someGuardian = CreateRandomGuardian();
+            GuardianRequest someGuardianRequest = CreateRandomGuardianRequest();
 
-            var failedGuardianServiceException =
-                new FailedGuardianServiceException(serviceException);
+            var failedGuardianRequestServiceException =
+                new FailedGuardianRequestServiceException(serviceException);
 
-            var expectedGuardianServiceException =
-                new GuardianServiceException(failedGuardianServiceException);
+            var expectedGuardianRequestServiceException =
+                new GuardianRequestServiceException(
+                    failedGuardianRequestServiceException);
 
             this.apiBrokerMock.Setup(broker =>
-                broker.PostGuardianAsync(It.IsAny<Guardian>()))
+                broker.PostGuardianRequestAsync(It.IsAny<GuardianRequest>()))
                     .ThrowsAsync(serviceException);
 
             // when
-            ValueTask<Guardian> addGuardianTask =
-                this.guardianService.AddGuardianAsync(someGuardian);
+            ValueTask<GuardianRequest> addGuardianRequestTask =
+                this.guardianRequestService.AddGuardianRequestAsync(someGuardianRequest);
 
             // then
-            await Assert.ThrowsAsync<GuardianServiceException>(() =>
-                addGuardianTask.AsTask());
+            await Assert.ThrowsAsync<GuardianRequestServiceException>(() =>
+                addGuardianRequestTask.AsTask());
 
             this.apiBrokerMock.Verify(broker =>
-                broker.PostGuardianAsync(It.IsAny<Guardian>()),
+                broker.PostGuardianRequestAsync(It.IsAny<GuardianRequest>()),
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
-                    expectedGuardianServiceException))),
+                    expectedGuardianRequestServiceException))),
                         Times.Once);
 
             this.loggingBrokerMock.VerifyNoOtherCalls();

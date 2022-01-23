@@ -3,15 +3,15 @@
 // -----------------------------------------------------------------------
 
 using System.Threading.Tasks;
-using SCMS.Portal.Web.Models.Foundations.Guardians;
+using SCMS.Portal.Web.Models.Foundations.GuardianRequests;
 
 namespace SCMS.Portal.Web.Brokers.Apis
 {
     public partial class ApiBroker : IApiBroker
     {
-        private const string GuardiansRelativeUrl = "api/guardians";
+        private const string GuardianRequestsRelativeUrl = "api/guardianRequests";
 
-        public async ValueTask<Guardian> PostGuardianAsync(Guardian guardian) =>
-            await this.PostAsync(GuardiansRelativeUrl, guardian);
+        public async ValueTask<GuardianRequest> PostGuardianRequestAsync(GuardianRequest guardianRequest) =>
+            await this.PostAsync(GuardianRequestsRelativeUrl, guardianRequest);
     }
 }

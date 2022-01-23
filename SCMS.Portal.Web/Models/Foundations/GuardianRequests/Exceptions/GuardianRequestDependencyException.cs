@@ -4,11 +4,11 @@
 
 using Xeptions;
 
-namespace SCMS.Portal.Web.Models.Foundations.Guardians.Exceptions
+namespace SCMS.Portal.Web.Models.Foundations.GuardianRequests.Exceptions
 {
-    public class GuardianDependencyException : Xeption
+    public class GuardianRequestDependencyException : Xeption
     {
-        public GuardianDependencyException(Xeption innerException)
+        public GuardianRequestDependencyException(Xeption innerException)
             : base(message: "Guardian dependency error occured, contact support.", innerException)
         { }
     }
