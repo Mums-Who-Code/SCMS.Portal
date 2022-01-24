@@ -16,6 +16,7 @@ using SCMS.Portal.Web.Services.Foundations.GuardianRequests;
 using SCMS.Portal.Web.Services.Foundations.Users;
 using SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews;
 using Tynamix.ObjectFiller;
+using Xeptions;
 
 namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
 {
@@ -67,6 +68,14 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
             }
 
             return randomTitle;
+        }
+        
+        private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException)
+        {
+            return actualException =>
+                actualException.Message == expectedException.Message
+                && actualException.InnerException.Message == expectedException.InnerException.Message
+                && (actualException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data);
         }
 
         private static GuardianRequestViewTitle GetRandomTitle()
