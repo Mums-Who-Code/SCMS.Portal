@@ -63,18 +63,20 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
         {
             GuardianRequestView invalidGuardianRequestView = new GuardianRequestView
             {
-                Title = (GuardianRequestViewTitle)GetValidEnum<GuardianRequestTitle>(),
+                Title = GuardianRequestViewTitle.None,
                 FirstName = invalidText,
                 LastName = invalidText,
                 EmailId = invalidText,
                 CountryCode = invalidText,
                 ContactNumber = invalidText,
                 Occupation = invalidText,
-                ContactLevel = (GuardianRequestViewContactLevel)GetValidEnum<GuardianRequestContactLevel>(),
-                Relationship = (GuardianRequestViewRelationship)GetValidEnum<GuardianRequestRelationship>()
             };
 
             var invalidGuardianRequestViewException = new InvalidGuardianRequestViewException();
+
+            invalidGuardianRequestViewException.AddData(
+                key: nameof(GuardianRequestView.Title),
+                values: "Value is invalid.");
 
             invalidGuardianRequestViewException.AddData(
                 key: nameof(GuardianRequestView.FirstName),
