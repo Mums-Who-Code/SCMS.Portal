@@ -113,6 +113,26 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
             return actualGuardianRequest => this.compareLogic.Compare(actualGuardianRequest, expectedGuardianRequest).AreEqual;
         }
 
+        private static T GetValidEnum<T>()
+        {
+            int randomNumber = GetLocalRandomNumber();
+
+            while (Enum.IsDefined(typeof(T), randomNumber) is false)
+            {
+                randomNumber = GetLocalRandomNumber();
+            }
+
+            return (T)(object)randomNumber;
+
+            static int GetLocalRandomNumber()
+            {
+                return new IntRange(
+                    min: Enum.GetValues(typeof(T)).Cast<int>().Min(),
+                    max: Enum.GetValues(typeof(T)).Cast<int>().Max())
+                        .GetValue();
+            }
+        }
+
         private static dynamic CreateRandomGuardianRequestViewProperties(
             Guid userId, DateTimeOffset dateTime) => new
             {
