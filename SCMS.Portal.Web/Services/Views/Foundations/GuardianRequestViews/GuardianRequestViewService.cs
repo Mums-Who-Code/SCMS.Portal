@@ -13,7 +13,7 @@ using SCMS.Portal.Web.Services.Foundations.Users;
 
 namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
 {
-    public class GuardianRequestViewService : IGuardianRequestViewService
+    public partial class GuardianRequestViewService : IGuardianRequestViewService
     {
         private readonly IGuardianRequestService guardianRequestService;
         private readonly IUserService userService;
@@ -32,13 +32,15 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
             this.loggingBroker = loggingBroker;
         }
 
-        public async ValueTask<GuardianRequestView> AddGuardianRequestViewAsync(GuardianRequestView guardianRequestView)
+        public ValueTask<GuardianRequestView> AddGuardianRequestViewAsync(GuardianRequestView guardianRequestView) =>
+        TryCatch(async () =>
         {
+            ValidateGuardianRequestViewOnAdd(guardianRequestView);
             GuardianRequest guardianRequest = MapToGuardianRequest(guardianRequestView);
             await this.guardianRequestService.AddGuardianRequestAsync(guardianRequest);
 
             return guardianRequestView;
-        }
+        });
 
         private GuardianRequest MapToGuardianRequest(GuardianRequestView guardianRequestView)
         {

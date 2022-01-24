@@ -8,7 +8,7 @@ namespace SCMS.Portal.Web.Models.Views.Foundations.GuardianRequestViews.Exceptio
 {
     public class GuardianRequestViewValidationException : Xeption
     {
-        public GuardianRequestViewValidationException(Xeption innerException):
+        public GuardianRequestViewValidationException(Xeption innerException) :
             base("Guardian request view validation error occured, try again.", innerException)
         { }
     }
