@@ -196,7 +196,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
             var filler = new Filler<GuardianRequestView>();
 
             filler.Setup().
-                OnType<DateTimeOffset>().Use(GetRandomDate());
+                OnType<DateTimeOffset>().Use(GetRandomDate()).
+                OnType<GuardianRequestViewTitle>().Use(GetRandomTitleThatIsNot(GuardianRequestViewTitle.None));
 
             return filler;
         }

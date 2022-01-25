@@ -3,6 +3,7 @@
 // -----------------------------------------------------------------------
 
 using System.Threading.Tasks;
+using SCMS.Portal.Web.Models.Foundations.GuardianRequests.Exceptions;
 using SCMS.Portal.Web.Models.Views.Foundations.GuardianRequestViews;
 using SCMS.Portal.Web.Models.Views.Foundations.GuardianRequestViews.Exceptions;
 using Xeptions;
@@ -27,6 +28,14 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
             {
                 throw CreateAndLogValidationException(invalidGuardianRequestViewException);
             }
+            catch (GuardianRequestValidationException guardianRequestValidationException)
+            {
+                throw CreateAndLogDependencyValidationException(guardianRequestValidationException);
+            }
+            catch (GuardianRequestDependencyValidationException guardianRequestDependencyValidationException)
+            {
+                throw CreateAndLogDependencyValidationException(guardianRequestDependencyValidationException);
+            }
         }
 
         private GuardianRequestViewValidationException CreateAndLogValidationException(Xeption exception)
@@ -39,7 +48,7 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
 
         private GuardianRequestViewDependencyValidationException CreateAndLogDependencyValidationException(Xeption exception)
         {
-            var guardianRequestViewDependencyValidationException = new GuardianRequestViewDependencyValidationException(exception);
+            var guardianRequestViewDependencyValidationException = new GuardianRequestViewDependencyValidationException(exception.InnerException);
             this.loggingBroker.LogError(guardianRequestViewDependencyValidationException);
 
             return guardianRequestViewDependencyValidationException;
