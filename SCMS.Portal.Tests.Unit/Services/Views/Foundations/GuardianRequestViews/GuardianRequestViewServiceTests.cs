@@ -12,7 +12,6 @@ using SCMS.Portal.Web.Brokers.DateTimes;
 using SCMS.Portal.Web.Brokers.Loggings;
 using SCMS.Portal.Web.Models.Foundations.GuardianRequests;
 using SCMS.Portal.Web.Models.Foundations.GuardianRequests.Exceptions;
-using SCMS.Portal.Web.Models.Foundations.Students;
 using SCMS.Portal.Web.Models.Views.Foundations.GuardianRequestViews;
 using SCMS.Portal.Web.Services.Foundations.GuardianRequests;
 using SCMS.Portal.Web.Services.Foundations.Users;

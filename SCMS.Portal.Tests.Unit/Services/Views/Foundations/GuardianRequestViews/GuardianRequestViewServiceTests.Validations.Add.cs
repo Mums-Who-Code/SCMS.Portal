@@ -58,7 +58,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
         [InlineData(null)]
         [InlineData("")]
         [InlineData("   ")]
-        public async Task ShouldThrowValidationExceptionOnAddIfGardianRequestViewIsInvalidAndLogItAsync(
+        public async Task ShouldThrowValidationExceptionOnAddIfGuardianRequestViewIsInvalidAndLogItAsync(
            string invalidText)
         {
             GuardianRequestView invalidGuardianRequestView = new GuardianRequestView
