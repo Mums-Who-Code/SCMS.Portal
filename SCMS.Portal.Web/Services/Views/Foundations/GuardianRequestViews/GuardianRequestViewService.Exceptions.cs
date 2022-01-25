@@ -36,6 +36,14 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
             {
                 throw CreateAndLogDependencyValidationException(guardianRequestDependencyValidationException);
             }
+            catch (GuardianRequestDependencyException guardianRequestDependencyException)
+            {
+                throw CreateAndLogDependencyException(guardianRequestDependencyException);
+            }
+            catch (GuardianRequestServiceException guardianRequestServiceException)
+            {
+                throw CreateAndLogDependencyException(guardianRequestServiceException);
+            }
         }
 
         private GuardianRequestViewValidationException CreateAndLogValidationException(Xeption exception)
@@ -52,6 +60,14 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
             this.loggingBroker.LogError(guardianRequestViewDependencyValidationException);
 
             return guardianRequestViewDependencyValidationException;
+        }
+
+        private GuardianRequestViewDependencyException CreateAndLogDependencyException(Xeption exception)
+        {
+            var guardianRequestViewDependencyException = new GuardianRequestViewDependencyException(exception);
+            this.loggingBroker.LogError(guardianRequestViewDependencyException);
+
+            return guardianRequestViewDependencyException;
         }
     }
 }
