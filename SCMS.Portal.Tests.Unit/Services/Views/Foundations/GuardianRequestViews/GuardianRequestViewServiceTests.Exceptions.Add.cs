@@ -130,6 +130,5 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
             this.userServiceMock.VerifyNoOtherCalls();
             this.guardianRequestServiceMock.VerifyNoOtherCalls();
         }
-
     }
 }

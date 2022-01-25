@@ -2,6 +2,7 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using SCMS.Portal.Web.Models.Foundations.GuardianRequests.Exceptions;
 using SCMS.Portal.Web.Models.Views.Foundations.GuardianRequestViews;
@@ -44,6 +45,13 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
             {
                 throw CreateAndLogDependencyException(guardianRequestServiceException);
             }
+            catch (Exception serviceException)
+            {
+                var failedGuardianRequestViewServiceException
+                    = new FailedGuardianRequestViewServiceException(serviceException);
+
+                throw CreateAndLogServiceException(failedGuardianRequestViewServiceException);
+            }
         }
 
         private GuardianRequestViewValidationException CreateAndLogValidationException(Xeption exception)
@@ -68,6 +76,14 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
             this.loggingBroker.LogError(guardianRequestViewDependencyException);
 
             return guardianRequestViewDependencyException;
+        }
+
+        private GuardianRequestViewServiceException CreateAndLogServiceException(Xeption exception)
+        {
+            var guardianRequestViewServiceException = new GuardianRequestViewServiceException(exception);
+            this.loggingBroker.LogError(guardianRequestViewServiceException);
+
+            return guardianRequestViewServiceException;
         }
     }
 }
