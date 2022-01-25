@@ -11,12 +11,15 @@ using Moq;
 using SCMS.Portal.Web.Brokers.DateTimes;
 using SCMS.Portal.Web.Brokers.Loggings;
 using SCMS.Portal.Web.Models.Foundations.GuardianRequests;
+using SCMS.Portal.Web.Models.Foundations.GuardianRequests.Exceptions;
+using SCMS.Portal.Web.Models.Foundations.Students;
 using SCMS.Portal.Web.Models.Views.Foundations.GuardianRequestViews;
 using SCMS.Portal.Web.Services.Foundations.GuardianRequests;
 using SCMS.Portal.Web.Services.Foundations.Users;
 using SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews;
 using Tynamix.ObjectFiller;
 using Xeptions;
+using Xunit;
 
 namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
 {
@@ -45,6 +48,29 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
                 dateTimeBroker: this.dateTimeBrokerMock.Object,
                 loggingBroker: this.loggingBrokerMock.Object);
         }
+
+        public static TheoryData DependencyValidationExceptions()
+        {
+            var innerException = new Xeption();
+
+            return new TheoryData<Exception>
+            {
+                new GuardianRequestValidationException(innerException),
+                new GuardianRequestDependencyValidationException(innerException)
+            };
+        }
+
+        public static TheoryData DependencyExceptions()
+        {
+            var innerException = new Xeption();
+
+            return new TheoryData<Exception>
+            {
+                new GuardianRequestDependencyException(innerException),
+                new GuardianRequestServiceException(innerException)
+            };
+        }
+
 
         private static DateTimeOffset GetRandomDateTimeOffset() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
@@ -77,6 +103,15 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
                 && actualException.InnerException.Message == expectedException.InnerException.Message
                 && (actualException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data);
         }
+
+        private static string GetRandomFirstName() =>
+            new RealNames(NameStyle.FirstName).GetValue();
+
+        private static string GetRandomLastName() =>
+            new RealNames(NameStyle.LastName).GetValue();
+
+        private static DateTimeOffset GetRandomDate() =>
+            new DateTimeRange(earliestDate: new DateTime()).GetValue();
 
         private static GuardianRequestViewTitle GetRandomTitle()
         {
@@ -152,5 +187,19 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
                 CreatedBy = userId,
                 UpdatedBy = userId
             };
+
+        private static GuardianRequestView CreateRandomGuardianRequestView() =>
+            CreateGuardianRequestViewFiller().Create();
+
+        private static Filler<GuardianRequestView> CreateGuardianRequestViewFiller()
+        {
+            var filler = new Filler<GuardianRequestView>();
+
+            filler.Setup().
+                OnType<DateTimeOffset>().Use(GetRandomDate());
+
+            return filler;
+        }
+
     }
 }

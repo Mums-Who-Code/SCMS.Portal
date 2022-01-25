@@ -36,5 +36,13 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
 
             return guardianRequestViewValidationException;
         }
+
+        private GuardianRequestViewDependencyValidationException CreateAndLogDependencyValidationException(Xeption exception)
+        {
+            var guardianRequestViewDependencyValidationException = new GuardianRequestViewDependencyValidationException(exception);
+            this.loggingBroker.LogError(guardianRequestViewDependencyValidationException);
+
+            return guardianRequestViewDependencyValidationException;
+        }
     }
 }
