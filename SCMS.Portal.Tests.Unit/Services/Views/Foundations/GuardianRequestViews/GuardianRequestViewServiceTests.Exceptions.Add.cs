@@ -90,5 +90,46 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
             this.guardianRequestServiceMock.VerifyNoOtherCalls();
         }
 
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnAddIfServiceErrorOccuredAndLogItAsync()
+        {
+            //given
+            GuardianRequestView someGuardianRequestView = CreateRandomGuardianRequestView();
+
+            var serviceException = new Exception();
+
+            var failedGuardianRequestViewServiceException =
+                new FailedGuardianRequestViewServiceException(serviceException);
+
+            var guardianRequestViewServiceException =
+                new GuardianRequestViewServiceException(failedGuardianRequestViewServiceException);
+
+            this.dateTimeBrokerMock.Setup(service =>
+                service.GetCurrentDateTime())
+                    .Throws(serviceException);
+
+            //when
+            ValueTask<GuardianRequestView> addGuardianRequestViewTask =
+                this.guardianRequestViewService.AddGuardianRequestViewAsync(someGuardianRequestView);
+
+            //then
+            await Assert.ThrowsAsync<GuardianRequestViewServiceException>(() =>
+                addGuardianRequestViewTask.AsTask());
+
+            this.dateTimeBrokerMock.Verify(service =>
+                service.GetCurrentDateTime(),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    guardianRequestViewServiceException))),
+                        Times.Once);
+
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.userServiceMock.VerifyNoOtherCalls();
+            this.guardianRequestServiceMock.VerifyNoOtherCalls();
+        }
+
     }
 }
