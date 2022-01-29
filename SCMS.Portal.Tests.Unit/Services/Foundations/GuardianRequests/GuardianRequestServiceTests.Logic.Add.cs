@@ -27,7 +27,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.GuardianRequests
                     .ReturnsAsync(retrievedGuardianRequest);
 
             //when
-            GuardianRequest actualGuardianRequest = 
+            GuardianRequest actualGuardianRequest =
                 await this.guardianRequestService.AddGuardianRequestAsync(
                     inputGuardianRequest);
 
