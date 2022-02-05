@@ -10,5 +10,6 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.StudentViews
     public interface IStudentViewService
     {
         ValueTask<StudentView> AddStudentViewAsync(StudentView studentView);
+        void NavigateTo(string route);
     }
 }

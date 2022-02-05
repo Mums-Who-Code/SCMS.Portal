@@ -9,6 +9,7 @@ using KellermanSoftware.CompareNetObjects;
 using Moq;
 using SCMS.Portal.Web.Brokers.DateTimes;
 using SCMS.Portal.Web.Brokers.Loggings;
+using SCMS.Portal.Web.Brokers.Navigations;
 using SCMS.Portal.Web.Models.Foundations.Students;
 using SCMS.Portal.Web.Models.Foundations.Students.Exceptions;
 using SCMS.Portal.Web.Models.Views.Foundations.StudentViews;
@@ -26,6 +27,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.StudentViews
         private readonly Mock<IStudentService> studentServiceMock;
         private readonly Mock<IUserService> userServiceMock;
         private readonly Mock<IDateTimeBroker> dateTimeBrokerMock;
+        private readonly Mock<INavigationBroker> navigationBrokerMock;
         private readonly Mock<ILoggingBroker> loggingBrokerMock;
         private readonly ICompareLogic compareLogic;
         private readonly IStudentViewService studentViewService;
@@ -35,6 +37,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.StudentViews
             this.studentServiceMock = new Mock<IStudentService>();
             this.userServiceMock = new Mock<IUserService>();
             this.dateTimeBrokerMock = new Mock<IDateTimeBroker>();
+            this.navigationBrokerMock = new Mock<INavigationBroker>();
             this.loggingBrokerMock = new Mock<ILoggingBroker>();
             var compareConfig = new ComparisonConfig();
             compareConfig.IgnoreProperty<Student>(student => student.Id);
@@ -44,6 +47,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.StudentViews
                 studentService: this.studentServiceMock.Object,
                 userService: this.userServiceMock.Object,
                 dateTimeBroker: this.dateTimeBrokerMock.Object,
+                navigationBroker: this.navigationBrokerMock.Object,
                 loggingBroker: this.loggingBrokerMock.Object);
         }
         public static TheoryData DependencyValidationExceptions()
@@ -67,6 +71,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.StudentViews
                 new StudentServiceException(innerException)
             };
         }
+
+        private static string GetRandomRoute() => new RandomUrl().GetValue();
 
         private static dynamic CreateRandomStudentViewProperties(
             DateTimeOffset auditDates,
