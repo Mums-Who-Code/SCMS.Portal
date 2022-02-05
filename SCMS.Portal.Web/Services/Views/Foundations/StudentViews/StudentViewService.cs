@@ -37,9 +37,9 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.StudentViews
         {
             ValidateStudentViewOnAdd(studentView);
             Student student = MapToStudent(studentView);
-            await this.studentService.AddStudentAsync(student);
+            Student addedStudent = await this.studentService.AddStudentAsync(student);
 
-            return studentView;
+            return MapToStudentView(addedStudent);
         });
 
 
@@ -65,6 +65,21 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.StudentViews
                 UpdatedBy = currentlyLoggedInUserId,
             };
 
+        }
+
+        private StudentView MapToStudentView(Student student)
+        {
+            return new StudentView
+            {
+                Id = student.Id,
+                FirstName = student.FirstName,
+                LastName = student.LastName,
+                DateOfBirth = student.DateOfBirth,
+                Gender = (StudentGenderView)student.Gender,
+                FideId = student.FideId,
+                Notes = student.Notes,
+                SchoolId = student.SchoolId
+            };
         }
     }
 }

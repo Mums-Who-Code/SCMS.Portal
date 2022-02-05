@@ -38,6 +38,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.StudentViews
 
             var inputStudentView = randomStudentView;
             var expectedStudentView = inputStudentView.DeepClone();
+            expectedStudentView.Id = randomStudentViewProperties.Id;
 
             var randomStudent = new Student
             {
