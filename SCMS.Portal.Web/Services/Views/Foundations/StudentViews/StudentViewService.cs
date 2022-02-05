@@ -6,6 +6,7 @@ using System;
 using System.Threading.Tasks;
 using SCMS.Portal.Web.Brokers.DateTimes;
 using SCMS.Portal.Web.Brokers.Loggings;
+using SCMS.Portal.Web.Brokers.Navigations;
 using SCMS.Portal.Web.Models.Foundations.Students;
 using SCMS.Portal.Web.Models.Views.Foundations.StudentViews;
 using SCMS.Portal.Web.Services.Foundations.Students;
@@ -18,17 +19,20 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.StudentViews
         private readonly IStudentService studentService;
         private readonly IDateTimeBroker dateTimeBroker;
         private readonly IUserService userService;
+        private readonly INavigationBroker navigationBroker;
         private readonly ILoggingBroker loggingBroker;
 
         public StudentViewService(
             IStudentService studentService,
             IDateTimeBroker dateTimeBroker,
             IUserService userService,
+            INavigationBroker navigationBroker,
             ILoggingBroker loggingBroker)
         {
             this.studentService = studentService;
             this.dateTimeBroker = dateTimeBroker;
             this.userService = userService;
+            this.navigationBroker = navigationBroker;
             this.loggingBroker = loggingBroker;
         }
 
@@ -43,7 +47,11 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.StudentViews
         });
 
         public void NavigateTo(string route) =>
-            throw new NotImplementedException();
+        TryCatch(() =>
+        {
+            ValidateRoute(route);
+            this.navigationBroker.NavigateTo(route);
+        });
 
         private Student MapToStudent(StudentView studentView)
         {
