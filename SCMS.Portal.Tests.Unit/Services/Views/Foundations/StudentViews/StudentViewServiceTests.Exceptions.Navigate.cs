@@ -13,7 +13,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.StudentViews
     public partial class StudentViewServiceTests
     {
         [Fact]
-        public async Task ShouldThrowServiceExceptionOnNavigateIfServiceErrorOccursAndLogItAsync()
+        public void ShouldThrowServiceExceptionOnNavigateIfServiceErrorOccursAndLogIt()
         {
             //given
             string someRoute = GetRandomRoute();
