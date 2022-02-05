@@ -8,7 +8,7 @@ namespace SCMS.Portal.Web.Models.Views.Foundations.StudentViews
 {
     public class StudentView
     {
-        public Guid StudentId { get; set; }
+        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTimeOffset DateOfBirth { get; set; }
