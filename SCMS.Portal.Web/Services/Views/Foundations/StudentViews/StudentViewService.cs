@@ -47,7 +47,11 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.StudentViews
         });
 
         public void NavigateTo(string route) =>
+        TryCatch(() =>
+        {
+            ValidateRoute(route);
             this.navigationBroker.NavigateTo(route);
+        });
 
         private Student MapToStudent(StudentView studentView)
         {
