@@ -211,12 +211,18 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             // given
             StudentView randomStudentView = CreateRandomStudentView();
             StudentView inputStudentView = randomStudentView;
+            StudentView returningStudentView = inputStudentView;
             StudentView expectedStudentView = inputStudentView.DeepClone();
             string expectedStatusLabel = "Registration completed.";
             Color expectedStatusLabelColor = Color.Green;
             List<SchoolView> someSchoolViews = CreateRandomSchoolViews();
             SchoolView selectedSchool = someSchoolViews.FirstOrDefault();
             SchoolView expectedSchoolView = selectedSchool.DeepClone();
+            Guid inputStudentId = inputStudentView.Id;
+            Guid expectedStudentId = inputStudentId;
+
+            string expectedNextNavigationPage =
+                $"/Students/{inputStudentId}/GuardianRequests";
 
             this.schoolViewServiceMock.Setup(service =>
                 service.RetrieveAllSchoolViewsAsync())
@@ -249,6 +255,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
                    selectedSchool;
 
             this.renderedStudentRegistrationComponent.Instance
+                .StudentView = returningStudentView;
+
+            this.renderedStudentRegistrationComponent.Instance
                 .NextButton.Click();
 
             // then
@@ -279,10 +288,17 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             this.renderedStudentRegistrationComponent.Instance.StatusLabel
                 .Color.Should().Be(expectedStatusLabelColor);
 
+            this.renderedStudentRegistrationComponent.Instance.StudentView.Id
+                .Should().Be(expectedStudentId);
+
             this.studentViewServiceMock.Verify(service =>
                 service.AddStudentViewAsync(
                     this.renderedStudentRegistrationComponent.Instance.StudentView),
                         Times.Once);
+
+            this.studentViewServiceMock.Verify(service =>
+                service.NavigateTo(expectedNextNavigationPage),
+                   Times.Once);
 
             this.studentViewServiceMock.VerifyNoOtherCalls();
         }

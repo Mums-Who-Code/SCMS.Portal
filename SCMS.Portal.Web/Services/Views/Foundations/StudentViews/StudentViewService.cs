@@ -42,6 +42,8 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.StudentViews
             return MapToStudentView(addedStudent);
         });
 
+        public void NavigateTo(string route) =>
+            throw new NotImplementedException();
 
         private Student MapToStudent(StudentView studentView)
         {
