@@ -22,6 +22,19 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.StudentViews
             );
         }
 
+        private void ValidateRoute(string route)
+        {
+            if (IsInvalidRoute(route))
+            {
+                throw new InvalidStudentViewException(
+                    parameterName: "Route",
+                    parameterValue: route);
+            }
+        }
+
+        private bool IsInvalidRoute(string route) =>
+            string.IsNullOrWhiteSpace(route);
+
         private void ValidateInput(StudentView studentView)
         {
             if (studentView == null)
