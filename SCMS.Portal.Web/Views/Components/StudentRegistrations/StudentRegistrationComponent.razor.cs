@@ -33,7 +33,7 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
         public TextBoxBase FideIdTextBox { get; set; }
         public TextBoxBase NotesTextBox { get; set; }
         public SchoolSelectionComponent SchoolSelectionComponent { get; set; }
-        public ButtonBase RegisterButton { get; set; }
+        public ButtonBase NextButton { get; set; }
         public LabelBase StatusLabel { get; set; }
 
         protected override void OnInitialized()
@@ -48,8 +48,14 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
             {
                 ApplyRegisteringStatus();
                 this.StudentView.SchoolId = this.SchoolSelectionComponent.SelectedSchool.Id;
-                await this.studentViewService.AddStudentViewAsync(this.StudentView);
-                ApplyRegisteredStatus();
+
+                StudentView returningStudentView =
+                    await this.studentViewService.AddStudentViewAsync(this.StudentView);
+
+                this.StudentView.Id = returningStudentView.Id;
+
+                this.studentViewService.NavigateTo(
+                    route: $"/Students/{this.StudentView.Id}/GuardianRequests");
             }
             catch (StudentViewValidationException studentViewValidationException)
             {
@@ -95,13 +101,7 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
             this.GenderDropdown.Disable();
             this.FideIdTextBox.Disable();
             this.NotesTextBox.Disable();
-            this.RegisterButton.Disable();
-        }
-
-        private void ApplyRegisteredStatus()
-        {
-            this.StatusLabel.SetColor(Color.Green);
-            this.StatusLabel.SetValue("Registration completed.");
+            this.NextButton.Disable();
         }
 
         private void ApplyRegistrationFailed(string validationMessage)
@@ -114,7 +114,7 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
             this.GenderDropdown.Enable();
             this.FideIdTextBox.Enable();
             this.NotesTextBox.Enable();
-            this.RegisterButton.Enable();
+            this.NextButton.Enable();
         }
     }
 }
