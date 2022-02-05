@@ -43,7 +43,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
                     someSchoolViews.FirstOrDefault();
 
             this.renderedStudentRegistrationComponent.Instance
-                .RegisterButton.Click();
+                .NextButton.Click();
 
             // then
             this.renderedStudentRegistrationComponent.Instance
@@ -71,7 +71,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
                 .NotesTextBox.IsDisabled.Should().BeFalse();
 
             this.renderedStudentRegistrationComponent.Instance
-                .RegisterButton.IsDisabled.Should().BeFalse();
+                .NextButton.IsDisabled.Should().BeFalse();
 
             this.studentViewServiceMock.Verify(service =>
                 service.AddStudentViewAsync(It.IsAny<StudentView>()),
@@ -104,7 +104,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
                     someSchoolViews.FirstOrDefault();
 
             this.renderedStudentRegistrationComponent.Instance
-                .RegisterButton.Click();
+                .NextButton.Click();
 
             // then
             this.renderedStudentRegistrationComponent.Instance
@@ -132,7 +132,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
                 .NotesTextBox.IsDisabled.Should().BeFalse();
 
             this.renderedStudentRegistrationComponent.Instance
-                .RegisterButton.IsDisabled.Should().BeFalse();
+                .NextButton.IsDisabled.Should().BeFalse();
 
             this.studentViewServiceMock.Verify(service =>
                 service.AddStudentViewAsync(It.IsAny<StudentView>()),
@@ -163,7 +163,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
                     someSchoolViews.FirstOrDefault();
 
             this.renderedStudentRegistrationComponent.Instance
-                .RegisterButton.Click();
+                .NextButton.Click();
 
             // then
             this.renderedStudentRegistrationComponent.Instance
@@ -191,7 +191,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
                 .NotesTextBox.IsDisabled.Should().BeFalse();
 
             this.renderedStudentRegistrationComponent.Instance
-                .RegisterButton.IsDisabled.Should().BeFalse();
+                .NextButton.IsDisabled.Should().BeFalse();
 
             this.studentViewServiceMock.Verify(service =>
                 service.AddStudentViewAsync(It.IsAny<StudentView>()),

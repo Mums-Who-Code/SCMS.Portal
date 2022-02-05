@@ -33,7 +33,7 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
         public TextBoxBase FideIdTextBox { get; set; }
         public TextBoxBase NotesTextBox { get; set; }
         public SchoolSelectionComponent SchoolSelectionComponent { get; set; }
-        public ButtonBase RegisterButton { get; set; }
+        public ButtonBase NextButton { get; set; }
         public LabelBase StatusLabel { get; set; }
 
         protected override void OnInitialized()
@@ -95,7 +95,7 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
             this.GenderDropdown.Disable();
             this.FideIdTextBox.Disable();
             this.NotesTextBox.Disable();
-            this.RegisterButton.Disable();
+            this.NextButton.Disable();
         }
 
         private void ApplyRegisteredStatus()
@@ -114,7 +114,7 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
             this.GenderDropdown.Enable();
             this.FideIdTextBox.Enable();
             this.NotesTextBox.Enable();
-            this.RegisterButton.Enable();
+            this.NextButton.Enable();
         }
     }
 }

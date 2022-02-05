@@ -38,7 +38,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             initialStudentRegistrationComponent.GenderDropdown.Should().BeNull();
             initialStudentRegistrationComponent.FideIdTextBox.Should().BeNull();
             initialStudentRegistrationComponent.NotesTextBox.Should().BeNull();
-            initialStudentRegistrationComponent.RegisterButton.Should().BeNull();
+            initialStudentRegistrationComponent.NextButton.Should().BeNull();
             initialStudentRegistrationComponent.StatusLabel.Should().BeNull();
         }
 
@@ -53,7 +53,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             string expectedDateOfBirthPickerPlaceholder = "Date of Birth";
             string expectedFideIdTextBoxPlaceholder = "Fide Id";
             string expectedNotesTextBoxPlaceholder = "Notes";
-            string expectedRegisterButtonLabel = "Register";
+            string expectedNextButtonLabel = "Next";
 
             this.schoolViewServiceMock.Setup(service =>
                 service.RetrieveAllSchoolViewsAsync())
@@ -125,14 +125,14 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             this.renderedStudentRegistrationComponent.Instance.NotesTextBox
                 .Placeholder.Should().Be(expectedNotesTextBoxPlaceholder);
 
-            this.renderedStudentRegistrationComponent.Instance.RegisterButton
+            this.renderedStudentRegistrationComponent.Instance.NextButton
                 .Should().NotBeNull();
 
-            this.renderedStudentRegistrationComponent.Instance.RegisterButton
+            this.renderedStudentRegistrationComponent.Instance.NextButton
                 .IsDisabled.Should().BeFalse();
 
-            this.renderedStudentRegistrationComponent.Instance.RegisterButton
-                .Label.Should().Be(expectedRegisterButtonLabel);
+            this.renderedStudentRegistrationComponent.Instance.NextButton
+                .Label.Should().Be(expectedNextButtonLabel);
 
             this.renderedStudentRegistrationComponent.Instance.StatusLabel
                 .Should().NotBeNull();
@@ -168,7 +168,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
                 .SchoolSelectionComponent.SelectedSchool =
                     someSchoolViews.FirstOrDefault();
 
-            this.renderedStudentRegistrationComponent.Instance.RegisterButton.Click();
+            this.renderedStudentRegistrationComponent.Instance.NextButton.Click();
 
             // then
             this.renderedStudentRegistrationComponent.Instance.StatusLabel.Value
@@ -195,7 +195,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             this.renderedStudentRegistrationComponent.Instance.NotesTextBox.IsDisabled
                .Should().BeTrue();
 
-            this.renderedStudentRegistrationComponent.Instance.RegisterButton.IsDisabled
+            this.renderedStudentRegistrationComponent.Instance.NextButton.IsDisabled
                .Should().BeTrue();
 
             this.studentViewServiceMock.Verify(service =>
@@ -249,7 +249,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
                    selectedSchool;
 
             this.renderedStudentRegistrationComponent.Instance
-                .RegisterButton.Click();
+                .NextButton.Click();
 
             // then
             this.renderedStudentRegistrationComponent.Instance.FirstNameTextBox
