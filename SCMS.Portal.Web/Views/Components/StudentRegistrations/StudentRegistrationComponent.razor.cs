@@ -48,8 +48,14 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
             {
                 ApplyRegisteringStatus();
                 this.StudentView.SchoolId = this.SchoolSelectionComponent.SelectedSchool.Id;
-                await this.studentViewService.AddStudentViewAsync(this.StudentView);
-                ApplyRegisteredStatus();
+
+                StudentView returningStudentView =
+                    await this.studentViewService.AddStudentViewAsync(this.StudentView);
+
+                this.StudentView.Id = returningStudentView.Id;
+
+                this.studentViewService.NavigateTo(
+                    route: $"/Students/{this.StudentView.Id}/GuardianRequests");
             }
             catch (StudentViewValidationException studentViewValidationException)
             {
@@ -96,12 +102,6 @@ namespace SCMS.Portal.Web.Views.Components.StudentRegistrations
             this.FideIdTextBox.Disable();
             this.NotesTextBox.Disable();
             this.NextButton.Disable();
-        }
-
-        private void ApplyRegisteredStatus()
-        {
-            this.StatusLabel.SetColor(Color.Green);
-            this.StatusLabel.SetValue("Registration completed.");
         }
 
         private void ApplyRegistrationFailed(string validationMessage)

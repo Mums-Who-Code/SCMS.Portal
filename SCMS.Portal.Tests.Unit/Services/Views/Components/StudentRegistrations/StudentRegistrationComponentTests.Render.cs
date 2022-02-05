@@ -213,8 +213,6 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             StudentView inputStudentView = randomStudentView;
             StudentView returningStudentView = inputStudentView;
             StudentView expectedStudentView = inputStudentView.DeepClone();
-            string expectedStatusLabel = "Registration completed.";
-            Color expectedStatusLabelColor = Color.Green;
             List<SchoolView> someSchoolViews = CreateRandomSchoolViews();
             SchoolView selectedSchool = someSchoolViews.FirstOrDefault();
             SchoolView expectedSchoolView = selectedSchool.DeepClone();
@@ -227,6 +225,10 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
             this.schoolViewServiceMock.Setup(service =>
                 service.RetrieveAllSchoolViewsAsync())
                     .ReturnsAsync(someSchoolViews);
+
+            this.studentViewServiceMock.Setup(service =>
+                service.AddStudentViewAsync(inputStudentView))
+                    .ReturnsAsync(returningStudentView);
 
             // when
             this.renderedStudentRegistrationComponent =
@@ -281,12 +283,6 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Components.StudentRegistrations
 
             this.renderedStudentRegistrationComponent.Instance.SchoolSelectionComponent
                 .SelectedSchool.Id.Should().Be(expectedSchoolView.Id);
-
-            this.renderedStudentRegistrationComponent.Instance.StatusLabel
-                .Value.Should().Be(expectedStatusLabel);
-
-            this.renderedStudentRegistrationComponent.Instance.StatusLabel
-                .Color.Should().Be(expectedStatusLabelColor);
 
             this.renderedStudentRegistrationComponent.Instance.StudentView.Id
                 .Should().Be(expectedStudentId);
