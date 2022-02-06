@@ -5,6 +5,7 @@
 using System;
 using Bunit;
 using FluentAssertions;
+using Force.DeepCloner;
 using Moq;
 using SCMS.Portal.Web.Models.Views.Components.Colors;
 using SCMS.Portal.Web.Models.Views.Components.Containers;
@@ -251,6 +252,99 @@ namespace SCMS.Portal.Tests.Unit.Views.Components.GuardianRequestForms
             this.guardianRequestViewServiceMock.Verify(service =>
                 service.AddGuardianRequestViewAsync(It.IsAny<GuardianRequestView>()),
                     Times.Once);
+
+            this.guardianRequestViewServiceMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public void ShouldRegisterGuardianRequest()
+        {
+            // given
+            GuardianRequestView randomGuardianRequestView = CreateRandomGuardianRequestView();
+            GuardianRequestView inputGuardianRequestView = randomGuardianRequestView;
+            GuardianRequestView expectedGuardianRequestView = inputGuardianRequestView.DeepClone();
+            Guid randomStudentId = Guid.NewGuid();
+            Guid inputStudentId = randomStudentId;
+            string expectedStatusLabel = "Registration completed.";
+            Color expectedStatusLabelColor = Color.Green;
+
+            ComponentParameter componentParameter = ComponentParameter.CreateParameter(
+                name: nameof(GuardianRequestView.StudentId),
+                value: inputStudentId);
+
+            // when
+            this.renderedGuardianRequestFormComponent =
+                RenderComponent<GuardianRequestFormComponent>(
+                    componentParameter);
+
+            this.renderedGuardianRequestFormComponent.Instance
+                .TitleDropdown.SetValue(inputGuardianRequestView.Title);
+
+            this.renderedGuardianRequestFormComponent.Instance
+                .FirstNameTextBox.SetValue(inputGuardianRequestView.FirstName);
+
+            this.renderedGuardianRequestFormComponent.Instance
+                .LastNameTextBox.SetValue(inputGuardianRequestView.LastName);
+
+            this.renderedGuardianRequestFormComponent.Instance
+                .EmailTextBox.SetValue(inputGuardianRequestView.EmailId);
+
+            this.renderedGuardianRequestFormComponent.Instance
+                .CountryCodeTextBox.SetValue(inputGuardianRequestView.CountryCode);
+
+            this.renderedGuardianRequestFormComponent.Instance
+                .ContactNumberTextBox.SetValue(inputGuardianRequestView.ContactNumber);
+
+            this.renderedGuardianRequestFormComponent.Instance
+                .OccupationTextBox.SetValue(inputGuardianRequestView.Occupation);
+
+            this.renderedGuardianRequestFormComponent.Instance
+                .ContactLevelDropdown.SetValue(inputGuardianRequestView.ContactLevel);
+
+            this.renderedGuardianRequestFormComponent.Instance
+                .RelationshipDropdown.SetValue(inputGuardianRequestView.Relationship);
+
+            this.renderedGuardianRequestFormComponent.Instance
+                .RegisterButton.Click();
+
+            // then
+            this.renderedGuardianRequestFormComponent.Instance
+                .TitleDropdown.Value.Should().Be(expectedGuardianRequestView.Title);
+
+            this.renderedGuardianRequestFormComponent.Instance
+                .FirstNameTextBox.Value.Should().Be(expectedGuardianRequestView.FirstName);
+
+            this.renderedGuardianRequestFormComponent.Instance
+                .LastNameTextBox.Value.Should().Be(expectedGuardianRequestView.LastName);
+
+            this.renderedGuardianRequestFormComponent.Instance
+                .EmailTextBox.Value.Should().Be(expectedGuardianRequestView.EmailId);
+
+            this.renderedGuardianRequestFormComponent.Instance
+                .CountryCodeTextBox.Value.Should().Be(expectedGuardianRequestView.CountryCode);
+
+            this.renderedGuardianRequestFormComponent.Instance
+                .ContactNumberTextBox.Value.Should().Be(expectedGuardianRequestView.ContactNumber);
+
+            this.renderedGuardianRequestFormComponent.Instance
+                .OccupationTextBox.Value.Should().Be(expectedGuardianRequestView.Occupation);
+
+            this.renderedGuardianRequestFormComponent.Instance
+                .ContactLevelDropdown.Value.Should().Be(expectedGuardianRequestView.ContactLevel);
+
+            this.renderedGuardianRequestFormComponent.Instance
+                .RelationshipDropdown.Value.Should().Be(expectedGuardianRequestView.Relationship);
+
+            this.renderedGuardianRequestFormComponent.Instance.StatusLabel
+                .Value.Should().Be(expectedStatusLabel);
+
+            this.renderedGuardianRequestFormComponent.Instance.StatusLabel
+                .Color.Should().Be(expectedStatusLabelColor);
+
+            this.guardianRequestViewServiceMock.Verify(service =>
+                service.AddGuardianRequestViewAsync(
+                    this.renderedGuardianRequestFormComponent.Instance.GuardianRequestView),
+                        Times.Once);
 
             this.guardianRequestViewServiceMock.VerifyNoOtherCalls();
         }
