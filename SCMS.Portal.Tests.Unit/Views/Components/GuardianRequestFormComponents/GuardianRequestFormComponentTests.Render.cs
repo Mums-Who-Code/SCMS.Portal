@@ -41,19 +41,21 @@ namespace SCMS.Portal.Tests.Unit.Views.Components.GuardianRequestForms
         [Fact]
         public void ShoudRenderComponent()
         {
-            //given
+            // given
             ComponentState expectedComponentState = ComponentState.Content;
+            string expectedTitleLabel = "Title";
             string expectedFirstNameTextBoxPlaceholder = "First Name";
             string expectedLastNameTextBoxPlaceholder = "Last Name";
             string expectedEmailTextBoxPlaceholder = "Email";
             string expectedCountryCodeTextBoxPlaceholder = "Country Code";
             string expectedContactNumberTextBoxPlaceholder = "Contact Number";
             string expectedOccupationTextBoxPlaceholder = "Occupation";
+            string expectedContactLevelLabel = "Contact Level";
+            string expectedRelationshipLabel = "Relationship";
             string expectedRegisterButtonLabel = "Register";
             Guid randomStudentId = Guid.NewGuid();
             Guid inputStudentId = randomStudentId;
             Guid expectedStudentId = inputStudentId;
-            var expectedGuardianRequestView = new GuardianRequestView();
 
             ComponentParameter componentParameter = ComponentParameter.CreateParameter(
                 name: nameof(GuardianRequestFormComponent.StudentId),
@@ -68,14 +70,14 @@ namespace SCMS.Portal.Tests.Unit.Views.Components.GuardianRequestForms
             this.renderedGuardianRequestFormComponent.Instance.GuardianRequestView
                 .Should().NotBeNull();
 
-            this.renderedGuardianRequestFormComponent.Instance.guardianRequestViewService
-                .Should().Be(expectedGuardianRequestView);
-
             this.renderedGuardianRequestFormComponent.Instance.State
                 .Should().Be(expectedComponentState);
 
             this.renderedGuardianRequestFormComponent.Instance.StudentId
                 .Should().Be(expectedStudentId);
+
+            this.renderedGuardianRequestFormComponent.Instance.TitleLabel
+                .Value.Should().Be(expectedTitleLabel);
 
             this.renderedGuardianRequestFormComponent.Instance.TitleDropdown
                 .Should().NotBeNull();
@@ -140,6 +142,9 @@ namespace SCMS.Portal.Tests.Unit.Views.Components.GuardianRequestForms
             this.renderedGuardianRequestFormComponent.Instance.OccupationTextBox
                 .IsDisabled.Should().BeFalse();
 
+            this.renderedGuardianRequestFormComponent.Instance.ContactLevelLabel
+                .Value.Should().Be(expectedContactLevelLabel);
+
             this.renderedGuardianRequestFormComponent.Instance.ContactLevelDropdown
                 .Should().NotBeNull();
 
@@ -148,6 +153,9 @@ namespace SCMS.Portal.Tests.Unit.Views.Components.GuardianRequestForms
 
             this.renderedGuardianRequestFormComponent.Instance.ContactLevelDropdown
                 .IsDisabled.Should().BeFalse();
+
+            this.renderedGuardianRequestFormComponent.Instance.RelationshipLabel
+                .Value.Should().Be(expectedRelationshipLabel);
 
             this.renderedGuardianRequestFormComponent.Instance.RelationshipDropdown
                 .Should().NotBeNull();

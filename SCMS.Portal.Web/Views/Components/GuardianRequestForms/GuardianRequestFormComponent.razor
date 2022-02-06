@@ -1,1 +1,74 @@
-﻿
+﻿@using SCMS.Portal.Web.Models.Views.Foundations.GuardianRequestViews
+@using SCMS.Portal.Web.Views.Bases.Cards;
+@using SCMS.Portal.Web.Views.Components.Containers;
+@using SCMS.Portal.Web.Views.Bases.Dropdowns.Selects;
+@using SCMS.Portal.Web.Views.Bases.Labels;
+@using SCMS.Portal.Web.Views.Bases.TextBoxes;
+@using SCMS.Portal.Web.Views.Bases.Buttons;
+
+<div class="card-container">
+    <CardBase Title ="New Guardian Registration"
+              SubTitle="Please fill the below form">
+        <Content>
+            <ContainerComponent State=@State>
+                <Content>
+                    <div>
+                        <LabelBase @ref=@TitleLabel Value="Title"/>
+                        <DropdownSelectBase @ref=@TitleDropdown
+                                            @bind-Value=@GuardianRequestView.Title
+                                            TEnum="GuardianRequestViewTitle"/>
+                        <br/>
+                        <br/>
+                        <TextBoxBase @ref=@FirstNameTextBox
+                                     @bind-Value=@GuardianRequestView.FirstName
+                                     Placeholder="First Name"/>
+                        <br/>
+                        <br/>
+                        <TextBoxBase @ref=@LastNameTextBox
+                                     @bind-Value=@GuardianRequestView.LastName
+                                     Placeholder="Last Name"/>
+                        <br/>
+                        <br/>
+                        <TextBoxBase @ref=@EmailTextBox
+                                     @bind-Value=@GuardianRequestView.EmailId
+                                     Placeholder="Email"/>
+                        <br/>
+                        <TextBoxBase @ref=@CountryCodeTextBox
+                                     @bind-Value=@GuardianRequestView.CountryCode
+                                     Placeholder="Country Code"/>
+                        <br/>
+                        <br/>
+                        <TextBoxBase @ref=@ContactNumberTextBox
+                                     @bind-Value=@GuardianRequestView.ContactNumber
+                                     Placeholder="Contact Number"/>
+                        <br/>
+                        <br/>
+                        <TextBoxBase @ref=@OccupationTextBox
+                                     @bind-Value=@GuardianRequestView.Occupation
+                                     Placeholder="Occupation"/>
+                        <br/>
+                        <br/>
+                        <LabelBase @ref=@ContactLevelLabel Value="Contact Level"/>
+                        <DropdownSelectBase @ref=@ContactLevelDropdown
+                                            @bind-Value=@GuardianRequestView.ContactLevel
+                                            TEnum="GuardianRequestViewContactLevel"/>
+                        <br/>
+                        <br/>
+                        <LabelBase @ref=@RelationshipLabel Value="Relationship"/>
+                        <DropdownSelectBase @ref=@RelationshipDropdown
+                                            @bind-Value=@GuardianRequestView.Relationship
+                                            TEnum="GuardianRequestViewRelationship"/>
+                        <br/>
+                        <br/>
+                        <LabelBase @ref=@StatusLabel/>
+                    </div>
+                </Content>
+            </ContainerComponent>
+        </Content>
+        <Footer>
+            <ButtonBase @ref=@RegisterButton
+                        Label="Register"
+                        OnClick=@RegisterGuardianRequestAsync/>
+        </Footer>
+    </CardBase>
+</div>

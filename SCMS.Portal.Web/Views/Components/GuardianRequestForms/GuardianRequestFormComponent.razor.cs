@@ -24,6 +24,7 @@ namespace SCMS.Portal.Web.Views.Components.GuardianRequestForms
 
         public ComponentState State { get; set; }
         public GuardianRequestView GuardianRequestView { get; set; }
+        public LabelBase TitleLabel { get; set; }
         public DropdownSelectBase<GuardianRequestViewTitle> TitleDropdown { get; set; }
         public TextBoxBase FirstNameTextBox { get; set; }
         public TextBoxBase LastNameTextBox { get; set; }
@@ -31,9 +32,24 @@ namespace SCMS.Portal.Web.Views.Components.GuardianRequestForms
         public TextBoxBase CountryCodeTextBox { get; set; }
         public TextBoxBase ContactNumberTextBox { get; set; }
         public TextBoxBase OccupationTextBox { get; set; }
+        public LabelBase ContactLevelLabel { get; set; }
         public DropdownSelectBase<GuardianRequestViewContactLevel> ContactLevelDropdown { get; set; }
+        public LabelBase RelationshipLabel { get; set; }
         public DropdownSelectBase<GuardianRequestViewRelationship> RelationshipDropdown { get; set; }
         public ButtonBase RegisterButton { get; set; }
         public LabelBase StatusLabel { get; set; }
+
+        protected override void OnInitialized()
+        {
+            this.GuardianRequestView = new GuardianRequestView();
+            this.State = ComponentState.Content;
+        }
+
+        public void RegisterGuardianRequestAsync()
+        {
+            this.GuardianRequestView.StudentId = this.StudentId;
+            this.guardianRequestViewService.AddGuardianRequestViewAsync(this.GuardianRequestView);
+        }
+
     }
 }
