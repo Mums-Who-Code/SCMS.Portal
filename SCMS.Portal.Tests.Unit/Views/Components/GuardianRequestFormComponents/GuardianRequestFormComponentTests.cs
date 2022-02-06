@@ -43,6 +43,19 @@ namespace SCMS.Portal.Tests.Unit.Views.Components.GuardianRequestForms
             };
         }
 
+        public static TheoryData GuardianRequestViewDependencyExceptions()
+        {
+            string randomMessage = GetRandomString();
+            string validationMesage = randomMessage;
+            var innerValidationException = new Xeption(validationMesage);
+
+            return new TheoryData<Xeption>
+            {
+                new GuardianRequestViewDependencyException(innerValidationException),
+                new GuardianRequestViewServiceException(innerValidationException)
+            };
+        }
+
         private static string GetRandomString() =>
             new MnemonicString().GetValue();
 
