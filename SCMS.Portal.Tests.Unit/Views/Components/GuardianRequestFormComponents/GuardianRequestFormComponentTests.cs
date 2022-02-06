@@ -6,10 +6,13 @@ using Bunit;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using SCMS.Portal.Web.Models.Views.Foundations.GuardianRequestViews;
+using SCMS.Portal.Web.Models.Views.Foundations.GuardianRequestViews.Exceptions;
 using SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews;
 using SCMS.Portal.Web.Views.Components.GuardianRequestForms;
 using Syncfusion.Blazor;
 using Tynamix.ObjectFiller;
+using Xeptions;
+using Xunit;
 
 namespace SCMS.Portal.Tests.Unit.Views.Components.GuardianRequestForms
 {
@@ -26,6 +29,22 @@ namespace SCMS.Portal.Tests.Unit.Views.Components.GuardianRequestForms
             this.Services.AddOptions();
             this.JSInterop.Mode = JSRuntimeMode.Loose;
         }
+
+        public static TheoryData GuardianRequestViewValidationExceptions()
+        {
+            string randomMessage = GetRandomString();
+            string validationMesage = randomMessage;
+            var innerValidationException = new Xeption(validationMesage);
+
+            return new TheoryData<Xeption>
+            {
+                new GuardianRequestViewValidationException(innerValidationException),
+                new GuardianRequestViewDependencyValidationException(innerValidationException)
+            };
+        }
+
+        private static string GetRandomString() =>
+            new MnemonicString().GetValue();
 
         private static GuardianRequestView CreateRandomGuardianRequestView() =>
             CreateGuardianRequestViewFiller().Create();
