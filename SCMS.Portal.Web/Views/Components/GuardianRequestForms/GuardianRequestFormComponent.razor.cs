@@ -72,17 +72,22 @@ namespace SCMS.Portal.Web.Views.Components.GuardianRequestForms
             }
             catch (GuardianRequestViewDependencyException guardianRequestViewDependencyException)
             {
-                string validationMessage =
+                string dependencyMessage =
                     guardianRequestViewDependencyException.InnerException.Message;
 
-                ApplyRegistrationFailed(validationMessage);
+                ApplyRegistrationFailed(dependencyMessage);
             }
             catch (GuardianRequestViewServiceException guardianRequestViewServiceException)
             {
-                string validationMessage =
+                string dependencyMessage =
                     guardianRequestViewServiceException.InnerException.Message;
 
-                ApplyRegistrationFailed(validationMessage);
+                ApplyRegistrationFailed(dependencyMessage);
+            }
+            catch (Exception serviceException)
+            {
+                string errorMessage = serviceException.Message;
+                ApplyRegistrationFailed(errorMessage);
             }
         }
 
