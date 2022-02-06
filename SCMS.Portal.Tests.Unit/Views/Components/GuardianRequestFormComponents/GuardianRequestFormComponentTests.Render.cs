@@ -5,6 +5,8 @@
 using System;
 using Bunit;
 using FluentAssertions;
+using Moq;
+using SCMS.Portal.Web.Models.Views.Components.Colors;
 using SCMS.Portal.Web.Models.Views.Components.Containers;
 using SCMS.Portal.Web.Models.Views.Foundations.GuardianRequestViews;
 using SCMS.Portal.Web.Views.Components.GuardianRequestForms;
@@ -180,6 +182,75 @@ namespace SCMS.Portal.Tests.Unit.Views.Components.GuardianRequestForms
 
             this.renderedGuardianRequestFormComponent.Instance.StatusLabel
                 .Value.Should().BeNull();
+
+            this.guardianRequestViewServiceMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public void ShouldDisplaySubmittingStatusAndDisableControlsBeforeGuardianRequestRegistrationCompletes()
+        {
+            // given
+            GuardianRequestView someGuardianRequestView = CreateRandomGuardianRequestView();
+            Guid randomStudentId = Guid.NewGuid();
+            Guid inputStudentId = randomStudentId;
+
+            ComponentParameter componentParameter = ComponentParameter.CreateParameter(
+                name: nameof(GuardianRequestView.StudentId),
+                value: inputStudentId);
+
+            this.guardianRequestViewServiceMock.Setup(service =>
+                service.AddGuardianRequestViewAsync(It.IsAny<GuardianRequestView>()))
+                    .ReturnsAsync(
+                        value: someGuardianRequestView,
+                        delay: TimeSpan.FromMilliseconds(500));
+
+            // when
+            this.renderedGuardianRequestFormComponent =
+                RenderComponent<GuardianRequestFormComponent>(
+                    componentParameter);
+
+            this.renderedGuardianRequestFormComponent.Instance.RegisterButton.Click();
+
+            // then
+            this.renderedGuardianRequestFormComponent.Instance.StatusLabel.Value
+                .Should().BeEquivalentTo("Registering...");
+
+            this.renderedGuardianRequestFormComponent.Instance.StatusLabel.Color
+                .Should().Be(Color.Black);
+
+            this.renderedGuardianRequestFormComponent.Instance.TitleDropdown.IsDisabled
+                .Should().BeTrue();
+
+            this.renderedGuardianRequestFormComponent.Instance.FirstNameTextBox.IsDisabled
+               .Should().BeTrue();
+
+            this.renderedGuardianRequestFormComponent.Instance.LastNameTextBox.IsDisabled
+               .Should().BeTrue();
+
+            this.renderedGuardianRequestFormComponent.Instance.EmailTextBox.IsDisabled
+               .Should().BeTrue();
+
+            this.renderedGuardianRequestFormComponent.Instance.CountryCodeTextBox.IsDisabled
+                .Should().BeTrue();
+
+            this.renderedGuardianRequestFormComponent.Instance.ContactNumberTextBox.IsDisabled
+               .Should().BeTrue();
+
+            this.renderedGuardianRequestFormComponent.Instance.OccupationTextBox.IsDisabled
+               .Should().BeTrue();
+
+            this.renderedGuardianRequestFormComponent.Instance.ContactLevelDropdown.IsDisabled
+               .Should().BeTrue();
+
+            this.renderedGuardianRequestFormComponent.Instance.RelationshipDropdown.IsDisabled
+               .Should().BeTrue();
+
+            this.renderedGuardianRequestFormComponent.Instance.RegisterButton.IsDisabled
+               .Should().BeTrue();
+
+            this.guardianRequestViewServiceMock.Verify(service =>
+                service.AddGuardianRequestViewAsync(It.IsAny<GuardianRequestView>()),
+                    Times.Once);
 
             this.guardianRequestViewServiceMock.VerifyNoOtherCalls();
         }

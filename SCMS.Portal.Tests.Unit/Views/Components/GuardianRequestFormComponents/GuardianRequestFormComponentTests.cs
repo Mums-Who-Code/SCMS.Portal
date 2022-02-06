@@ -5,9 +5,11 @@
 using Bunit;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using SCMS.Portal.Web.Models.Views.Foundations.GuardianRequestViews;
 using SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews;
 using SCMS.Portal.Web.Views.Components.GuardianRequestForms;
 using Syncfusion.Blazor;
+using Tynamix.ObjectFiller;
 
 namespace SCMS.Portal.Tests.Unit.Views.Components.GuardianRequestForms
 {
@@ -24,5 +26,11 @@ namespace SCMS.Portal.Tests.Unit.Views.Components.GuardianRequestForms
             this.Services.AddOptions();
             this.JSInterop.Mode = JSRuntimeMode.Loose;
         }
+
+        private static GuardianRequestView CreateRandomGuardianRequestView() =>
+            CreateGuardianRequestViewFiller().Create();
+
+        private static Filler<GuardianRequestView> CreateGuardianRequestViewFiller() =>
+            new Filler<GuardianRequestView>();
     }
 }
