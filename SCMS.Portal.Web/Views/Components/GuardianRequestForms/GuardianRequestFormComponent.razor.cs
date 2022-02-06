@@ -70,6 +70,20 @@ namespace SCMS.Portal.Web.Views.Components.GuardianRequestForms
 
                 ApplyRegistrationFailed(validationMessage);
             }
+            catch (GuardianRequestViewDependencyException guardianRequestViewDependencyException)
+            {
+                string validationMessage =
+                    guardianRequestViewDependencyException.InnerException.Message;
+
+                ApplyRegistrationFailed(validationMessage);
+            }
+            catch (GuardianRequestViewServiceException guardianRequestViewServiceException)
+            {
+                string validationMessage =
+                    guardianRequestViewServiceException.InnerException.Message;
+
+                ApplyRegistrationFailed(validationMessage);
+            }
         }
 
         private void ApplyRegisteringStatus()
