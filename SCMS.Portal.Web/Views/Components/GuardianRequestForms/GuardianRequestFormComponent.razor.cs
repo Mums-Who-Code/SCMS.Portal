@@ -46,11 +46,12 @@ namespace SCMS.Portal.Web.Views.Components.GuardianRequestForms
             this.State = ComponentState.Content;
         }
 
-        public void RegisterGuardianRequestAsync()
+        public async void RegisterGuardianRequestAsync()
         {
             ApplyRegisteringStatus();
             this.GuardianRequestView.StudentId = this.StudentId;
-            this.guardianRequestViewService.AddGuardianRequestViewAsync(this.GuardianRequestView);
+            await this.guardianRequestViewService.AddGuardianRequestViewAsync(this.GuardianRequestView);
+            ApplyRegisteredStatus();
         }
 
         private void ApplyRegisteringStatus()
@@ -67,6 +68,12 @@ namespace SCMS.Portal.Web.Views.Components.GuardianRequestForms
             this.ContactLevelDropdown.Disable();
             this.RelationshipDropdown.Disable();
             this.RegisterButton.Disable();
+        }
+
+        private void ApplyRegisteredStatus()
+        {
+            this.StatusLabel.SetColor(Color.Green);
+            this.StatusLabel.SetValue("Registration completed.");
         }
     }
 }
