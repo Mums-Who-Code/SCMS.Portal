@@ -19,6 +19,7 @@ using SCMS.Portal.Web.Services.Foundations.GuardianRequests;
 using SCMS.Portal.Web.Services.Foundations.Schools;
 using SCMS.Portal.Web.Services.Foundations.Students;
 using SCMS.Portal.Web.Services.Foundations.Users;
+using SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews;
 using SCMS.Portal.Web.Services.Views.Foundations.SchoolViews;
 using SCMS.Portal.Web.Services.Views.Foundations.StudentViews;
 using SCMS.Portal.Web.Services.Views.Processings.SchoolViews;
@@ -118,6 +119,7 @@ namespace SCMS.Portal.Web
         {
             services.AddScoped<IStudentViewService, StudentViewService>();
             services.AddScoped<ISchoolViewService, SchoolViewService>();
+            services.AddScoped<IGuardianRequestViewService, GuardianRequestViewService>();
         }
 
         private static void AddProcessingViewServices(IServiceCollection services) =>
