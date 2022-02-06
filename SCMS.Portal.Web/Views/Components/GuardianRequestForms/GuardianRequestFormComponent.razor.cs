@@ -4,6 +4,7 @@
 
 using System;
 using Microsoft.AspNetCore.Components;
+using SCMS.Portal.Web.Models.Views.Components.Colors;
 using SCMS.Portal.Web.Models.Views.Components.Containers;
 using SCMS.Portal.Web.Models.Views.Foundations.GuardianRequestViews;
 using SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews;
@@ -47,9 +48,25 @@ namespace SCMS.Portal.Web.Views.Components.GuardianRequestForms
 
         public void RegisterGuardianRequestAsync()
         {
+            ApplyRegisteringStatus();
             this.GuardianRequestView.StudentId = this.StudentId;
             this.guardianRequestViewService.AddGuardianRequestViewAsync(this.GuardianRequestView);
         }
 
+        private void ApplyRegisteringStatus()
+        {
+            this.StatusLabel.SetColor(Color.Black);
+            this.StatusLabel.SetValue("Registering...");
+            this.TitleDropdown.Disable();
+            this.FirstNameTextBox.Disable();
+            this.LastNameTextBox.Disable();
+            this.EmailTextBox.Disable();
+            this.CountryCodeTextBox.Disable();
+            this.ContactNumberTextBox.Disable();
+            this.OccupationTextBox.Disable();
+            this.ContactLevelDropdown.Disable();
+            this.RelationshipDropdown.Disable();
+            this.RegisterButton.Disable();
+        }
     }
 }
