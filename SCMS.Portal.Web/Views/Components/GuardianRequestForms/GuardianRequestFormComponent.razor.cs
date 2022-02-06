@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components;
 using SCMS.Portal.Web.Models.Views.Components.Colors;
 using SCMS.Portal.Web.Models.Views.Components.Containers;
 using SCMS.Portal.Web.Models.Views.Foundations.GuardianRequestViews;
+using SCMS.Portal.Web.Models.Views.Foundations.GuardianRequestViews.Exceptions;
 using SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews;
 using SCMS.Portal.Web.Views.Bases.Buttons;
 using SCMS.Portal.Web.Views.Bases.Dropdowns.Selects;
@@ -48,10 +49,27 @@ namespace SCMS.Portal.Web.Views.Components.GuardianRequestForms
 
         public async void RegisterGuardianRequestAsync()
         {
-            ApplyRegisteringStatus();
-            this.GuardianRequestView.StudentId = this.StudentId;
-            await this.guardianRequestViewService.AddGuardianRequestViewAsync(this.GuardianRequestView);
-            ApplyRegisteredStatus();
+            try
+            {
+                ApplyRegisteringStatus();
+                this.GuardianRequestView.StudentId = this.StudentId;
+                await this.guardianRequestViewService.AddGuardianRequestViewAsync(this.GuardianRequestView);
+                ApplyRegisteredStatus();
+            }
+            catch (GuardianRequestViewValidationException guardianRequestViewValidationException)
+            {
+                string validationMessage =
+                    guardianRequestViewValidationException.InnerException.Message;
+
+                ApplyRegistrationFailed(validationMessage);
+            }
+            catch (GuardianRequestViewDependencyValidationException guardianRequestViewDependencyValidationException)
+            {
+                string validationMessage =
+                    guardianRequestViewDependencyValidationException.InnerException.Message;
+
+                ApplyRegistrationFailed(validationMessage);
+            }
         }
 
         private void ApplyRegisteringStatus()
@@ -74,6 +92,22 @@ namespace SCMS.Portal.Web.Views.Components.GuardianRequestForms
         {
             this.StatusLabel.SetColor(Color.Green);
             this.StatusLabel.SetValue("Registration completed.");
+        }
+
+        private void ApplyRegistrationFailed(string validationMessage)
+        {
+            this.StatusLabel.SetValue(validationMessage);
+            this.StatusLabel.SetColor(Color.Red);
+            this.TitleDropdown.Enable();
+            this.FirstNameTextBox.Enable();
+            this.LastNameTextBox.Enable();
+            this.EmailTextBox.Enable();
+            this.CountryCodeTextBox.Enable();
+            this.ContactNumberTextBox.Enable();
+            this.OccupationTextBox.Enable();
+            this.ContactLevelDropdown.Enable();
+            this.RelationshipDropdown.Enable();
+            this.RegisterButton.Enable();
         }
     }
 }
