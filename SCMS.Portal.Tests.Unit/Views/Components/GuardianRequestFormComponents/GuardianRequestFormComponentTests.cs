@@ -2,11 +2,6 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Bunit;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
@@ -19,12 +14,12 @@ namespace SCMS.Portal.Tests.Unit.Views.Components.GuardianRequestForms
     public partial class GuardianRequestFormComponentTests : TestContext
     {
         private readonly Mock<IGuardianRequestViewService> guardianRequestViewServiceMock;
-        private readonly IRenderedComponent<GuardianRequestFormComponent> guardianRequestFormComponent;
+        private IRenderedComponent<GuardianRequestFormComponent> renderedGuardianRequestFormComponent;
 
         public GuardianRequestFormComponentTests()
         {
             this.guardianRequestViewServiceMock = new Mock<IGuardianRequestViewService>();
-            this.Services.AddScoped(service => this.guardianRequestViewServiceMock);
+            this.Services.AddScoped(service => this.guardianRequestViewServiceMock.Object);
             this.Services.AddSyncfusionBlazor();
             this.Services.AddOptions();
             this.JSInterop.Mode = JSRuntimeMode.Loose;

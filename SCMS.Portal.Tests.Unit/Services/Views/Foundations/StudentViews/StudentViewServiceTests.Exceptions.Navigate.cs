@@ -3,7 +3,6 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Threading.Tasks;
 using Moq;
 using SCMS.Portal.Web.Models.Views.Foundations.StudentViews.Exceptions;
 using Xunit;

@@ -65,7 +65,7 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.StudentViews
             {
                 throw CreateAndLogValidationException(invalidStudentViewException);
             }
-            catch(Exception serviceException)
+            catch (Exception serviceException)
             {
                 var failedStudentViewServiceException =
                    new FailedStudentViewServiceException(serviceException);
