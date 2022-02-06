@@ -1,3 +1,4 @@
 ﻿@page "/Students/{StudentId}/GuardianRequests"
+@using SCMS.Portal.Web.Views.Components.GuardianRequestForms;
 
-<label>Student registered successfully!</label>
+<GuardianRequestFormComponent StudentId="@(Guid.Parse(StudentId))"/>
