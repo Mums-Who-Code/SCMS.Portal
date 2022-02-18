@@ -65,6 +65,13 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
             {
                 throw CreateAndLogValidationException(invalidStudentViewException);
             }
+            catch (Exception serviceException)
+            {
+                var failedGuardianRequestViewServiceException =
+                   new FailedGuardianRequestViewServiceException(serviceException);
+
+                throw CreateAndLogServiceException(failedGuardianRequestViewServiceException);
+            }
         }
 
         private GuardianRequestViewValidationException CreateAndLogValidationException(Xeption exception)
