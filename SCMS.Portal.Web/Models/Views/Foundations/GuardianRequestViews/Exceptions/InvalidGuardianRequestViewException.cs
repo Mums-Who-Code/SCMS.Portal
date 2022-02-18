@@ -13,7 +13,7 @@ namespace SCMS.Portal.Web.Models.Views.Foundations.GuardianRequestViews.Exceptio
         { }
 
         public InvalidGuardianRequestViewException(string parameterName, object parameterValue)
-           : base($"Invalid student view error occured. " +
+           : base($"Invalid guardian request view error occured. " +
                 $"parameter name: {parameterName}, " +
                 $"parameter value: {parameterValue}")
         { }

@@ -11,7 +11,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
     public partial class GuardianRequestViewServiceTests
     {
         [Fact]
-        public async Task ShouldNavigateToRoute()
+        public void ShouldNavigateToRoute()
         {
             // given
             string randomRoute = GetRandomRoute();

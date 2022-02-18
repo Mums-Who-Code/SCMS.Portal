@@ -15,7 +15,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
         [InlineData(null)]
         [InlineData("")]
         [InlineData(" ")]
-        public void ShouldThrowValidationExceptionOnNavigateIfRouteIsInvalidAndLogitAsync(
+        public void ShouldThrowValidationExceptionOnNavigateIfRouteIsInvalidAndLogit(
             string invalidRoute)
         {
             // given
@@ -43,8 +43,8 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
                 broker.NavigateTo(It.IsAny<string>()),
                     Times.Never);
 
-            this.navigationBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.navigationBrokerMock.VerifyNoOtherCalls();
             this.userServiceMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.guardianRequestServiceMock.VerifyNoOtherCalls();

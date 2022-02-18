@@ -40,6 +40,7 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
 
         private bool IsInvalidRoute(string route) =>
             string.IsNullOrWhiteSpace(route);
+
         private void ValidateInput(GuardianRequestView guardianRequestView)
         {
             if (guardianRequestView == null)
