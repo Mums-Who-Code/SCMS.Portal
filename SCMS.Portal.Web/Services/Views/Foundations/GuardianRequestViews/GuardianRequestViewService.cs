@@ -32,6 +32,7 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
             this.guardianRequestService = guardianRequestService;
             this.userService = userService;
             this.dateTimeBroker = dateTimeBroker;
+            this.navigationBroker = navigationBroker;
             this.loggingBroker = loggingBroker;
         }
 
@@ -46,7 +47,7 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
         });
 
         public void NavigateTo(string route) =>
-            throw new NotImplementedException();
+            this.navigationBroker.NavigateTo(route);
         private GuardianRequest MapToGuardianRequest(GuardianRequestView guardianRequestView)
         {
             DateTimeOffset currentDateTime = this.dateTimeBroker.GetCurrentDateTime();
