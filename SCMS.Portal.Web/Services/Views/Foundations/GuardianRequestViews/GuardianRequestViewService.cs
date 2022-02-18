@@ -47,7 +47,12 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
         });
 
         public void NavigateTo(string route) =>
+        TryCatch(() =>
+        {
+            ValidateRoute(route);
             this.navigationBroker.NavigateTo(route);
+        });
+
         private GuardianRequest MapToGuardianRequest(GuardianRequestView guardianRequestView)
         {
             DateTimeOffset currentDateTime = this.dateTimeBroker.GetCurrentDateTime();

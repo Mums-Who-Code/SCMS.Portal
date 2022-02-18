@@ -14,6 +14,7 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
     public partial class GuardianRequestViewService
     {
         private delegate ValueTask<GuardianRequestView> ReturningGuardianRequestViewFunction();
+        private delegate void ReturningNothingFunction();
 
         private async ValueTask<GuardianRequestView> TryCatch(ReturningGuardianRequestViewFunction returningGuardianRequestViewFunction)
         {
@@ -51,6 +52,18 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
                     = new FailedGuardianRequestViewServiceException(serviceException);
 
                 throw CreateAndLogServiceException(failedGuardianRequestViewServiceException);
+            }
+        }
+
+        private void TryCatch(ReturningNothingFunction returningNothingFunction)
+        {
+            try
+            {
+                returningNothingFunction();
+            }
+            catch (InvalidGuardianRequestViewException invalidStudentViewException)
+            {
+                throw CreateAndLogValidationException(invalidStudentViewException);
             }
         }
 
