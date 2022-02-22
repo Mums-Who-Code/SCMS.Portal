@@ -2,7 +2,6 @@
 // Copyright (c) Signature Chess Club & MumsWhoCode. All rights reserved.
 // -----------------------------------------------------------------------
 
-using System.Threading.Tasks;
 using Moq;
 using Xunit;
 

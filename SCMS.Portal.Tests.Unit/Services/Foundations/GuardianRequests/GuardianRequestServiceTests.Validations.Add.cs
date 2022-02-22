@@ -86,7 +86,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Foundations.GuardianRequests
                 values: "Value is invalid.");
 
             invalidGuardianRequestException.AddData(
-                key: nameof(GuardianRequest.EmailId),
+                key: nameof(GuardianRequest.Email),
                 values: "Text is required.");
 
             invalidGuardianRequestException.AddData(

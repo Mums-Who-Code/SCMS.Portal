@@ -64,7 +64,7 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
                 Title = (GuardianRequestTitle)guardianRequestView.Title,
                 FirstName = guardianRequestView.FirstName,
                 LastName = guardianRequestView.LastName,
-                EmailId = guardianRequestView.EmailId,
+                Email = guardianRequestView.Email,
                 CountryCode = guardianRequestView.CountryCode,
                 ContactNumber = guardianRequestView.ContactNumber,
                 Occupation = guardianRequestView.Occupation,
