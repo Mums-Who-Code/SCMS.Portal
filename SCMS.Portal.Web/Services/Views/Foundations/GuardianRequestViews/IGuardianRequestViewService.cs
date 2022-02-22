@@ -10,5 +10,6 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
     public interface IGuardianRequestViewService
     {
         ValueTask<GuardianRequestView> AddGuardianRequestViewAsync(GuardianRequestView guardianRequestView);
+        void NavigateTo(string route);
     }
 }

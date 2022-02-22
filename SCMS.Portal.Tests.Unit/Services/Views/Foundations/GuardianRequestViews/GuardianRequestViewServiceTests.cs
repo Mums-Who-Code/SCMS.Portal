@@ -10,6 +10,7 @@ using KellermanSoftware.CompareNetObjects;
 using Moq;
 using SCMS.Portal.Web.Brokers.DateTimes;
 using SCMS.Portal.Web.Brokers.Loggings;
+using SCMS.Portal.Web.Brokers.Navigations;
 using SCMS.Portal.Web.Models.Foundations.GuardianRequests;
 using SCMS.Portal.Web.Models.Foundations.GuardianRequests.Exceptions;
 using SCMS.Portal.Web.Models.Views.Foundations.GuardianRequestViews;
@@ -27,6 +28,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
         private readonly Mock<IGuardianRequestService> guardianRequestServiceMock;
         private readonly Mock<IUserService> userServiceMock;
         private readonly Mock<IDateTimeBroker> dateTimeBrokerMock;
+        private readonly Mock<INavigationBroker> navigationBrokerMock;
         private readonly Mock<ILoggingBroker> loggingBrokerMock;
         private readonly IGuardianRequestViewService guardianRequestViewService;
         private readonly ICompareLogic compareLogic;
@@ -36,6 +38,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
             this.guardianRequestServiceMock = new Mock<IGuardianRequestService>();
             this.userServiceMock = new Mock<IUserService>();
             this.dateTimeBrokerMock = new Mock<IDateTimeBroker>();
+            this.navigationBrokerMock = new Mock<INavigationBroker>();
             this.loggingBrokerMock = new Mock<ILoggingBroker>();
             var compareConfig = new ComparisonConfig();
             compareConfig.IgnoreProperty<GuardianRequest>(guardianRequest => guardianRequest.Id);
@@ -45,6 +48,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
                 guardianRequestService: this.guardianRequestServiceMock.Object,
                 userService: this.userServiceMock.Object,
                 dateTimeBroker: this.dateTimeBrokerMock.Object,
+                navigationBroker: this.navigationBrokerMock.Object,
                 loggingBroker: this.loggingBrokerMock.Object);
         }
 
@@ -70,6 +74,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
             };
         }
 
+        private static string GetRandomRoute() => new RandomUrl().GetValue();
 
         private static DateTimeOffset GetRandomDateTimeOffset() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
