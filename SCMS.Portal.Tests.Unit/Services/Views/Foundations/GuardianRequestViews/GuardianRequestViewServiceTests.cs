@@ -179,7 +179,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
                 Title = GetRandomTitleThatIsNot(GuardianRequestViewTitle.None),
                 FirstName = GetRandomString(),
                 LastName = GetRandomString(),
-                EmailId = GetRandomEmail(),
+                Email = GetRandomEmail(),
                 CountryCode = GetRandomString(),
                 ContactNumber = GetValidContactNumber(),
                 Occupation = GetRandomString(),

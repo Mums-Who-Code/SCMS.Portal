@@ -287,7 +287,7 @@ namespace SCMS.Portal.Tests.Unit.Views.Components.GuardianRequestForms
                 .LastNameTextBox.SetValue(inputGuardianRequestView.LastName);
 
             this.renderedGuardianRequestFormComponent.Instance
-                .EmailTextBox.SetValue(inputGuardianRequestView.EmailId);
+                .EmailTextBox.SetValue(inputGuardianRequestView.Email);
 
             this.renderedGuardianRequestFormComponent.Instance
                 .CountryCodeTextBox.SetValue(inputGuardianRequestView.CountryCode);
@@ -318,7 +318,7 @@ namespace SCMS.Portal.Tests.Unit.Views.Components.GuardianRequestForms
                 .LastNameTextBox.Value.Should().Be(expectedGuardianRequestView.LastName);
 
             this.renderedGuardianRequestFormComponent.Instance
-                .EmailTextBox.Value.Should().Be(expectedGuardianRequestView.EmailId);
+                .EmailTextBox.Value.Should().Be(expectedGuardianRequestView.Email);
 
             this.renderedGuardianRequestFormComponent.Instance
                 .CountryCodeTextBox.Value.Should().Be(expectedGuardianRequestView.CountryCode);

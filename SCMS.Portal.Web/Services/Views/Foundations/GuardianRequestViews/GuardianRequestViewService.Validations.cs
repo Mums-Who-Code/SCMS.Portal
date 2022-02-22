@@ -20,7 +20,7 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
                 (Rule: IsInvalid(title: guardianRequestView.Title), Parameter: nameof(GuardianRequestView.Title)),
                 (Rule: IsInvalid(text: guardianRequestView.FirstName), Parameter: nameof(GuardianRequestView.FirstName)),
                 (Rule: IsInvalid(text: guardianRequestView.LastName), Parameter: nameof(GuardianRequestView.LastName)),
-                (Rule: IsInvalid(text: guardianRequestView.EmailId), Parameter: nameof(GuardianRequestView.EmailId)),
+                (Rule: IsInvalid(text: guardianRequestView.Email), Parameter: nameof(GuardianRequestView.Email)),
                 (Rule: IsInvalid(text: guardianRequestView.CountryCode), Parameter: nameof(GuardianRequestView.CountryCode)),
                 (Rule: IsInvalid(text: guardianRequestView.ContactNumber), Parameter: nameof(GuardianRequestView.ContactNumber)),
                 (Rule: IsInvalid(text: guardianRequestView.Occupation), Parameter: nameof(GuardianRequestView.Occupation)),
