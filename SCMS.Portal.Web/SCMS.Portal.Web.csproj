@@ -6,11 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="RESTFulSense" Version="2.4.0" />
-    <PackageReference Include="Syncfusion.Blazor.Buttons" Version="19.4.0.48" />
-    <PackageReference Include="Syncfusion.Blazor.Calendars" Version="19.4.0.48" />
-    <PackageReference Include="Syncfusion.Blazor.Cards" Version="19.4.0.48" />
-    <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="19.4.0.48" />
-    <PackageReference Include="Syncfusion.Blazor.Inputs" Version="19.4.0.48" />
+    <PackageReference Include="Syncfusion.Blazor.Buttons" Version="19.4.0.53" />
+    <PackageReference Include="Syncfusion.Blazor.Calendars" Version="19.4.0.53" />
+    <PackageReference Include="Syncfusion.Blazor.Cards" Version="19.4.0.53" />
+    <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="19.4.0.53" />
+    <PackageReference Include="Syncfusion.Blazor.Inputs" Version="19.4.0.53" />
     <PackageReference Include="Xeption" Version="1.7.0" />
   </ItemGroup>
 
