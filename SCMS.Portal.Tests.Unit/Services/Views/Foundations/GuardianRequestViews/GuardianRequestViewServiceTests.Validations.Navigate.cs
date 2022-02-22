@@ -20,7 +20,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
         {
             // given
             var invalidGuardianRequestViewException =
-               new InvalidGuardianRequestViewException(
+                new InvalidGuardianRequestViewException(
                    parameterName: "Route",
                    parameterValue: invalidRoute);
 
