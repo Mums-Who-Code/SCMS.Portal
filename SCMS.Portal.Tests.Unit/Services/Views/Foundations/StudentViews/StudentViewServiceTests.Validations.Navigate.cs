@@ -12,9 +12,9 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.StudentViews
     public partial class StudentViewServiceTests
     {
         [Theory]
-        [InlineData(data: null)]
-        [InlineData(data: "")]
-        [InlineData(data: " ")]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
         public void ShouldThrowValidationExceptionOnNavigateIfRouteIsInvalidAndLogitAsync(
             string invalidRoute)
         {
