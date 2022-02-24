@@ -40,8 +40,8 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.SchoolViews
         });
 
         public void NavigateTo(string route) =>
-            throw new NotImplementedException();
-
+           this.navigationBroker.NavigateTo(route);
+           
         private static Func<School, SchoolView> AsSchoolView =>
             school => new SchoolView
             {
