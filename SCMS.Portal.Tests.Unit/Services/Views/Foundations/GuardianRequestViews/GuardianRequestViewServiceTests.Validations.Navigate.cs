@@ -4,50 +4,50 @@
 
 using System;
 using Moq;
-using SCMS.Portal.Web.Models.Views.Foundations.StudentViews.Exceptions;
+using SCMS.Portal.Web.Models.Views.Foundations.GuardianRequestViews.Exceptions;
 using Xunit;
 
-namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.StudentViews
+namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
 {
-    public partial class StudentViewServiceTests
+    public partial class GuardianRequestViewServiceTests
     {
         [Theory]
         [InlineData(null)]
         [InlineData("")]
         [InlineData(" ")]
-        public void ShouldThrowValidationExceptionOnNavigateIfRouteIsInvalidAndLogitAsync(
+        public void ShouldThrowValidationExceptionOnNavigateIfRouteIsInvalidAndLogit(
             string invalidRoute)
         {
-            //given
-            var invalidStudentViewException =
-               new InvalidStudentViewException(
+            // given
+            var invalidGuardianRequestViewException =
+                new InvalidGuardianRequestViewException(
                    parameterName: "Route",
                    parameterValue: invalidRoute);
 
-            var expectedStudentViewValidationException =
-                new StudentViewValidationException(invalidStudentViewException);
+            var expectedGuardianRequestViewValidationException =
+                new GuardianRequestViewValidationException(invalidGuardianRequestViewException);
 
-            //when
+            // when
             Action navigateToAction = () =>
-                this.studentViewService.NavigateTo(invalidRoute);
+                this.guardianRequestViewService.NavigateTo(invalidRoute);
 
-            //then
-            Assert.Throws<StudentViewValidationException>(navigateToAction);
+            // then
+            Assert.Throws<GuardianRequestViewValidationException>(navigateToAction);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
-                    expectedStudentViewValidationException))),
+                    expectedGuardianRequestViewValidationException))),
                         Times.Once);
 
             this.navigationBrokerMock.Verify(broker =>
                 broker.NavigateTo(It.IsAny<string>()),
                     Times.Never);
 
-            this.navigationBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.navigationBrokerMock.VerifyNoOtherCalls();
             this.userServiceMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
-            this.studentServiceMock.VerifyNoOtherCalls();
+            this.guardianRequestServiceMock.VerifyNoOtherCalls();
         }
     }
 }

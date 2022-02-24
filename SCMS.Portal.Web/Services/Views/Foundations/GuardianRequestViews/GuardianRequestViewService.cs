@@ -6,6 +6,7 @@ using System;
 using System.Threading.Tasks;
 using SCMS.Portal.Web.Brokers.DateTimes;
 using SCMS.Portal.Web.Brokers.Loggings;
+using SCMS.Portal.Web.Brokers.Navigations;
 using SCMS.Portal.Web.Models.Foundations.GuardianRequests;
 using SCMS.Portal.Web.Models.Views.Foundations.GuardianRequestViews;
 using SCMS.Portal.Web.Services.Foundations.GuardianRequests;
@@ -18,17 +19,20 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
         private readonly IGuardianRequestService guardianRequestService;
         private readonly IUserService userService;
         private readonly IDateTimeBroker dateTimeBroker;
+        private readonly INavigationBroker navigationBroker;
         private readonly ILoggingBroker loggingBroker;
 
         public GuardianRequestViewService(
             IGuardianRequestService guardianRequestService,
             IUserService userService,
             IDateTimeBroker dateTimeBroker,
+            INavigationBroker navigationBroker,
             ILoggingBroker loggingBroker)
         {
             this.guardianRequestService = guardianRequestService;
             this.userService = userService;
             this.dateTimeBroker = dateTimeBroker;
+            this.navigationBroker = navigationBroker;
             this.loggingBroker = loggingBroker;
         }
 
@@ -42,6 +46,13 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
             return guardianRequestView;
         });
 
+        public void NavigateTo(string route) =>
+        TryCatch(() =>
+        {
+            ValidateRoute(route);
+            this.navigationBroker.NavigateTo(route);
+        });
+
         private GuardianRequest MapToGuardianRequest(GuardianRequestView guardianRequestView)
         {
             DateTimeOffset currentDateTime = this.dateTimeBroker.GetCurrentDateTime();
@@ -53,7 +64,7 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.GuardianRequestViews
                 Title = (GuardianRequestTitle)guardianRequestView.Title,
                 FirstName = guardianRequestView.FirstName,
                 LastName = guardianRequestView.LastName,
-                EmailId = guardianRequestView.EmailId,
+                Email = guardianRequestView.Email,
                 CountryCode = guardianRequestView.CountryCode,
                 ContactNumber = guardianRequestView.ContactNumber,
                 Occupation = guardianRequestView.Occupation,

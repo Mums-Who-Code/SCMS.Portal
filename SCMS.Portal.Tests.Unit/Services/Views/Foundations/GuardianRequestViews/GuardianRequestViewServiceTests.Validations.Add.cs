@@ -66,7 +66,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
                 Title = GuardianRequestViewTitle.None,
                 FirstName = invalidText,
                 LastName = invalidText,
-                EmailId = invalidText,
+                Email = invalidText,
                 CountryCode = invalidText,
                 ContactNumber = invalidText,
                 Occupation = invalidText,
@@ -87,7 +87,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.GuardianRequestViews
                 values: "Text is required.");
 
             invalidGuardianRequestViewException.AddData(
-                key: nameof(GuardianRequestView.EmailId),
+                key: nameof(GuardianRequestView.Email),
                 values: "Text is required.");
 
             invalidGuardianRequestViewException.AddData(
