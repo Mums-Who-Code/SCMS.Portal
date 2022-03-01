@@ -6,11 +6,10 @@ using Xeptions;
 
 namespace SCMS.Portal.Web.Models.Views.Foundations.SchoolViews.Exceptions
 {
-    public class SchoolViewServiceException : Xeption
+    public class NullSchoolViewException : Xeption
     {
-        public SchoolViewServiceException(Xeption innerException)
-            : base(message: "School service error occurred, contact support.",
-                  innerException)
+        public NullSchoolViewException()
+           : base("Null school view error occured.")
         { }
     }
 }

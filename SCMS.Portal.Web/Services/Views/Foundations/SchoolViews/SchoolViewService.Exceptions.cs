@@ -15,6 +15,7 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.SchoolViews
     public partial class SchoolViewService : ISchoolViewService
     {
         private delegate ValueTask<List<SchoolView>> ReturningSchoolViewsFunction();
+        private delegate void ReturningNothingFunction();
 
         private async ValueTask<List<SchoolView>> TryCatch(ReturningSchoolViewsFunction returningSchoolViewsFunction)
         {
@@ -48,6 +49,26 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.SchoolViews
             this.loggingBroker.LogError(schoolViewDependencyException);
 
             return schoolViewDependencyException;
+        }
+
+        private void TryCatch(ReturningNothingFunction returningNothingFunction)
+        {
+            try
+            {
+                returningNothingFunction();
+            }
+            catch (InvalidSchoolViewException invalidSchoolViewException)
+            {
+                throw CreateAndLogValidationException(invalidSchoolViewException);
+            }
+        }
+
+        private SchoolViewValidationException CreateAndLogValidationException(Xeption exception)
+        {
+            var schoolViewValidationException = new SchoolViewValidationException(exception);
+            this.loggingBroker.LogError(schoolViewValidationException);
+
+            return schoolViewValidationException;
         }
 
         private SchoolViewServiceException CreateAndLogServiceException(Xeption exception)

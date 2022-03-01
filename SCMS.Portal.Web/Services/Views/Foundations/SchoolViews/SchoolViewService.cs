@@ -40,7 +40,11 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.SchoolViews
         });
 
         public void NavigateTo(string route) =>
-           this.navigationBroker.NavigateTo(route);
+        TryCatch(() =>
+        {
+            ValidateRoute(route);
+            this.navigationBroker.NavigateTo(route);
+        });
 
         private static Func<School, SchoolView> AsSchoolView =>
             school => new SchoolView
