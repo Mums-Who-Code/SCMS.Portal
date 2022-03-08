@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Moq;
 using SCMS.Portal.Web.Brokers.Loggings;
+using SCMS.Portal.Web.Brokers.Navigations;
 using SCMS.Portal.Web.Models.Foundations.Schools.Exceptions;
 using SCMS.Portal.Web.Services.Foundations.Schools;
 using SCMS.Portal.Web.Services.Views.Foundations.SchoolViews;
@@ -22,14 +23,17 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.SchoolViews
         private readonly Mock<ISchoolService> schoolServiceMock;
         private readonly Mock<ILoggingBroker> loggingBrokerMock;
         private readonly ISchoolViewService schoolViewService;
+        private readonly Mock<INavigationBroker> navigationBrokerMock;
 
         public SchoolViewServiceTests()
         {
             this.schoolServiceMock = new Mock<ISchoolService>();
             this.loggingBrokerMock = new Mock<ILoggingBroker>();
+            this.navigationBrokerMock = new Mock<INavigationBroker>();
 
             this.schoolViewService = new SchoolViewService(
                 schoolService: this.schoolServiceMock.Object,
+                navigationBroker: this.navigationBrokerMock.Object,
                 loggingBroker: this.loggingBrokerMock.Object);
         }
 
@@ -76,6 +80,7 @@ namespace SCMS.Portal.Tests.Unit.Services.Views.Foundations.SchoolViews
         private static string GetRandomString() =>
             new MnemonicString().GetValue();
 
+        private static  string GetRandomRoute() => new RandomUrl().GetValue();
         private static DateTimeOffset GetRandomDate() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
     }

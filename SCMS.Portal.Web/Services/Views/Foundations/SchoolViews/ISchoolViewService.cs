@@ -11,5 +11,6 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.SchoolViews
     public interface ISchoolViewService
     {
         ValueTask<List<SchoolView>> RetrieveAllSchoolViewsAsync();
+        void NavigateTo(string route);
     }
 }
