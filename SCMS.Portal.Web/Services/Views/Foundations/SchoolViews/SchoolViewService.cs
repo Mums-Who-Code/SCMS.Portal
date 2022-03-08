@@ -26,6 +26,7 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.SchoolViews
             ILoggingBroker loggingBroker)
         {
             this.schoolService = schoolService;
+            this.navigationBroker = navigationBroker;
             this.loggingBroker = loggingBroker;
         }
 
@@ -39,7 +40,7 @@ namespace SCMS.Portal.Web.Services.Views.Foundations.SchoolViews
         });
 
         public void NavigateTo(String route) =>
-            throw new NotImplementedException();
+            this.navigationBroker.NavigateTo(route);
 
         private static Func<School, SchoolView> AsSchoolView =>
             school => new SchoolView
